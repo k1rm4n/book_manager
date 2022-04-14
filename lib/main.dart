@@ -4,7 +4,7 @@ import 'package:book_manager/profile_user.dart';
 import 'package:flutter/material.dart';
 import 'auto_user.dart';
 import 'reg_user.dart';
-import 'drawer_user.dart';
+import 'notifications_user.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         '/auto': (BuildContext context) => Autorization(),
         '/reg': (BuildContext context) => Registration(),
         '/profile': (BuildContext context) => Profile(),
-        '/draw': (BuildContext context) => MainCustomDrawer()
+        '/notific': (BuildContext context) => Notifications(),
       },
     );
   }

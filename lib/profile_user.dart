@@ -1,7 +1,4 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'drawer_user.dart';
 import 'navigation_bar.dart';
 
 // menu_rounded
@@ -11,14 +8,6 @@ class Profile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _key,
-      drawer: ClipRRect(
-        borderRadius: const BorderRadius.only(
-          topRight: Radius.circular(10),
-          bottomRight: Radius.circular(10),
-        ),
-        child: MainCustomDrawer(),
-      ),
       bottomNavigationBar: MainNavigationBar(),
       body: SafeArea(
         child: Stack(
@@ -112,10 +101,15 @@ class Profile extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const Icon(
-                    Icons.notifications_none_rounded,
-                    size: 25,
-                    color: Color.fromRGBO(61, 104, 255, 1),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.popAndPushNamed(context, '/notific');
+                    },
+                    child: const Icon(
+                      Icons.notifications_none_rounded,
+                      size: 25,
+                      color: Color.fromRGBO(61, 104, 255, 1),
+                    ),
                   ),
                 ],
               ),
