@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'drawer_user.dart';
+import 'navigation_bar.dart';
 
 // menu_rounded
 class Profile extends StatelessWidget {
@@ -18,6 +19,7 @@ class Profile extends StatelessWidget {
         ),
         child: MainCustomDrawer(),
       ),
+      bottomNavigationBar: MainNavigationBar(),
       body: SafeArea(
         child: Stack(
           children: <Widget>[
@@ -221,14 +223,56 @@ class Profile extends StatelessWidget {
                             ]),
                           ),
                           Container(
-                            width: 40,
-                            height: 40,
+                            width: 30,
+                            height: 30,
                             decoration: const BoxDecoration(
                               image: DecorationImage(
                                 image: AssetImage(
                                     ".dart_tool/images/open_book.png"),
                               ),
                             ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    width: double.infinity,
+                    height: 61,
+                    decoration: BoxDecoration(
+                      color: const Color.fromRGBO(255, 255, 255, 1),
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color.fromRGBO(0, 0, 0, 0.2),
+                          offset: Offset(0, 0),
+                          blurRadius: 2,
+                        ),
+                      ],
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 20, horizontal: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: const [
+                          Text(
+                            'История',
+                            style: TextStyle(
+                              color: Color.fromRGBO(70, 70, 70, 1),
+                              fontSize: 15,
+                              fontWeight: FontWeight.w400,
+                              fontStyle: FontStyle.normal,
+                              fontFamily: 'Roboto',
+                            ),
+                          ),
+                          Icon(
+                            Icons.restore_rounded,
+                            size: 25,
+                            color: Color.fromRGBO(128, 128, 131, 1),
                           ),
                         ],
                       ),

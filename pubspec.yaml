@@ -72,6 +72,7 @@ flutter:
     - .dart_tool/images/BookManager.png
     - .dart_tool/images/book.png
     - .dart_tool/images/open_book.png
+    - .dart_tool/images/vector_history.png
     
 
   # An image asset can refer to one or more resolution-specific "variants", see
