@@ -55,10 +55,15 @@ class Notifications extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const Icon(
-                        Icons.close,
-                        color: Color.fromRGBO(61, 104, 255, 1),
-                        size: 28,
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.popAndPushNamed(context, '/profile');
+                        },
+                        child: const Icon(
+                          Icons.close,
+                          color: Color.fromRGBO(61, 104, 255, 1),
+                          size: 28,
+                        ),
                       ),
                     ],
                   ),
