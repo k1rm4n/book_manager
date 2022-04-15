@@ -77,13 +77,10 @@ class Profile extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  GestureDetector(
-                    onTap: () => _key.currentState!.openDrawer(),
-                    child: const Icon(
-                      Icons.menu_rounded,
-                      size: 25,
-                      color: Color.fromRGBO(61, 104, 255, 1),
-                    ),
+                  const Icon(
+                    Icons.menu_rounded,
+                    size: 25,
+                    color: Color.fromRGBO(61, 104, 255, 1),
                   ),
                   const SizedBox(
                     width: 15,
