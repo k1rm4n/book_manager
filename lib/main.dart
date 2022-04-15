@@ -46,64 +46,65 @@ class MainSreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 65, vertical: 40),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              RichText(
-                textAlign: TextAlign.center,
-                text: TextSpan(
-                  children: [
-                    const TextSpan(
-                      text: 'Добро пожаловать в\n',
-                      style: TextStyle(
-                        color: Color.fromRGBO(70, 70, 70, 1),
-                        fontSize: 25,
-                        fontWeight: FontWeight.w300,
-                        fontStyle: FontStyle.normal,
-                        fontFamily: 'Roboto',
+        child: SizedBox(
+          width: double.infinity,
+          height: double.infinity,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 65, vertical: 40),
+            child: Column(
+              children: [
+                RichText(
+                  textAlign: TextAlign.center,
+                  text: TextSpan(
+                    children: [
+                      const TextSpan(
+                        text: 'Добро пожаловать в\n',
+                        style: TextStyle(
+                          color: Color.fromRGBO(70, 70, 70, 1),
+                          fontSize: 25,
+                          fontWeight: FontWeight.w300,
+                          fontStyle: FontStyle.normal,
+                          fontFamily: 'Roboto',
+                        ),
                       ),
-                    ),
-                    TextSpan(
-                      text: 'BookManager',
-                      style: TextStyle(
-                        foreground: Paint()..shader = linearGradient,
-                        fontSize: 30,
-                        fontWeight: FontWeight.w700,
-                        fontStyle: FontStyle.normal,
-                        fontFamily: 'Roboto',
+                      TextSpan(
+                        text: 'BookManager',
+                        style: TextStyle(
+                          foreground: Paint()..shader = linearGradient,
+                          fontSize: 30,
+                          fontWeight: FontWeight.w700,
+                          fontStyle: FontStyle.normal,
+                          fontFamily: 'Roboto',
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: Container(
-                  width: 50,
-                  height: 50,
-                  decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    gradient: LinearGradient(
-                      begin: Alignment.centerRight,
-                      end: Alignment.centerLeft,
-                      colors: [
-                        Color.fromRGBO(76, 61, 255, 1),
-                        Color.fromRGBO(103, 152, 230, 1),
-                      ],
-                    ),
-                  ),
-                  child: const Icon(
-                    Icons.arrow_forward_ios_rounded,
-                    color: Colors.white,
-                    size: 40,
+                    ],
                   ),
                 ),
-              ),
-            ],
+                Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                    width: 50,
+                    height: 50,
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      gradient: LinearGradient(
+                        begin: Alignment.centerRight,
+                        end: Alignment.centerLeft,
+                        colors: [
+                          Color.fromRGBO(76, 61, 255, 1),
+                          Color.fromRGBO(103, 152, 230, 1),
+                        ],
+                      ),
+                    ),
+                    child: const Icon(
+                      Icons.arrow_forward_ios_rounded,
+                      color: Colors.white,
+                      size: 40,
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
