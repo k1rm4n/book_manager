@@ -45,66 +45,103 @@ class MainSreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
       body: SafeArea(
-        child: SizedBox(
-          width: double.infinity,
-          height: double.infinity,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 65, vertical: 40),
-            child: Column(
-              children: [
-                RichText(
-                  textAlign: TextAlign.center,
-                  text: TextSpan(
-                    children: [
-                      const TextSpan(
-                        text: 'Добро пожаловать в\n',
-                        style: TextStyle(
-                          color: Color.fromRGBO(70, 70, 70, 1),
-                          fontSize: 25,
-                          fontWeight: FontWeight.w300,
-                          fontStyle: FontStyle.normal,
-                          fontFamily: 'Roboto',
-                        ),
-                      ),
-                      TextSpan(
-                        text: 'BookManager',
-                        style: TextStyle(
-                          foreground: Paint()..shader = linearGradient,
-                          fontSize: 30,
-                          fontWeight: FontWeight.w700,
-                          fontStyle: FontStyle.normal,
-                          fontFamily: 'Roboto',
-                        ),
-                      ),
-                    ],
-                  ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 65, vertical: 40),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              _TextWelcomWidget(linearGradient: linearGradient),
+              _ButtonNextWidget(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ButtonNextWidget extends StatelessWidget {
+  const _ButtonNextWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+        flex: 0,
+        child: GestureDetector(
+          onTap: () {
+            Navigator.popAndPushNamed(context, '/auto');
+          },
+          child: Align(
+            alignment: Alignment.bottomRight,
+            child: Container(
+              width: 50,
+              height: 50,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                  begin: Alignment.centerRight,
+                  end: Alignment.centerLeft,
+                  colors: [
+                    Color.fromRGBO(76, 61, 255, 1),
+                    Color.fromRGBO(103, 152, 230, 1),
+                  ],
                 ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Container(
-                    width: 50,
-                    height: 50,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                      gradient: LinearGradient(
-                        begin: Alignment.centerRight,
-                        end: Alignment.centerLeft,
-                        colors: [
-                          Color.fromRGBO(76, 61, 255, 1),
-                          Color.fromRGBO(103, 152, 230, 1),
-                        ],
-                      ),
-                    ),
-                    child: const Icon(
-                      Icons.arrow_forward_ios_rounded,
-                      color: Colors.white,
-                      size: 40,
-                    ),
-                  ),
-                ),
-              ],
+              ),
+              child: const Icon(
+                Icons.arrow_forward_ios_rounded,
+                color: Colors.white,
+                size: 40,
+              ),
             ),
+          ),
+        ));
+  }
+}
+
+class _TextWelcomWidget extends StatelessWidget {
+  const _TextWelcomWidget({
+    Key? key,
+    required this.linearGradient,
+  }) : super(key: key);
+
+  final Shader linearGradient;
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      flex: 100,
+      child: Align(
+        alignment: Alignment.center,
+        child: RichText(
+          textAlign: TextAlign.center,
+          text: TextSpan(
+            children: [
+              const TextSpan(
+                text: 'Добро пожаловать в\n',
+                style: TextStyle(
+                  color: Color.fromRGBO(70, 70, 70, 1),
+                  fontSize: 25,
+                  fontWeight: FontWeight.w300,
+                  fontStyle: FontStyle.normal,
+                  fontFamily: 'Roboto',
+                ),
+              ),
+              TextSpan(
+                text: 'BookManager',
+                style: TextStyle(
+                  foreground: Paint()..shader = linearGradient,
+                  fontSize: 30,
+                  fontWeight: FontWeight.w700,
+                  fontStyle: FontStyle.normal,
+                  fontFamily: 'Roboto',
+                ),
+              ),
+            ],
           ),
         ),
       ),
