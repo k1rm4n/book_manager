@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'auto_user.dart';
 import 'reg_user.dart';
 import 'notifications_user.dart';
+import 'settings_user.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
         '/reg': (BuildContext context) => Registration(),
         '/profile': (BuildContext context) => Profile(),
         '/notific': (BuildContext context) => Notifications(),
+        '/settingsUser': (BuildContext context) => SettingsUser(),
       },
     );
   }
@@ -80,6 +82,14 @@ class _ButtonNextWidget extends StatelessWidget {
               width: 50,
               height: 50,
               decoration: const BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Color.fromRGBO(0, 0, 0, 0.2),
+                    offset: Offset(0, 4),
+                    blurRadius: 10,
+                    spreadRadius: 3,
+                  )
+                ],
                 shape: BoxShape.circle,
                 gradient: LinearGradient(
                   begin: Alignment.centerRight,

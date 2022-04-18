@@ -265,6 +265,9 @@ class _HeaderProfileWidget extends StatelessWidget {
           ),
         ),
         GestureDetector(
+          onTap: () {
+            Navigator.popAndPushNamed(context, '/settingsUser');
+          },
           child: const Icon(
             Icons.settings,
             size: 25,

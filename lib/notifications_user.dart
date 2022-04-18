@@ -53,11 +53,16 @@ class Notifications extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const Icon(
-                    Icons.close,
-                    color: Color.fromRGBO(76, 61, 255, 1),
-                    size: 28,
-                  ),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.popAndPushNamed(context, '/profile');
+                    },
+                    child: const Icon(
+                      Icons.close,
+                      color: Color.fromRGBO(76, 61, 255, 1),
+                      size: 28,
+                    ),
+                  )
                 ],
               ),
               const SizedBox(
@@ -79,16 +84,103 @@ class Notifications extends StatelessWidget {
                     const SizedBox(
                       width: 33,
                     ),
-                    const Expanded(
-                      child: Text(
-                        'Вы забронировали книгу "Шерлок Холмс"',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          color: Color.fromRGBO(70, 70, 70, 1),
-                          fontSize: 15,
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.normal,
-                          fontFamily: 'Roboto',
+                    Expanded(
+                      child: RichText(
+                        text: const TextSpan(
+                          children: [
+                            TextSpan(
+                              text: 'Вы зобранировали книгу "Шерлок Холмс"',
+                              style: TextStyle(
+                                color: Color.fromRGBO(70, 70, 70, 1),
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                fontStyle: FontStyle.normal,
+                                fontFamily: 'Roboto',
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 12,
+                      height: 12,
+                      decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color.fromRGBO(61, 104, 255, 1)),
+                    ),
+                    const SizedBox(
+                      width: 33,
+                    ),
+                    Expanded(
+                      child: RichText(
+                        text: const TextSpan(
+                          children: [
+                            TextSpan(
+                              text:
+                                  'Вы забронировали книгу "Общая теория права"',
+                              style: TextStyle(
+                                color: Color.fromRGBO(70, 70, 70, 1),
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                fontStyle: FontStyle.normal,
+                                fontFamily: 'Roboto',
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 12,
+                      height: 12,
+                      decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Color.fromRGBO(255, 203, 203, 1)),
+                    ),
+                    const SizedBox(
+                      width: 33,
+                    ),
+                    Expanded(
+                      child: RichText(
+                        text: const TextSpan(
+                          children: [
+                            TextSpan(
+                              text:
+                                  'Напоминание! Срок сдачи книги подходит к концу',
+                              style: TextStyle(
+                                color: Color.fromRGBO(70, 70, 70, 1),
+                                fontSize: 15,
+                                fontWeight: FontWeight.w400,
+                                fontStyle: FontStyle.normal,
+                                fontFamily: 'Roboto',
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
