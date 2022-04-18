@@ -31,16 +31,14 @@ class MyApp extends StatelessWidget {
 
 class MainSreen extends StatelessWidget {
   final Shader linearGradient = const LinearGradient(
-      begin: Alignment.centerRight,
-      end: Alignment.centerLeft,
-      colors: [
-        Color.fromRGBO(76, 61, 255, 1),
-        Color.fromRGBO(103, 152, 230, 1),
-      ],
-      stops: [
-        0,
-        0.86
-      ]).createShader(const Rect.fromLTWH(65, 302, 245, 62));
+    begin: Alignment.centerRight,
+    end: Alignment.centerLeft,
+    colors: [
+      Color.fromRGBO(76, 61, 255, 1),
+      Color.fromRGBO(103, 152, 230, 1),
+    ],
+    stops: [0, 0.86],
+  ).createShader(const Rect.fromLTWH(65, 302, 245, 62));
   // arrow_forward_ios_rounded
   @override
   Widget build(BuildContext context) {
@@ -54,7 +52,7 @@ class MainSreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               _TextWelcomWidget(linearGradient: linearGradient),
-              _ButtonNextWidget(),
+              const _ButtonNextWidget(),
             ],
           ),
         ),

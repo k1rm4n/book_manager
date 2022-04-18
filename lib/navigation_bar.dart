@@ -31,6 +31,7 @@ class _CustomNavigationBar extends State<MainNavigationBar> {
           topRight: Radius.circular(10),
         ),
         child: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
           backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
@@ -38,19 +39,35 @@ class _CustomNavigationBar extends State<MainNavigationBar> {
                 Icons.email_outlined,
               ),
               label: 'Мои запросы',
+              activeIcon: GradientIcon(
+                icon: Icon(Icons.email_outlined),
+              ),
             ),
             BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.auto_awesome_motion_rounded,
-                ),
-                label: 'Библиотека'),
+              icon: Icon(
+                Icons.auto_awesome_motion_rounded,
+              ),
+              label: 'Библиотека',
+              activeIcon: GradientIcon(
+                icon: Icon(Icons.auto_awesome_motion_rounded),
+              ),
+            ),
             BottomNavigationBarItem(
-                icon: Icon(Icons.favorite_outline), label: 'Избранные'),
+              icon: Icon(Icons.favorite_outline),
+              label: 'Избранные',
+              activeIcon: GradientIcon(
+                icon: Icon(Icons.favorite_outline),
+              ),
+            ),
             BottomNavigationBarItem(
-                icon: Icon(
-                  Icons.person,
-                ),
-                label: 'Профиль'),
+              icon: Icon(
+                Icons.person,
+              ),
+              label: 'Профиль',
+              activeIcon: GradientIcon(
+                icon: Icon(Icons.person),
+              ),
+            ),
           ],
           currentIndex: _selectedIndex,
           unselectedItemColor: const Color.fromRGBO(124, 124, 124, 1),
@@ -58,6 +75,27 @@ class _CustomNavigationBar extends State<MainNavigationBar> {
           onTap: _onItemTapped,
         ),
       ),
+    );
+  }
+}
+
+class GradientIcon extends StatelessWidget {
+  const GradientIcon({required this.icon});
+  final Icon icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return ShaderMask(
+      blendMode: BlendMode.srcIn,
+      shaderCallback: (bounds) => const LinearGradient(
+        begin: Alignment.centerRight,
+        end: Alignment.centerLeft,
+        colors: [
+          Color.fromRGBO(76, 61, 255, 1),
+          Color.fromRGBO(103, 152, 230, 1),
+        ],
+      ).createShader(bounds),
+      child: icon,
     );
   }
 }
