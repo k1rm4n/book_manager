@@ -1,7 +1,9 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:book_manager/connect_db.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:book_manager/auto_user.dart';
 
 class Autorization extends StatelessWidget {
   final Shader linearGradient = const LinearGradient(
@@ -82,42 +84,7 @@ class Autorization extends StatelessWidget {
                   const SizedBox(
                     height: 45,
                   ),
-                  const SizedBox(
-                    width: double.infinity,
-                    height: 50,
-                    child: TextField(
-                      style: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.w300,
-                        fontFamily: "Roboto",
-                      ),
-                      decoration: InputDecoration(
-                        floatingLabelBehavior: FloatingLabelBehavior.always,
-                        labelText: "E-mail",
-                        contentPadding: EdgeInsets.symmetric(horizontal: 30),
-                        labelStyle: TextStyle(
-                          fontSize: 15,
-                          fontWeight: FontWeight.w500,
-                          fontFamily: "Inter",
-                          color: Color(0xFF595959),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                            borderSide:
-                                BorderSide(color: Color(0xFFE4E4E4), width: 1)),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          borderSide:
-                              BorderSide(color: Color(0xFFE4E4E4), width: 1),
-                        ),
-                        disabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          borderSide:
-                              BorderSide(color: Color(0xFFE4E4E4), width: 1),
-                        ),
-                      ),
-                    ),
-                  ),
+                  EmailTextFieldWidget(),
                   const SizedBox(
                     height: 10,
                   ),
@@ -177,46 +144,7 @@ class Autorization extends StatelessWidget {
                   const SizedBox(
                     height: 30,
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.popAndPushNamed(context, '/profile');
-                    },
-                    child: Container(
-                      width: double.infinity,
-                      height: 50,
-                      decoration: BoxDecoration(
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Color.fromRGBO(0, 0, 0, 0.2),
-                            offset: Offset(0, 5),
-                            blurRadius: 8,
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(10),
-                        gradient: const LinearGradient(
-                          colors: [
-                            Color.fromRGBO(103, 152, 230, 1),
-                            Color.fromRGBO(76, 61, 230, 1),
-                          ],
-                          stops: [0, 1],
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                        ),
-                      ),
-                      child: Center(
-                        child: RichText(
-                          text: const TextSpan(
-                            text: 'Войти',
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontFamily: 'Roboto',
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  ButtonWidget(),
                   const SizedBox(
                     height: 30,
                   ),
@@ -253,6 +181,119 @@ class Autorization extends StatelessWidget {
               ),
             ), // Кнопка "Войти"
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class ButtonWidget extends StatefulWidget {
+  ButtonWidget({Key? key}) : super(key: key);
+
+  @override
+  State<ButtonWidget> createState() => _ButtonWidget();
+}
+
+class _ButtonWidget extends State<ButtonWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        MyConnection().init(_EmailTextFieldWidget()._controller.text);
+      },
+      child: Container(
+        width: double.infinity,
+        height: 50,
+        decoration: BoxDecoration(
+          boxShadow: const [
+            BoxShadow(
+              color: Color.fromRGBO(0, 0, 0, 0.2),
+              offset: Offset(0, 5),
+              blurRadius: 8,
+            ),
+          ],
+          borderRadius: BorderRadius.circular(10),
+          gradient: const LinearGradient(
+            colors: [
+              Color.fromRGBO(103, 152, 230, 1),
+              Color.fromRGBO(76, 61, 230, 1),
+            ],
+            stops: [0, 1],
+            begin: Alignment.centerLeft,
+            end: Alignment.centerRight,
+          ),
+        ),
+        child: Center(
+          child: RichText(
+            text: const TextSpan(
+              text: 'Войти',
+              style: TextStyle(
+                fontSize: 15,
+                fontFamily: 'Roboto',
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class EmailTextFieldWidget extends StatefulWidget {
+  EmailTextFieldWidget({Key? key}) : super(key: key);
+
+  @override
+  State<EmailTextFieldWidget> createState() => _EmailTextFieldWidget();
+}
+
+class _EmailTextFieldWidget extends State<EmailTextFieldWidget> {
+  late TextEditingController _controller;
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      height: 50,
+      child: TextField(
+        controller: _controller,
+        style: const TextStyle(
+          fontSize: 15,
+          fontWeight: FontWeight.w300,
+          fontFamily: "Roboto",
+        ),
+        decoration: const InputDecoration(
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          labelText: "E-mail",
+          contentPadding: EdgeInsets.symmetric(horizontal: 30),
+          labelStyle: TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.w500,
+            fontFamily: "Inter",
+            color: Color(0xFF595959),
+          ),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+              borderSide: BorderSide(color: Color(0xFFE4E4E4), width: 1)),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            borderSide: BorderSide(color: Color(0xFFE4E4E4), width: 1),
+          ),
+          disabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            borderSide: BorderSide(color: Color(0xFFE4E4E4), width: 1),
+          ),
         ),
       ),
     );
