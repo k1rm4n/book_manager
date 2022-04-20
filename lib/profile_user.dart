@@ -124,7 +124,7 @@ class _NowReadWidget extends StatelessWidget {
                   height: 30,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage(".dart_tool/images/open_book.png"),
+                      image: AssetImage("images/open_book.png"),
                     ),
                   ),
                 ),

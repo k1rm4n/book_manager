@@ -18,6 +18,7 @@ class Autorization extends StatelessWidget {
         0.8
       ]).createShader(const Rect.fromLTWH(65, 302, 245, 62));
 
+  final _mailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +41,7 @@ class Autorization extends StatelessWidget {
                       height: 50,
                       decoration: const BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage(".dart_tool/images/book.png"),
+                          image: AssetImage("images/book.png"),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -84,7 +85,7 @@ class Autorization extends StatelessWidget {
                   const SizedBox(
                     height: 45,
                   ),
-                  EmailTextFieldWidget(),
+                  _EmailTextFieldWidget(mailController: _mailController),
                   const SizedBox(
                     height: 10,
                   ),
@@ -144,7 +145,7 @@ class Autorization extends StatelessWidget {
                   const SizedBox(
                     height: 30,
                   ),
-                  ButtonWidget(),
+                  _ButtonWidget(mailController: _mailController),
                   const SizedBox(
                     height: 30,
                   ),
@@ -187,19 +188,20 @@ class Autorization extends StatelessWidget {
   }
 }
 
-class ButtonWidget extends StatefulWidget {
-  ButtonWidget({Key? key}) : super(key: key);
+class _ButtonWidget extends StatelessWidget {
+  const _ButtonWidget({
+    Key? key,
+    required TextEditingController mailController,
+  })  : _mailController = mailController,
+        super(key: key);
 
-  @override
-  State<ButtonWidget> createState() => _ButtonWidget();
-}
+  final TextEditingController _mailController;
 
-class _ButtonWidget extends State<ButtonWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        MyConnection().init(_EmailTextFieldWidget()._controller.text);
+        MyConnection().init(_mailController.text);
       },
       child: Container(
         width: double.infinity,
@@ -240,26 +242,14 @@ class _ButtonWidget extends State<ButtonWidget> {
   }
 }
 
-class EmailTextFieldWidget extends StatefulWidget {
-  EmailTextFieldWidget({Key? key}) : super(key: key);
+class _EmailTextFieldWidget extends StatelessWidget {
+  const _EmailTextFieldWidget({
+    Key? key,
+    required TextEditingController mailController,
+  })  : _mailController = mailController,
+        super(key: key);
 
-  @override
-  State<EmailTextFieldWidget> createState() => _EmailTextFieldWidget();
-}
-
-class _EmailTextFieldWidget extends State<EmailTextFieldWidget> {
-  late TextEditingController _controller;
-  @override
-  void initState() {
-    super.initState();
-    _controller = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  final TextEditingController _mailController;
 
   @override
   Widget build(BuildContext context) {
@@ -267,7 +257,7 @@ class _EmailTextFieldWidget extends State<EmailTextFieldWidget> {
       width: double.infinity,
       height: 50,
       child: TextField(
-        controller: _controller,
+        controller: _mailController,
         style: const TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.w300,

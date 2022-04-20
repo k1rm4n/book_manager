@@ -32,7 +32,7 @@ dependencies:
   mysql1: ^0.19.2
 
 flutter_native_splash:
-  image: .dart_tool/images/BookManager.png
+  image: images/BookManager.png
   color: "FFFFFF"
 
   flutter:
@@ -69,12 +69,11 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - .dart_tool/images/fon.png
-    - .dart_tool/images/fon_auto.png
-    - .dart_tool/images/BookManager.png
-    - .dart_tool/images/book.png
-    - .dart_tool/images/open_book.png
-    - .dart_tool/images/vector_history.png
+    - images/fon.png
+    - images/fon_auto.png
+    - images/BookManager.png
+    - images/book.png
+    - images/open_book.png
     
 
   # An image asset can refer to one or more resolution-specific "variants", see
