@@ -4,6 +4,8 @@ import 'package:book_manager/connect_db.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:book_manager/auto_user.dart';
+import 'data.dart';
+import 'package:provider/provider.dart';
 
 class Autorization extends StatelessWidget {
   final Shader linearGradient = const LinearGradient(
@@ -26,134 +28,140 @@ class Autorization extends StatelessWidget {
       backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
       // resizeToAvoidBottomInset: true,
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Stack(
-            children: <Widget>[
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 28),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 100,
-                    ),
-                    Center(
-                      child: Container(
-                        width: 50,
-                        height: 50,
-                        decoration: const BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage("images/book.png"),
-                            fit: BoxFit.cover,
+        child: ChangeNotifierProvider(
+          create: (context) => DataText('E-mail'),
+          child: SingleChildScrollView(
+            child: Stack(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 28),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        height: 100,
+                      ),
+                      Center(
+                        child: Container(
+                          width: 50,
+                          height: 50,
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage("images/book.png"),
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Center(
-                      child: SizedBox(
-                        width: 160,
-                        height: 70,
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Center(
+                        child: SizedBox(
+                          width: 160,
+                          height: 70,
+                          child: RichText(
+                            textAlign: TextAlign.center,
+                            text: TextSpan(
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: 'BOOK\n',
+                                  style: TextStyle(
+                                    foreground: Paint()
+                                      ..shader = linearGradient,
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.w700,
+                                    fontFamily: 'Roboto',
+                                    letterSpacing: 20,
+                                  ),
+                                ),
+                                TextSpan(
+                                  text: 'MANAGER',
+                                  style: TextStyle(
+                                    foreground: Paint()
+                                      ..shader = linearGradient,
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.w300,
+                                    fontFamily: 'Roboto',
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 45,
+                      ),
+                      EmailTextFieldWidget(mailController: _mailController),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      _PassTextFieldWidget(passController: _passController),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Align(
+                        alignment: Alignment.centerRight,
                         child: RichText(
-                          textAlign: TextAlign.center,
+                          text: const TextSpan(
+                            text: 'Забыли пароль?',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w300,
+                              fontSize: 12,
+                              color: Color.fromRGBO(89, 89, 89, 1),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      _ButtonWidget(
+                        mailController: _mailController,
+                        passController: _passController,
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Center(
+                        child: RichText(
                           text: TextSpan(
                             children: <TextSpan>[
-                              TextSpan(
-                                text: 'BOOK\n',
+                              const TextSpan(
+                                text: 'Новый пользователь? ',
                                 style: TextStyle(
-                                  foreground: Paint()..shader = linearGradient,
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: 'Roboto',
-                                  letterSpacing: 20,
-                                ),
-                              ),
-                              TextSpan(
-                                text: 'MANAGER',
-                                style: TextStyle(
-                                  foreground: Paint()..shader = linearGradient,
-                                  fontSize: 30,
                                   fontWeight: FontWeight.w300,
+                                  fontSize: 12,
+                                  color: Color(0xFF464646),
                                   fontFamily: 'Roboto',
                                 ),
                               ),
+                              TextSpan(
+                                  text: 'Зарегестрироваться',
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 12,
+                                    color: Color.fromRGBO(61, 104, 255, 1),
+                                    fontFamily: 'Roboto',
+                                  ),
+                                  recognizer: TapGestureRecognizer()
+                                    ..onTap = () {
+                                      Navigator.popAndPushNamed(
+                                          context, '/reg');
+                                    }),
                             ],
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 45,
-                    ),
-                    EmailTextFieldWidget(mailController: _mailController),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    _PassTextFieldWidget(passController: _passController),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: RichText(
-                        text: const TextSpan(
-                          text: 'Забыли пароль?',
-                          style: TextStyle(
-                            fontWeight: FontWeight.w300,
-                            fontSize: 12,
-                            color: Color.fromRGBO(89, 89, 89, 1),
-                          ),
-                        ),
+                      const SizedBox(
+                        height: 30,
                       ),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    _ButtonWidget(
-                      mailController: _mailController,
-                      passController: _passController,
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Center(
-                      child: RichText(
-                        text: TextSpan(
-                          children: <TextSpan>[
-                            const TextSpan(
-                              text: 'Новый пользователь? ',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w300,
-                                fontSize: 12,
-                                color: Color(0xFF464646),
-                                fontFamily: 'Roboto',
-                              ),
-                            ),
-                            TextSpan(
-                                text: 'Зарегестрироваться',
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 12,
-                                  color: Color.fromRGBO(61, 104, 255, 1),
-                                  fontFamily: 'Roboto',
-                                ),
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    Navigator.popAndPushNamed(context, '/reg');
-                                  }),
-                          ],
-                        ),
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                  ],
-                ),
-              ), // Кнопка "Войти"
-            ],
+                    ],
+                  ),
+                ), // Кнопка "Войти"
+              ],
+            ),
           ),
         ),
       ),
@@ -210,8 +218,8 @@ class _PassTextFieldWidget extends StatelessWidget {
   }
 }
 
-class _ButtonWidget extends StatelessWidget {
-  const _ButtonWidget({
+class _ButtonWidget extends StatefulWidget {
+  _ButtonWidget({
     Key? key,
     required TextEditingController mailController,
     required TextEditingController passController,
@@ -223,10 +231,25 @@ class _ButtonWidget extends StatelessWidget {
   final TextEditingController _passController;
 
   @override
+  State<_ButtonWidget> createState() =>
+      _ButtonWidgetState(_mailController, _passController);
+}
+
+class _ButtonWidgetState extends State<_ButtonWidget> {
+  final TextEditingController _mailController;
+  final TextEditingController _passController;
+  _ButtonWidgetState(this._mailController, this._passController);
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        MyConnection().auto(_mailController.text, _passController.text);
+        setState(() {
+          bool state =
+              MyConnection().auto(_mailController.text, _passController.text);
+          if (state == false) {
+            Provider.of<DataText>(context, listen: false).setText('E-mail*');
+          }
+        });
       },
       child: Container(
         width: double.infinity,
@@ -267,8 +290,8 @@ class _ButtonWidget extends StatelessWidget {
   }
 }
 
-class EmailTextFieldWidget extends StatefulWidget {
-  const EmailTextFieldWidget({
+class EmailTextFieldWidget extends StatelessWidget {
+  EmailTextFieldWidget({
     Key? key,
     required TextEditingController mailController,
   })  : _mailController = mailController,
@@ -277,31 +300,12 @@ class EmailTextFieldWidget extends StatefulWidget {
   final TextEditingController _mailController;
 
   @override
-  _EmailTextFieldWidgetState createState() => _EmailTextFieldWidgetState();
-
-  _EmailTextFieldWidgetState getMailClass() {
-    return _EmailTextFieldWidgetState();
-  }
-}
-
-class _EmailTextFieldWidgetState extends State<EmailTextFieldWidget> {
-  late Color _firstColor;
-  late String _firstText;
-
-  @override
-  void initState() {
-    _firstColor = const Color.fromRGBO(89, 89, 89, 1);
-    _firstText = 'E-mail';
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
       height: 50,
       child: TextField(
-        controller: widget._mailController,
+        controller: _mailController,
         style: const TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.w300,
@@ -309,13 +313,13 @@ class _EmailTextFieldWidgetState extends State<EmailTextFieldWidget> {
         ),
         decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.always,
-          labelText: _firstText,
+          labelText: Provider.of<DataText>(context).text,
           contentPadding: const EdgeInsets.symmetric(horizontal: 30),
-          labelStyle: TextStyle(
+          labelStyle: const TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w500,
             fontFamily: "Inter",
-            color: _firstColor,
+            color: Color.fromRGBO(89, 89, 89, 1),
           ),
           focusedBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(10)),

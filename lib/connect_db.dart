@@ -14,20 +14,22 @@ class MyConnection {
     return await MySqlConnection.connect(settings);
   }
 
-  void auto(String mail, String pass) async {
-    await getConnection().then((conn) {
+  bool auto(String mail, String pass) {
+    bool state = true;
+    getConnection().then((conn) {
       conn.query('select * from users').then(
         (results) {
           for (var row in results) {
             if (row[1] == mail && row[2] == pass) {
-              print('Добро пожаловать!');
+              state = true;
             } else {
-              // здесь хочу прописать состояние изменение цвета
+              state = false;
             }
           }
           conn.close();
         },
       );
     });
+    return state;
   }
 }
