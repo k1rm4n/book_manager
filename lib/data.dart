@@ -4,17 +4,36 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class DataText extends ChangeNotifier {
-  DataText(this.text);
   String text = 'E-mail';
   void setText(String text) {
-    Text(
-      text,
-      style: const TextStyle(
-        color: Colors.red,
-        fontSize: 20,
-      ),
-    );
     this.text = text;
+    notifyListeners();
+  }
+
+  var textStyle = const TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.w500,
+    fontFamily: "Inter",
+    color: Color.fromRGBO(89, 89, 89, 1),
+  );
+
+  void setErorTextStyle() {
+    textStyle = const TextStyle(
+      fontSize: 15,
+      fontWeight: FontWeight.w500,
+      fontFamily: "Inter",
+      color: Colors.red,
+    );
+    notifyListeners();
+  }
+
+  void setDefaultTextStyle() {
+    textStyle = const TextStyle(
+      fontSize: 15,
+      fontWeight: FontWeight.w500,
+      fontFamily: "Inter",
+      color: Color.fromRGBO(89, 89, 89, 1),
+    );
     notifyListeners();
   }
 }

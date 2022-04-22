@@ -1,5 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
+import 'dart:ui';
+
 import 'package:book_manager/connect_db.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
@@ -29,7 +31,7 @@ class Autorization extends StatelessWidget {
       // resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: ChangeNotifierProvider(
-          create: (context) => DataText('E-mail'),
+          create: (context) => DataText(),
           child: SingleChildScrollView(
             child: Stack(
               children: <Widget>[
@@ -244,11 +246,8 @@ class _ButtonWidgetState extends State<_ButtonWidget> {
     return GestureDetector(
       onTap: () {
         setState(() {
-          bool state =
-              MyConnection().auto(_mailController.text, _passController.text);
-          if (state == false) {
-            Provider.of<DataText>(context, listen: false).setText('E-mail*');
-          }
+          MyConnection()
+              .auto(_mailController.text, _passController.text, context);
         });
       },
       child: Container(
@@ -315,12 +314,7 @@ class EmailTextFieldWidget extends StatelessWidget {
           floatingLabelBehavior: FloatingLabelBehavior.always,
           labelText: Provider.of<DataText>(context).text,
           contentPadding: const EdgeInsets.symmetric(horizontal: 30),
-          labelStyle: const TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w500,
-            fontFamily: "Inter",
-            color: Color.fromRGBO(89, 89, 89, 1),
-          ),
+          labelStyle: Provider.of<DataText>(context).textStyle,
           focusedBorder: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(10)),
               borderSide: BorderSide(color: Color(0xFFE4E4E4), width: 1)),

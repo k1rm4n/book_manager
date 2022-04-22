@@ -1,6 +1,8 @@
 import 'package:mysql1/mysql1.dart';
 import 'package:flutter/material.dart';
 import 'auto_user.dart';
+import 'data.dart';
+import 'package:provider/provider.dart';
 
 class MyConnection {
   Future<MySqlConnection> getConnection() async {
@@ -14,22 +16,23 @@ class MyConnection {
     return await MySqlConnection.connect(settings);
   }
 
-  bool auto(String mail, String pass) {
-    bool state = true;
+  void auto(String mail, String pass, BuildContext context) async {
     getConnection().then((conn) {
-      conn.query('select * from users').then(
+      conn
+          .query(
+              'select * from users where login = "$mail" and pass = "$pass" ')
+          .then(
         (results) {
-          for (var row in results) {
-            if (row[1] == mail && row[2] == pass) {
-              state = true;
-            } else {
-              state = false;
-            }
+          if (results.isNotEmpty) {
+            Provider.of<DataText>(context, listen: false).setText('E-mail');
+            Provider.of<DataText>(context, listen: false).setDefaultTextStyle();
+          } else {
+            Provider.of<DataText>(context, listen: false).setText('E-mail*');
+            Provider.of<DataText>(context, listen: false).setErorTextStyle();
           }
           conn.close();
         },
       );
     });
-    return state;
   }
 }
