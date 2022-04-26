@@ -1,7 +1,5 @@
 // ignore_for_file: deprecated_member_use
 
-import 'dart:ui';
-
 import 'package:book_manager/connect_db.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
@@ -193,26 +191,24 @@ class _PassTextFieldWidget extends StatelessWidget {
           fontWeight: FontWeight.w300,
           fontFamily: "Roboto",
         ),
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.always,
-          labelText: "Пароль",
-          contentPadding: EdgeInsets.symmetric(horizontal: 30),
-          labelStyle: TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w500,
-            fontFamily: 'Inter',
-            color: Color(0xFF595959),
-          ),
+          labelText: Provider.of<DataText>(context).textPass,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 30),
+          labelStyle: Provider.of<DataText>(context).textStyle,
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-              borderSide: BorderSide(color: Color(0xFFE4E4E4), width: 1)),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              borderSide: BorderSide(
+                  color: Provider.of<DataText>(context).defBorder, width: 1)),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-            borderSide: BorderSide(color: Color(0xFFE4E4E4), width: 1),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            borderSide: BorderSide(
+                color: Provider.of<DataText>(context).defBorder, width: 1),
           ),
           disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-            borderSide: BorderSide(color: Color(0xFFE4E4E4), width: 1),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            borderSide: BorderSide(
+                color: Provider.of<DataText>(context).defBorder, width: 1),
           ),
         ),
       ),
@@ -312,19 +308,25 @@ class EmailTextFieldWidget extends StatelessWidget {
         ),
         decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.always,
-          labelText: Provider.of<DataText>(context).text,
+          labelText: Provider.of<DataText>(context).textLogin,
           contentPadding: const EdgeInsets.symmetric(horizontal: 30),
           labelStyle: Provider.of<DataText>(context).textStyle,
-          focusedBorder: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-              borderSide: BorderSide(color: Color(0xFFE4E4E4), width: 1)),
-          enabledBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-            borderSide: BorderSide(color: Color(0xFFE4E4E4), width: 1),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              borderSide: BorderSide(
+                  color: Provider.of<DataText>(
+                    context,
+                  ).defBorder,
+                  width: 1)),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            borderSide: BorderSide(
+                color: Provider.of<DataText>(context).defBorder, width: 1),
           ),
-          disabledBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-            borderSide: BorderSide(color: Color(0xFFE4E4E4), width: 1),
+          disabledBorder: OutlineInputBorder(
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            borderSide: BorderSide(
+                color: Provider.of<DataText>(context).defBorder, width: 1),
           ),
         ),
       ),

@@ -1,5 +1,7 @@
+import 'package:book_manager/data.dart';
 import 'package:flutter/material.dart';
 import 'navigation_bar.dart';
+import 'package:provider/provider.dart';
 
 // menu_rounded
 class Profile extends StatelessWidget {
@@ -8,18 +10,21 @@ class Profile extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: MainNavigationBar(),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 30),
-          child: Column(
-            children: <Widget>[
-              _HeaderProfileWidget(),
-              const SizedBox(height: 30),
-              const _AvatarAndNameWidget(),
-              const SizedBox(
-                height: 30,
-              ),
-              const _NowReadWidget(),
-            ],
+        child: ChangeNotifierProvider(
+          create: (context) => DataText(),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 30),
+            child: Column(
+              children: <Widget>[
+                _HeaderProfileWidget(),
+                const SizedBox(height: 30),
+                const _AvatarAndNameWidget(),
+                const SizedBox(
+                  height: 30,
+                ),
+                const _NowReadWidget(),
+              ],
+            ),
           ),
         ),
       ),
@@ -205,9 +210,9 @@ class _AvatarAndNameWidget extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          const Text(
-            'Фамилия Имя Отчество',
-            style: TextStyle(
+          Text(
+            Provider.of<DataText>(context).nameUser,
+            style: const TextStyle(
               color: Color.fromRGBO(61, 104, 255, 1),
               fontSize: 20,
               fontWeight: FontWeight.w500,

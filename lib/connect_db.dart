@@ -10,8 +10,8 @@ class MyConnection {
       host: 'mysql.gameoxford.ru',
       port: 3306,
       user: 'krotov',
-      password: '2V5xK@t!a',
-      db: 'krotov',
+      password: 'pOQ7gO',
+      db: 'krotov_bm_db',
     );
     return await MySqlConnection.connect(settings);
   }
@@ -25,10 +25,17 @@ class MyConnection {
         (results) {
           if (results.isNotEmpty) {
             Provider.of<DataText>(context, listen: false).setText('E-mail');
+            Provider.of<DataText>(context, listen: false).setPassText('Пароль');
             Provider.of<DataText>(context, listen: false).setDefaultTextStyle();
+            Provider.of<DataText>(context, listen: false).setDefColorBorder();
+            Provider.of<DataText>(context, listen: false).setNameUser('Крот');
+            Navigator.popAndPushNamed(context, '/profile');
           } else {
             Provider.of<DataText>(context, listen: false).setText('E-mail*');
+            Provider.of<DataText>(context, listen: false)
+                .setPassText('Пароль*');
             Provider.of<DataText>(context, listen: false).setErorTextStyle();
+            Provider.of<DataText>(context, listen: false).setRedColorBorder();
           }
           conn.close();
         },

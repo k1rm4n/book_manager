@@ -1,12 +1,21 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class DataText extends ChangeNotifier {
-  String text = 'E-mail';
+  String nameUser = 'null';
+  void setNameUser(String name) {
+    nameUser = name;
+    notifyListeners();
+  }
+
+  String textLogin = 'E-mail';
   void setText(String text) {
-    this.text = text;
+    textLogin = text;
+    notifyListeners();
+  }
+
+  String textPass = 'Пароль';
+  void setPassText(String text) {
+    textPass = text;
     notifyListeners();
   }
 
@@ -34,6 +43,18 @@ class DataText extends ChangeNotifier {
       fontFamily: "Inter",
       color: Color.fromRGBO(89, 89, 89, 1),
     );
+    notifyListeners();
+  }
+
+  Color defBorder = const Color.fromRGBO(228, 228, 228, 1);
+
+  void setRedColorBorder() {
+    defBorder = Colors.red;
+    notifyListeners();
+  }
+
+  void setDefColorBorder() {
+    defBorder = const Color.fromRGBO(228, 228, 228, 1);
     notifyListeners();
   }
 }

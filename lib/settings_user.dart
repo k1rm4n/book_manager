@@ -57,26 +57,31 @@ class _ContainerProfileAndExitWidget extends StatelessWidget {
 class _ButtonExitWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-      child: Container(
-        width: double.infinity,
-        height: 40,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: const Color.fromRGBO(76, 61, 255, 1),
+    return GestureDetector(
+      onTap: (() {
+        Navigator.popAndPushNamed(context, '/auto');
+      }),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        child: Container(
+          width: double.infinity,
+          height: 40,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+              color: const Color.fromRGBO(76, 61, 255, 1),
+            ),
           ),
-        ),
-        child: const Align(
-          child: Text(
-            'Выйти',
-            style: TextStyle(
-              color: Color.fromRGBO(76, 61, 255, 1),
-              fontSize: 15,
-              fontWeight: FontWeight.w500,
-              fontStyle: FontStyle.normal,
-              fontFamily: 'Roboto',
+          child: const Align(
+            child: Text(
+              'Выйти',
+              style: TextStyle(
+                color: Color.fromRGBO(76, 61, 255, 1),
+                fontSize: 15,
+                fontWeight: FontWeight.w500,
+                fontStyle: FontStyle.normal,
+                fontFamily: 'Roboto',
+              ),
             ),
           ),
         ),
