@@ -4,7 +4,7 @@ import 'package:book_manager/connect_db.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:book_manager/auto_user.dart';
-import 'data.dart';
+import 'data/auto_data.dart';
 import 'package:provider/provider.dart';
 
 class Autorization extends StatelessWidget {
@@ -29,7 +29,7 @@ class Autorization extends StatelessWidget {
       // resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: ChangeNotifierProvider(
-          create: (context) => DataText(),
+          create: (context) => AutoData(),
           child: SingleChildScrollView(
             child: Stack(
               children: <Widget>[
@@ -138,7 +138,7 @@ class Autorization extends StatelessWidget {
                                 ),
                               ),
                               TextSpan(
-                                  text: 'Зарегестрироваться',
+                                  text: 'Зарегистрироваться',
                                   style: const TextStyle(
                                     fontWeight: FontWeight.w400,
                                     fontSize: 12,
@@ -193,22 +193,22 @@ class _PassTextFieldWidget extends StatelessWidget {
         ),
         decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.always,
-          labelText: Provider.of<DataText>(context).textPass,
+          labelText: Provider.of<AutoData>(context).textPass,
           contentPadding: const EdgeInsets.symmetric(horizontal: 30),
-          labelStyle: Provider.of<DataText>(context).textStyle,
+          labelStyle: Provider.of<AutoData>(context).textStyle,
           focusedBorder: OutlineInputBorder(
               borderRadius: const BorderRadius.all(Radius.circular(10)),
               borderSide: BorderSide(
-                  color: Provider.of<DataText>(context).defBorder, width: 1)),
+                  color: Provider.of<AutoData>(context).defBorder, width: 1)),
           enabledBorder: OutlineInputBorder(
             borderRadius: const BorderRadius.all(Radius.circular(10)),
             borderSide: BorderSide(
-                color: Provider.of<DataText>(context).defBorder, width: 1),
+                color: Provider.of<AutoData>(context).defBorder, width: 1),
           ),
           disabledBorder: OutlineInputBorder(
             borderRadius: const BorderRadius.all(Radius.circular(10)),
             borderSide: BorderSide(
-                color: Provider.of<DataText>(context).defBorder, width: 1),
+                color: Provider.of<AutoData>(context).defBorder, width: 1),
           ),
         ),
       ),
@@ -308,25 +308,25 @@ class EmailTextFieldWidget extends StatelessWidget {
         ),
         decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.always,
-          labelText: Provider.of<DataText>(context).textLogin,
+          labelText: Provider.of<AutoData>(context).textLogin,
           contentPadding: const EdgeInsets.symmetric(horizontal: 30),
-          labelStyle: Provider.of<DataText>(context).textStyle,
+          labelStyle: Provider.of<AutoData>(context).textStyle,
           focusedBorder: OutlineInputBorder(
               borderRadius: const BorderRadius.all(Radius.circular(10)),
               borderSide: BorderSide(
-                  color: Provider.of<DataText>(
+                  color: Provider.of<AutoData>(
                     context,
                   ).defBorder,
                   width: 1)),
           enabledBorder: OutlineInputBorder(
             borderRadius: const BorderRadius.all(Radius.circular(10)),
             borderSide: BorderSide(
-                color: Provider.of<DataText>(context).defBorder, width: 1),
+                color: Provider.of<AutoData>(context).defBorder, width: 1),
           ),
           disabledBorder: OutlineInputBorder(
             borderRadius: const BorderRadius.all(Radius.circular(10)),
             borderSide: BorderSide(
-                color: Provider.of<DataText>(context).defBorder, width: 1),
+                color: Provider.of<AutoData>(context).defBorder, width: 1),
           ),
         ),
       ),

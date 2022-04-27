@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class DataText extends ChangeNotifier {
+class AutoData extends ChangeNotifier {
   String nameUser = 'null';
   void setNameUser(String name) {
     nameUser = name;

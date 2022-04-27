@@ -1,4 +1,5 @@
-import 'package:book_manager/data.dart';
+import 'package:book_manager/data/auto_data.dart';
+import 'package:book_manager/data/profile_data.dart';
 import 'package:flutter/material.dart';
 import 'navigation_bar.dart';
 import 'package:provider/provider.dart';
@@ -10,21 +11,18 @@ class Profile extends StatelessWidget {
     return Scaffold(
       bottomNavigationBar: MainNavigationBar(),
       body: SafeArea(
-        child: ChangeNotifierProvider(
-          create: (context) => DataText(),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 30),
-            child: Column(
-              children: <Widget>[
-                _HeaderProfileWidget(),
-                const SizedBox(height: 30),
-                const _AvatarAndNameWidget(),
-                const SizedBox(
-                  height: 30,
-                ),
-                const _NowReadWidget(),
-              ],
-            ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 30),
+          child: Column(
+            children: <Widget>[
+              _HeaderProfileWidget(),
+              const SizedBox(height: 30),
+              const _AvatarAndNameWidget(),
+              const SizedBox(
+                height: 30,
+              ),
+              const _NowReadWidget(),
+            ],
           ),
         ),
       ),
@@ -210,9 +208,9 @@ class _AvatarAndNameWidget extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          Text(
-            Provider.of<DataText>(context).nameUser,
-            style: const TextStyle(
+          const Text(
+            'Кротов Кирилл',
+            style: TextStyle(
               color: Color.fromRGBO(61, 104, 255, 1),
               fontSize: 20,
               fontWeight: FontWeight.w500,

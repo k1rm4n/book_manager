@@ -1,7 +1,7 @@
 import 'package:mysql1/mysql1.dart';
 import 'package:flutter/material.dart';
 import 'auto_user.dart';
-import 'data.dart';
+import 'data/auto_data.dart';
 import 'package:provider/provider.dart';
 
 class MyConnection {
@@ -24,18 +24,17 @@ class MyConnection {
           .then(
         (results) {
           if (results.isNotEmpty) {
-            Provider.of<DataText>(context, listen: false).setText('E-mail');
-            Provider.of<DataText>(context, listen: false).setPassText('Пароль');
-            Provider.of<DataText>(context, listen: false).setDefaultTextStyle();
-            Provider.of<DataText>(context, listen: false).setDefColorBorder();
-            Provider.of<DataText>(context, listen: false).setNameUser('Крот');
+            Provider.of<AutoData>(context, listen: false).setText('E-mail');
+            Provider.of<AutoData>(context, listen: false).setPassText('Пароль');
+            Provider.of<AutoData>(context, listen: false).setDefaultTextStyle();
+            Provider.of<AutoData>(context, listen: false).setDefColorBorder();
             Navigator.popAndPushNamed(context, '/profile');
           } else {
-            Provider.of<DataText>(context, listen: false).setText('E-mail*');
-            Provider.of<DataText>(context, listen: false)
+            Provider.of<AutoData>(context, listen: false).setText('E-mail*');
+            Provider.of<AutoData>(context, listen: false)
                 .setPassText('Пароль*');
-            Provider.of<DataText>(context, listen: false).setErorTextStyle();
-            Provider.of<DataText>(context, listen: false).setRedColorBorder();
+            Provider.of<AutoData>(context, listen: false).setErorTextStyle();
+            Provider.of<AutoData>(context, listen: false).setRedColorBorder();
           }
           conn.close();
         },
