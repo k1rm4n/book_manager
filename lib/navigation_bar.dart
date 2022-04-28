@@ -72,7 +72,21 @@ class _CustomNavigationBar extends State<MainNavigationBar> {
           currentIndex: _selectedIndex,
           unselectedItemColor: const Color.fromRGBO(124, 124, 124, 1),
           selectedItemColor: const Color.fromRGBO(61, 104, 255, 1),
-          onTap: _onItemTapped,
+          onTap: (_onItemTapped) {
+            switch (_onItemTapped) {
+              case 0:
+                Navigator.popAndPushNamed(context, '/profile');
+                break;
+              case 1:
+                Navigator.popAndPushNamed(context, '/library');
+                break;
+              case 2:
+                Navigator.popAndPushNamed(context, '/profile');
+                break;
+              case 3:
+                Navigator.popAndPushNamed(context, '/profile');
+            }
+          },
         ),
       ),
     );

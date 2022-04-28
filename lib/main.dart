@@ -1,5 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:book_manager/library_list.dart';
 import 'package:book_manager/profile_user.dart';
 import 'package:flutter/material.dart';
 import 'auto_user.dart';
@@ -26,6 +27,7 @@ class MyApp extends StatelessWidget {
         '/profile': (BuildContext context) => Profile(),
         '/notific': (BuildContext context) => Notifications(),
         '/settingsUser': (BuildContext context) => SettingsUser(),
+        '/library': (BuildContext context) => Library(),
       },
     );
   }
