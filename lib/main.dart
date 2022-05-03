@@ -1,12 +1,14 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:book_manager/library_list.dart';
+import 'package:book_manager/navigation_bar.dart';
 import 'package:book_manager/profile_user.dart';
 import 'package:flutter/material.dart';
 import 'auto_user.dart';
 import 'reg_user.dart';
 import 'notifications_user.dart';
 import 'settings_user.dart';
+import 'book_info.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,6 +30,8 @@ class MyApp extends StatelessWidget {
         '/notific': (BuildContext context) => Notifications(),
         '/settingsUser': (BuildContext context) => SettingsUser(),
         '/library': (BuildContext context) => Library(),
+        '/navBar': (BuildContext context) => MainNavigationBar(),
+        '/bookInfo': (BuildContext context) => BookInfo(),
       },
     );
   }

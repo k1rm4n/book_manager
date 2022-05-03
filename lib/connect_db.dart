@@ -28,8 +28,8 @@ class MyConnection {
             Provider.of<AutoData>(context, listen: false).setPassText('Пароль');
             Provider.of<AutoData>(context, listen: false).setDefaultTextStyle();
             Provider.of<AutoData>(context, listen: false).setDefColorBorder();
-            Navigator.popAndPushNamed(context, '/profile',
-                arguments: ProfileData(results.first["name"]));
+            Navigator.popAndPushNamed(context, '/navBar',
+                arguments: results.first["name"]);
           } else {
             Provider.of<AutoData>(context, listen: false).setText('E-mail*');
             Provider.of<AutoData>(context, listen: false)

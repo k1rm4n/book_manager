@@ -1,15 +1,14 @@
-import 'package:book_manager/data/auto_data.dart';
 import 'package:book_manager/data/profile_data.dart';
 import 'package:flutter/material.dart';
-import 'navigation_bar.dart';
-import 'package:provider/provider.dart';
 
 // menu_rounded
 class Profile extends StatelessWidget {
+  final profileData = ProfileData();
+  Profile({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: MainNavigationBar(),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -18,7 +17,7 @@ class Profile extends StatelessWidget {
               children: <Widget>[
                 _HeaderProfileWidget(),
                 const SizedBox(height: 30),
-                const _AvatarAndNameWidget(),
+                _AvatarAndNameWidget(profileData: profileData),
                 const SizedBox(
                   height: 30,
                 ),
@@ -186,11 +185,14 @@ class _NowReadWidget extends StatelessWidget {
 class _AvatarAndNameWidget extends StatelessWidget {
   const _AvatarAndNameWidget({
     Key? key,
+    required this.profileData,
   }) : super(key: key);
 
+  final ProfileData profileData;
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as ProfileData;
+    final args = ModalRoute.of(context)!.settings.arguments as String;
+    profileData.name = args;
     return Align(
       alignment: Alignment.center,
       child: Column(
@@ -212,7 +214,7 @@ class _AvatarAndNameWidget extends StatelessWidget {
             height: 20,
           ),
           Text(
-            args.name,
+            profileData.name,
             style: const TextStyle(
               color: Color.fromRGBO(61, 104, 255, 1),
               fontSize: 20,
