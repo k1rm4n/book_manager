@@ -70,6 +70,11 @@ class _BookListWidget extends StatelessWidget {
                           blurRadius: 10,
                         ),
                       ],
+                      image: const DecorationImage(
+                          image: NetworkImage(
+                            "https://img4.labirint.ru/rc/009ddcb31237552314703a6847875d04/220x340/books34/335480/cover.png?1612704312",
+                          ),
+                          fit: BoxFit.cover),
                     ),
                   ),
                 ),
@@ -258,12 +263,17 @@ class _HeaderLibraryWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 25),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: const [
-          Icon(
-            Icons.arrow_back_ios_rounded,
-            color: Color.fromRGBO(76, 61, 255, 1),
+        children: [
+          GestureDetector(
+            // onTap: () {
+            //   MainNavigationBar();
+            // },
+            child: const Icon(
+              Icons.arrow_back_ios_rounded,
+              color: Color.fromRGBO(76, 61, 255, 1),
+            ),
           ),
-          Text(
+          const Text(
             'Библиотека',
             style: TextStyle(
               color: Color.fromRGBO(76, 61, 255, 1),
@@ -273,7 +283,7 @@ class _HeaderLibraryWidget extends StatelessWidget {
               fontFamily: 'Roboto',
             ),
           ),
-          Icon(
+          const Icon(
             Icons.search,
             color: Color.fromRGBO(76, 61, 255, 1),
             size: 34,

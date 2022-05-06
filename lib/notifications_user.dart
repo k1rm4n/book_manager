@@ -53,7 +53,7 @@ class Notifications extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Navigator.popAndPushNamed(context, '/profile');
+                      Navigator.pop(context, '/navBar');
                     },
                     child: const Icon(
                       Icons.close,

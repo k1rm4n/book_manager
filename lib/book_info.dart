@@ -43,12 +43,17 @@ class BookInfo extends StatelessWidget {
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Icon(
-                          Icons.arrow_back_ios_rounded,
-                          color: Color.fromRGBO(255, 255, 255, 1),
+                      children: [
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context, '/navBar');
+                          },
+                          child: const Icon(
+                            Icons.arrow_back_ios_rounded,
+                            color: Color.fromRGBO(255, 255, 255, 1),
+                          ),
                         ),
-                        Icon(
+                        const Icon(
                           Icons.favorite_outline,
                           color: Color.fromRGBO(196, 196, 196, 1),
                           size: 30,
@@ -191,6 +196,7 @@ class BookInfo extends StatelessWidget {
                               height: 5,
                             ),
                             RichText(
+                              textAlign: TextAlign.left,
                               text: const TextSpan(
                                 children: [
                                   TextSpan(
@@ -204,7 +210,7 @@ class BookInfo extends StatelessWidget {
                                     ),
                                   ),
                                   TextSpan(
-                                    text: '№34156',
+                                    text: '№341',
                                     style: TextStyle(
                                       color: Color.fromRGBO(70, 70, 70, 1),
                                       fontFamily: 'Roboto',
@@ -220,6 +226,7 @@ class BookInfo extends StatelessWidget {
                               height: 5,
                             ),
                             RichText(
+                              textAlign: TextAlign.left,
                               text: const TextSpan(
                                 children: [
                                   TextSpan(
@@ -338,6 +345,99 @@ class BookInfo extends StatelessWidget {
                     ),
                     const SizedBox(
                       height: 20,
+                    ),
+                    const Text(
+                      'Эти парень и девушка знакомы с детства и еще могут полюбить друг друга, но им придется стать врагами. По жребию они должны участвовать в страшных Голодных играх, где побеждает только один – таков закон, который не нарушался еще никогда… Китнисс и Пит выжили – заставили признать победителями их обоих. Но многие из тех, кому не нравится победа, считают парня и девушку опасными. У этих людей хватает силы и власти, чтобы с легкостью убить и Пита, и Китнисс. Но никому не под силу их разъединить…классическими. ',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Color.fromRGBO(124, 124, 124, 1),
+                        fontFamily: 'Roboto',
+                        fontStyle: FontStyle.normal,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const Text(
+                      'Содержание',
+                      style: TextStyle(
+                        color: Color.fromRGBO(70, 70, 70, 1),
+                        fontFamily: 'Roboto',
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 15,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    const Text(
+                      'Голодные игры\nИ вспыхнет пламя\nСойка-пересмешница',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        color: Color.fromRGBO(124, 124, 124, 1),
+                        fontFamily: 'Roboto',
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w300,
+                        fontSize: 12,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          width: 40,
+                          height: 40,
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(10),
+                            image: const DecorationImage(
+                                image: NetworkImage(
+                                  "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Suzanne_Collins_David_Shankbone_2010.jpg/200px-Suzanne_Collins_David_Shankbone_2010.jpg",
+                                ),
+                                fit: BoxFit.cover),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Container(
+                          child: SizedBox(
+                            height: 45,
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 2),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: const [
+                                  Text(
+                                    'Сьюзен Коллинз',
+                                    style: TextStyle(
+                                      color: Color.fromRGBO(61, 104, 255, 1),
+                                      fontFamily: 'Roboto',
+                                      fontStyle: FontStyle.normal,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 2,
+                                  ),
+                                  Text(
+                                    '7 книг',
+                                    style: TextStyle(
+                                      color: Color.fromRGBO(124, 124, 124, 1),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),

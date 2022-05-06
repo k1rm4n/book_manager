@@ -340,7 +340,7 @@ class _HeaderSettingsWidget extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            Navigator.popAndPushNamed(context, '/profile');
+            Navigator.pop(context, '/navBar');
           },
           child: const Icon(
             Icons.arrow_back_ios_rounded,

@@ -66,6 +66,116 @@ class _NowReadWidget extends StatelessWidget {
               ),
             ],
           ),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 65,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color.fromRGBO(0, 0, 0, 0.25),
+                          offset: Offset(0, 4),
+                          blurRadius: 10,
+                        ),
+                      ],
+                      image: const DecorationImage(
+                          image: NetworkImage(
+                            "https://img4.labirint.ru/rc/009ddcb31237552314703a6847875d04/220x340/books34/335480/cover.png?1612704312",
+                          ),
+                          fit: BoxFit.cover),
+                    ),
+                  ),
+                  const SizedBox(width: 20),
+                  Container(
+                    width: 65,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color.fromRGBO(0, 0, 0, 0.25),
+                          offset: Offset(0, 4),
+                          blurRadius: 10,
+                        ),
+                      ],
+                      image: const DecorationImage(
+                          image: NetworkImage(
+                            "https://img4.labirint.ru/rc/009ddcb31237552314703a6847875d04/220x340/books34/335480/cover.png?1612704312",
+                          ),
+                          fit: BoxFit.cover),
+                    ),
+                  ),
+                  const SizedBox(width: 20),
+                  Container(
+                    width: 65,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color.fromRGBO(0, 0, 0, 0.25),
+                          offset: Offset(0, 4),
+                          blurRadius: 10,
+                        ),
+                      ],
+                      image: const DecorationImage(
+                          image: NetworkImage(
+                            "https://img4.labirint.ru/rc/009ddcb31237552314703a6847875d04/220x340/books34/335480/cover.png?1612704312",
+                          ),
+                          fit: BoxFit.cover),
+                    ),
+                  ),
+                  const SizedBox(width: 20),
+                  Container(
+                    width: 65,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color.fromRGBO(0, 0, 0, 0.25),
+                          offset: Offset(0, 4),
+                          blurRadius: 10,
+                        ),
+                      ],
+                      image: const DecorationImage(
+                          image: NetworkImage(
+                            "https://img4.labirint.ru/rc/009ddcb31237552314703a6847875d04/220x340/books34/335480/cover.png?1612704312",
+                          ),
+                          fit: BoxFit.cover),
+                    ),
+                  ),
+                  const SizedBox(width: 20),
+                  Container(
+                    width: 65,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: Color.fromRGBO(0, 0, 0, 0.25),
+                          offset: Offset(0, 4),
+                          blurRadius: 10,
+                        ),
+                      ],
+                      image: const DecorationImage(
+                          image: NetworkImage(
+                            "https://img4.labirint.ru/rc/009ddcb31237552314703a6847875d04/220x340/books34/335480/cover.png?1612704312",
+                          ),
+                          fit: BoxFit.cover),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
         const SizedBox(
           height: 10,
@@ -253,7 +363,7 @@ class _HeaderProfileWidget extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            Navigator.popAndPushNamed(context, '/notific');
+            Navigator.pushNamed(context, '/notific');
           },
           child: const Icon(
             Icons.notifications_none_rounded,
@@ -274,7 +384,7 @@ class _HeaderProfileWidget extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            Navigator.popAndPushNamed(context, '/settingsUser');
+            Navigator.pushNamed(context, '/settingsUser');
           },
           child: const Icon(
             Icons.settings,
