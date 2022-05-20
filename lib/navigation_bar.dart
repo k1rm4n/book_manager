@@ -1,17 +1,20 @@
+import 'package:book_manager/elect_list.dart';
 import 'package:book_manager/library_list.dart';
 import 'package:book_manager/profile_user.dart';
+import 'package:book_manager/query_user.dart';
 import 'package:flutter/material.dart';
 
 class MainNavigationBar extends StatefulWidget {
-  
   @override
   _CustomNavigationBar createState() => _CustomNavigationBar();
 }
 
 class _CustomNavigationBar extends State<MainNavigationBar> {
-  int _selectedIndex = 1;
+  int _selectedIndex = 3;
   final List _children = [
+    MyQuery(),
     Library(),
+    Elect(),
     Profile(),
   ];
   void _onItemTapped(int index) {
@@ -43,15 +46,15 @@ class _CustomNavigationBar extends State<MainNavigationBar> {
             type: BottomNavigationBarType.fixed,
             backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
             items: const <BottomNavigationBarItem>[
-              // BottomNavigationBarItem(
-              //   icon: Icon(
-              //     Icons.email_outlined,
-              //   ),
-              //   label: 'Мои запросы',
-              //   activeIcon: GradientIcon(
-              //     icon: Icon(Icons.email_outlined),
-              //   ),
-              // ),
+              BottomNavigationBarItem(
+                icon: Icon(
+                  Icons.email_outlined,
+                ),
+                label: 'Мои запросы',
+                activeIcon: GradientIcon(
+                  icon: Icon(Icons.email_outlined),
+                ),
+              ),
               BottomNavigationBarItem(
                 icon: Icon(
                   Icons.auto_awesome_motion_rounded,
@@ -61,13 +64,13 @@ class _CustomNavigationBar extends State<MainNavigationBar> {
                   icon: Icon(Icons.auto_awesome_motion_rounded),
                 ),
               ),
-              // BottomNavigationBarItem(
-              //   icon: Icon(Icons.favorite_outline),
-              //   label: 'Избранные',
-              //   activeIcon: GradientIcon(
-              //     icon: Icon(Icons.favorite_outline),
-              //   ),
-              // ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.favorite_outline),
+                label: 'Избранные',
+                activeIcon: GradientIcon(
+                  icon: Icon(Icons.favorite_outline),
+                ),
+              ),
               BottomNavigationBarItem(
                 icon: Icon(
                   Icons.person,

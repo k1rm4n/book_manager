@@ -283,10 +283,15 @@ class _HeaderLibraryWidget extends StatelessWidget {
               fontFamily: 'Roboto',
             ),
           ),
-          const Icon(
-            Icons.search,
-            color: Color.fromRGBO(76, 61, 255, 1),
-            size: 34,
+          GestureDetector(
+            onTap: () {
+              Navigator.pushNamed(context, '/searchBook');
+            },
+            child: const Icon(
+              Icons.search,
+              color: Color.fromRGBO(76, 61, 255, 1),
+              size: 34,
+            ),
           ),
         ],
       ),

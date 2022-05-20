@@ -3,6 +3,7 @@
 import 'package:book_manager/library_list.dart';
 import 'package:book_manager/navigation_bar.dart';
 import 'package:book_manager/profile_user.dart';
+import 'package:book_manager/search_book.dart';
 import 'package:flutter/material.dart';
 import 'auto_user.dart';
 import 'reg_user.dart';
@@ -32,6 +33,7 @@ class MyApp extends StatelessWidget {
         '/library': (BuildContext context) => Library(),
         '/navBar': (BuildContext context) => MainNavigationBar(),
         '/bookInfo': (BuildContext context) => BookInfo(),
+        '/searchBook': (BuildContext context) => SearchBook(),
       },
     );
   }
