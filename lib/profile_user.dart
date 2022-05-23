@@ -39,15 +39,17 @@ class _NowReadWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          'Сейчас читаете',
-          style: TextStyle(
-            color: Color.fromRGBO(70, 70, 70, 1),
-            fontSize: 15,
+        const Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            'Сейчас читаете',
+            style: TextStyle(
+              color: Color.fromRGBO(70, 70, 70, 1),
+              fontSize: 15,
+            ),
+            textAlign: TextAlign.left,
           ),
-          textAlign: TextAlign.left,
         ),
         const SizedBox(
           height: 20,
@@ -66,10 +68,10 @@ class _NowReadWidget extends StatelessWidget {
               ),
             ],
           ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

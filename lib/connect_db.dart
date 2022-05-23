@@ -13,10 +13,15 @@ class MyConnection {
       password: 'pOQ7gO',
       db: 'krotov_bm_db',
     );
+
     return await MySqlConnection.connect(settings);
   }
 
   void auto(String mail, String pass, BuildContext context) async {
+    String getFirstAndLastName(var lastname, var firstname) {
+      return "$lastname $firstname";
+    }
+
     getConnection().then((conn) {
       conn
           .query(
@@ -29,13 +34,31 @@ class MyConnection {
             Provider.of<AutoData>(context, listen: false).setDefaultTextStyle();
             Provider.of<AutoData>(context, listen: false).setDefColorBorder();
             Navigator.popAndPushNamed(context, '/navBar',
-                arguments: results.first["name"]);
+                arguments: getFirstAndLastName(
+                    results.first["lastname"], results.first["firstname"]));
           } else {
             Provider.of<AutoData>(context, listen: false).setText('E-mail*');
             Provider.of<AutoData>(context, listen: false)
                 .setPassText('Пароль*');
             Provider.of<AutoData>(context, listen: false).setErorTextStyle();
             Provider.of<AutoData>(context, listen: false).setRedColorBorder();
+          }
+          conn.close();
+        },
+      );
+    });
+  }
+
+  void reg(String lastname, String firstname, String mail, String pass,
+      String repeatPass) async {
+    getConnection().then((conn) {
+      conn
+          .query(
+              'insert into users (login, pass, firstname, lastname) values ("$mail", "$pass", "$firstname", "$lastname")')
+          .then(
+        (results) {
+          if (results.first["login"].runtimeType == MySqlException) {
+            throw new MySqlClientError('yes');
           }
           conn.close();
         },
