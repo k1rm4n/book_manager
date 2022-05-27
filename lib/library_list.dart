@@ -175,14 +175,16 @@ class _BookListWidget extends StatelessWidget {
                                             76, 61, 255, 1),
                                       ),
                                     ),
-                                    child: const Text(
-                                      'Запросить',
-                                      style: TextStyle(
-                                        color: Color.fromRGBO(76, 61, 255, 1),
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w500,
-                                        fontStyle: FontStyle.normal,
-                                        fontFamily: 'Roboto',
+                                    child: const FittedBox(
+                                      child: Text(
+                                        'Запросить',
+                                        style: TextStyle(
+                                          color: Color.fromRGBO(76, 61, 255, 1),
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.w500,
+                                          fontStyle: FontStyle.normal,
+                                          fontFamily: 'Roboto',
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -290,7 +292,6 @@ class _HeaderLibraryWidget extends StatelessWidget {
             child: const Icon(
               Icons.search,
               color: Color.fromRGBO(76, 61, 255, 1),
-              size: 34,
             ),
           ),
         ],

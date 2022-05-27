@@ -169,7 +169,7 @@ class Autorization extends StatelessWidget {
   }
 }
 
-class _PassTextFieldWidget extends StatelessWidget {
+class _PassTextFieldWidget extends StatefulWidget {
   const _PassTextFieldWidget({
     Key? key,
     required TextEditingController passController,
@@ -179,13 +179,24 @@ class _PassTextFieldWidget extends StatelessWidget {
   final TextEditingController _passController;
 
   @override
+  State<_PassTextFieldWidget> createState() => _PassTextFieldWidgetState();
+}
+
+class _PassTextFieldWidgetState extends State<_PassTextFieldWidget> {
+  bool _passwordVisible = false;
+  void initState() {
+    _passwordVisible = true;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
       height: 50,
       child: TextField(
-        controller: _passController,
-        obscureText: true,
+        controller: widget._passController,
+        obscureText: _passwordVisible,
         style: const TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.w300,
@@ -194,6 +205,17 @@ class _PassTextFieldWidget extends StatelessWidget {
         decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.always,
           labelText: Provider.of<AutoData>(context).textPass,
+          suffixIcon: IconButton(
+            icon: Icon(
+              _passwordVisible ? Icons.visibility : Icons.visibility_off,
+              color: const Color.fromRGBO(103, 152, 230, 1),
+            ),
+            onPressed: () {
+              setState(() {
+                _passwordVisible = !_passwordVisible;
+              });
+            },
+          ),
           contentPadding: const EdgeInsets.symmetric(horizontal: 30),
           labelStyle: Provider.of<AutoData>(context).textStyle,
           focusedBorder: OutlineInputBorder(

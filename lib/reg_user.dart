@@ -191,31 +191,43 @@ class _RegButtonWidgetState extends State<_RegButtonWidget> {
               r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
           var mailRegex = RegExp(
               r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
+
+          // List<String> listField = [
+          //   _firstname.text,
+          //   _lastname.text,
+          //   _mail.text,
+          //   _pass.text,
+          //   _repeatPass.text
+          // ];
+
           if (_lastname.text.isEmpty) {
             Provider.of<RegData>(context, listen: false).setRedTextAndBorder();
             Provider.of<RegData>(context, listen: false).setSizedHeight();
             Provider.of<RegData>(context, listen: false)
-                .setRowPresetLastName('Обязательное поле');
+                .setRowPresetLastName('Введите фамилию');
           } else if (_firstname.text.isEmpty) {
             Provider.of<RegData>(context, listen: false).setRedTextAndBorder();
             Provider.of<RegData>(context, listen: false).setSizedHeight();
             Provider.of<RegData>(context, listen: false)
-                .setRowPresetFirstName('Обязательное поле');
+                .setRowPresetFirstName('Введите имя');
           } else if (!mailRegex.hasMatch(_mail.text)) {
             Provider.of<RegData>(context, listen: false).setRedTextAndBorder();
             Provider.of<RegData>(context, listen: false).setSizedHeight();
             _mail.text.isEmpty
                 ? Provider.of<RegData>(context, listen: false)
-                    .setRowPresetMail('Обязательное поле')
+                    .setRowPresetMail('Введите электронную почту')
                 : Provider.of<RegData>(context, listen: false).setRowPresetMail(
                     'Электронная почта неверная. Проверьте электронную почту');
             Provider.of<RegData>(context, listen: false).setSizedHeight();
           } else if (!passRegex.hasMatch(_pass.text)) {
             Provider.of<RegData>(context, listen: false).setRedTextAndBorder();
             Provider.of<RegData>(context, listen: false).setRowPresetPass(
-                "Пароль должен содержать восьми или более символов латинского алфавита, содержать заглавные и строчные буквы, цифры и иметь не менее одного из следующих символов: ( )");
+                "Пароль должен содержать восьми или более символов латинского алфавита, содержать заглавные и строчные буквы, цифры и иметь не менее одного из следующих символов: !  @ # \$ & * ~");
             Provider.of<RegData>(context, listen: false).setSizedHeightPass();
           } else if (_pass.text != _repeatPass.text) {
+            Provider.of<RegData>(context, listen: false).defRowPresetPass();
+            Provider.of<RegData>(context, listen: false).defSizedPass();
+            Provider.of<RegData>(context, listen: false).setSizedHeight();
             Provider.of<RegData>(context, listen: false).setRedTextAndBorder();
             Provider.of<RegData>(context, listen: false)
                 .setRowPresetRepeatPass('Пароль не совпадает с предыдущим');
@@ -268,7 +280,7 @@ class _RegButtonWidgetState extends State<_RegButtonWidget> {
   }
 }
 
-class _RepeatPassTextFieldWidget extends StatelessWidget {
+class _RepeatPassTextFieldWidget extends StatefulWidget {
   const _RepeatPassTextFieldWidget({
     Key? key,
     required TextEditingController repeatPass,
@@ -278,13 +290,27 @@ class _RepeatPassTextFieldWidget extends StatelessWidget {
   final TextEditingController _repeatPass;
 
   @override
+  State<_RepeatPassTextFieldWidget> createState() =>
+      _RepeatPassTextFieldWidgetState();
+}
+
+class _RepeatPassTextFieldWidgetState
+    extends State<_RepeatPassTextFieldWidget> {
+  @override
+  bool _passwordVisible = false;
+  void initState() {
+    _passwordVisible = true;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
       height: 50,
       child: TextField(
-        controller: _repeatPass,
-        obscureText: true,
+        controller: widget._repeatPass,
+        obscureText: _passwordVisible,
         style: const TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.w300,
@@ -294,6 +320,17 @@ class _RepeatPassTextFieldWidget extends StatelessWidget {
           floatingLabelBehavior: FloatingLabelBehavior.always,
           labelText: "Повторите пароль",
           contentPadding: const EdgeInsets.symmetric(horizontal: 30),
+          suffixIcon: IconButton(
+            icon: Icon(
+              _passwordVisible ? Icons.visibility : Icons.visibility_off,
+              color: const Color.fromRGBO(103, 152, 230, 1),
+            ),
+            onPressed: () {
+              setState(() {
+                _passwordVisible = !_passwordVisible;
+              });
+            },
+          ),
           labelStyle: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w500,
@@ -315,7 +352,7 @@ class _RepeatPassTextFieldWidget extends StatelessWidget {
   }
 }
 
-class _PassTextFieldWidget extends StatelessWidget {
+class _PassTextFieldWidget extends StatefulWidget {
   const _PassTextFieldWidget({
     Key? key,
     required TextEditingController pass,
@@ -325,13 +362,25 @@ class _PassTextFieldWidget extends StatelessWidget {
   final TextEditingController _pass;
 
   @override
+  State<_PassTextFieldWidget> createState() => _PassTextFieldWidgetState();
+}
+
+class _PassTextFieldWidgetState extends State<_PassTextFieldWidget> {
+  @override
+  bool _passwordVisible = false;
+  void initState() {
+    _passwordVisible = true;
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
       height: 50,
       child: TextField(
-        controller: _pass,
-        obscureText: true,
+        controller: widget._pass,
+        obscureText: _passwordVisible,
         style: const TextStyle(
           fontSize: 15,
           fontWeight: FontWeight.w300,
@@ -341,6 +390,17 @@ class _PassTextFieldWidget extends StatelessWidget {
           floatingLabelBehavior: FloatingLabelBehavior.always,
           labelText: "Пароль",
           contentPadding: const EdgeInsets.symmetric(horizontal: 30),
+          suffixIcon: IconButton(
+            icon: Icon(
+              _passwordVisible ? Icons.visibility : Icons.visibility_off,
+              color: const Color.fromRGBO(103, 152, 230, 1),
+            ),
+            onPressed: () {
+              setState(() {
+                _passwordVisible = !_passwordVisible;
+              });
+            },
+          ),
           labelStyle: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w500,

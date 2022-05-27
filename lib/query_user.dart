@@ -456,8 +456,9 @@ class InWait extends StatelessWidget {
                               child: Align(
                                 alignment: Alignment.centerRight,
                                 child: Container(
+                                  height: 30,
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 27, vertical: 8),
+                                      horizontal: 18, vertical: 8),
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(10),
                                     border: Border.all(
@@ -465,14 +466,17 @@ class InWait extends StatelessWidget {
                                             228, 228, 228, 1)),
                                   ),
                                   child: const Align(
-                                    child: Text(
-                                      'Отмена',
-                                      style: TextStyle(
-                                        color: Color.fromRGBO(124, 124, 124, 1),
-                                        fontFamily: 'Roboto',
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 12,
+                                    child: FittedBox(
+                                      child: Text(
+                                        'Отмена',
+                                        style: TextStyle(
+                                          color:
+                                              Color.fromRGBO(124, 124, 124, 1),
+                                          fontFamily: 'Roboto',
+                                          fontStyle: FontStyle.normal,
+                                          fontWeight: FontWeight.w500,
+                                          fontSize: 12,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -614,7 +618,7 @@ class YouRead extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(
-                            width: 48,
+                            width: 40,
                           ),
                           Expanded(
                             child: Padding(
@@ -623,10 +627,10 @@ class YouRead extends StatelessWidget {
                                 alignment: Alignment.centerRight,
                                 child: Container(
                                   constraints: const BoxConstraints(
-                                      maxWidth: double.infinity),
+                                      maxWidth: double.infinity, maxHeight: 30),
                                   height: 30,
                                   padding: const EdgeInsets.symmetric(
-                                      horizontal: 26),
+                                      horizontal: 18, vertical: 8),
                                   decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(10),
@@ -635,14 +639,17 @@ class YouRead extends StatelessWidget {
                                     ),
                                   ),
                                   child: const Align(
-                                    child: Text(
-                                      'Вернуть',
-                                      style: TextStyle(
-                                        color: Color.fromRGBO(76, 61, 255, 1),
-                                        fontFamily: 'Roboto',
-                                        fontStyle: FontStyle.normal,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 12,
+                                    child: FittedBox(
+                                      fit: BoxFit.cover,
+                                      child: Text(
+                                        'Вернуть',
+                                        style: TextStyle(
+                                            color:
+                                                Color.fromRGBO(76, 61, 255, 1),
+                                            fontFamily: 'Roboto',
+                                            fontStyle: FontStyle.normal,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 12),
                                       ),
                                     ),
                                   ),
