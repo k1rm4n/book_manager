@@ -3,6 +3,8 @@
 import 'package:book_manager/connect_db.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
+import 'package:provider/provider.dart';
+import 'data_reg.dart';
 
 class Registration extends StatelessWidget {
   final _lastname = TextEditingController();
@@ -12,87 +14,135 @@ class Registration extends StatelessWidget {
   final _repeatPass = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: SafeArea(
-        child: Stack(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 28, vertical: 22),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.popAndPushNamed(context, '/auto');
-                    },
-                    child: Container(
-                      child: const Icon(
-                        Icons.arrow_back_ios_rounded,
-                        color: Color.fromRGBO(61, 104, 255, 1),
+    return ChangeNotifierProvider(
+      create: (context) => RegData(),
+      child: Scaffold(
+        body: SafeArea(
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: Stack(
+              children: <Widget>[
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 28, vertical: 22),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.popAndPushNamed(context, '/auto');
+                        },
+                        child: Container(
+                          child: const Icon(
+                            Icons.arrow_back_ios_rounded,
+                            color: Color.fromRGBO(61, 104, 255, 1),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                  const Expanded(
-                    child: Text(
-                      'Регистрация',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Color.fromRGBO(61, 104, 255, 1),
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
-                        fontStyle: FontStyle.normal,
-                        fontFamily: 'Roboto',
+                      const Expanded(
+                        child: Text(
+                          'Регистрация',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: Color.fromRGBO(61, 104, 255, 1),
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                            fontStyle: FontStyle.normal,
+                            fontFamily: 'Roboto',
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 28),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(
-                    height: 117,
-                  ),
-                  _LastNameTextFieldWidget(lastname: _lastname),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  _FirstNameTextFieldWidget(firstname: _firstname),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  _MailTextFieldWidget(mail: _mail),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  _PassTextFieldWidget(pass: _pass),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  _RepeatPassTextFieldWidget(repeatPass: _repeatPass),
-                  const SizedBox(
-                    height: 68,
-                  ),
-                  // Кнопка "Зарегестрироваться"
-                  _RegButtonWidget(
+                ),
+                _fieldListWidget(
                     lastname: _lastname,
                     firstname: _firstname,
                     mail: _mail,
                     pass: _pass,
-                    repeatPass: _repeatPass,
-                  ),
-                  const SizedBox(
-                    height: 30,
-                  ),
-                ],
-              ),
+                    repeatPass: _repeatPass),
+              ],
             ),
-          ],
+          ),
         ),
+      ),
+    );
+  }
+}
+
+class _fieldListWidget extends StatelessWidget {
+  const _fieldListWidget({
+    Key? key,
+    required TextEditingController lastname,
+    required TextEditingController firstname,
+    required TextEditingController mail,
+    required TextEditingController pass,
+    required TextEditingController repeatPass,
+  })  : _lastname = lastname,
+        _firstname = firstname,
+        _mail = mail,
+        _pass = pass,
+        _repeatPass = repeatPass,
+        super(key: key);
+
+  final TextEditingController _lastname;
+  final TextEditingController _firstname;
+  final TextEditingController _mail;
+  final TextEditingController _pass;
+  final TextEditingController _repeatPass;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 28),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(
+            height: 117,
+          ),
+          _LastNameTextFieldWidget(lastname: _lastname),
+          SizedBox(
+            height: Provider.of<RegData>(context).defSizedHeight,
+            child: Provider.of<RegData>(context).rowPresetLastName,
+          ),
+          _FirstNameTextFieldWidget(firstname: _firstname),
+          SizedBox(
+            height: Provider.of<RegData>(context).defSizedHeight,
+            child: Provider.of<RegData>(context).rowPresetFirstName,
+          ),
+          _MailTextFieldWidget(mail: _mail),
+          SizedBox(
+            height: Provider.of<RegData>(context).defSizedHeight,
+            child: Provider.of<RegData>(context).rowPresetMail,
+          ),
+          _PassTextFieldWidget(pass: _pass),
+          SizedBox(
+            height: _mail.text != ''
+                ? Provider.of<RegData>(context).defSizedHeightPass
+                : Provider.of<RegData>(context).defSizedHeight,
+            child: Provider.of<RegData>(context).rowPresetPass,
+          ),
+          _RepeatPassTextFieldWidget(repeatPass: _repeatPass),
+          SizedBox(
+            height: Provider.of<RegData>(context).defSizedHeight,
+            child: Provider.of<RegData>(context).rowPresetRepeatPass,
+          ),
+          const SizedBox(
+            height: 40,
+          ),
+          // Кнопка "Зарегестрироваться"
+          _RegButtonWidget(
+            lastname: _lastname,
+            firstname: _firstname,
+            mail: _mail,
+            pass: _pass,
+            repeatPass: _repeatPass,
+          ),
+          const SizedBox(
+            height: 30,
+          ),
+        ],
       ),
     );
   }
@@ -137,8 +187,47 @@ class _RegButtonWidgetState extends State<_RegButtonWidget> {
     return GestureDetector(
       onTap: () {
         setState(() {
-          MyConnection().reg(_lastname.text, _firstname.text, _mail.text,
-              _pass.text, _repeatPass.text);
+          var passRegex = RegExp(
+              r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+          var mailRegex = RegExp(
+              r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
+          if (_lastname.text.isEmpty) {
+            Provider.of<RegData>(context, listen: false).setRedTextAndBorder();
+            Provider.of<RegData>(context, listen: false).setSizedHeight();
+            Provider.of<RegData>(context, listen: false)
+                .setRowPresetLastName('Обязательное поле');
+          } else if (_firstname.text.isEmpty) {
+            Provider.of<RegData>(context, listen: false).setRedTextAndBorder();
+            Provider.of<RegData>(context, listen: false).setSizedHeight();
+            Provider.of<RegData>(context, listen: false)
+                .setRowPresetFirstName('Обязательное поле');
+          } else if (!mailRegex.hasMatch(_mail.text)) {
+            Provider.of<RegData>(context, listen: false).setRedTextAndBorder();
+            Provider.of<RegData>(context, listen: false).setSizedHeight();
+            _mail.text.isEmpty
+                ? Provider.of<RegData>(context, listen: false)
+                    .setRowPresetMail('Обязательное поле')
+                : Provider.of<RegData>(context, listen: false).setRowPresetMail(
+                    'Электронная почта неверная. Проверьте электронную почту');
+            Provider.of<RegData>(context, listen: false).setSizedHeight();
+          } else if (!passRegex.hasMatch(_pass.text)) {
+            Provider.of<RegData>(context, listen: false).setRedTextAndBorder();
+            Provider.of<RegData>(context, listen: false).setRowPresetPass(
+                "Пароль должен содержать восьми или более символов латинского алфавита, содержать заглавные и строчные буквы, цифры и иметь не менее одного из следующих символов: ( )");
+            Provider.of<RegData>(context, listen: false).setSizedHeightPass();
+          } else if (_pass.text != _repeatPass.text) {
+            Provider.of<RegData>(context, listen: false).setRedTextAndBorder();
+            Provider.of<RegData>(context, listen: false)
+                .setRowPresetRepeatPass('Пароль не совпадает с предыдущим');
+          } else {
+            MyConnection().reg(_lastname.text, _firstname.text, _mail.text,
+                _pass.text, _repeatPass.text, context);
+            _lastname.text = '';
+            _firstname.text = '';
+            _mail.text = '';
+            _pass.text = '';
+            _repeatPass.text = '';
+          }
         });
       },
       child: Container(
@@ -201,22 +290,24 @@ class _RepeatPassTextFieldWidget extends StatelessWidget {
           fontWeight: FontWeight.w300,
           fontFamily: "Roboto",
         ),
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.always,
           labelText: "Повторите пароль",
-          contentPadding: EdgeInsets.symmetric(horizontal: 30),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 30),
           labelStyle: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w500,
             fontFamily: 'Inter',
-            color: Color(0xFF595959),
+            color: Provider.of<RegData>(context).defTextColor,
           ),
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-              borderSide: BorderSide(color: Color(0xFFE4E4E4), width: 1)),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              borderSide: BorderSide(
+                  color: Provider.of<RegData>(context).defBorder, width: 1)),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-            borderSide: BorderSide(color: Color(0xFFE4E4E4), width: 1),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            borderSide: BorderSide(
+                color: Provider.of<RegData>(context).defBorder, width: 1),
           ),
         ),
       ),
@@ -246,22 +337,24 @@ class _PassTextFieldWidget extends StatelessWidget {
           fontWeight: FontWeight.w300,
           fontFamily: "Roboto",
         ),
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.always,
           labelText: "Пароль",
-          contentPadding: EdgeInsets.symmetric(horizontal: 30),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 30),
           labelStyle: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w500,
             fontFamily: 'Inter',
-            color: Color(0xFF595959),
+            color: Provider.of<RegData>(context).defTextColor,
           ),
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-              borderSide: BorderSide(color: Color(0xFFE4E4E4), width: 1)),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              borderSide: BorderSide(
+                  color: Provider.of<RegData>(context).defBorder, width: 1)),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-            borderSide: BorderSide(color: Color(0xFFE4E4E4), width: 1),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            borderSide: BorderSide(
+                color: Provider.of<RegData>(context).defBorder, width: 1),
           ),
         ),
       ),
@@ -290,22 +383,24 @@ class _MailTextFieldWidget extends StatelessWidget {
           fontWeight: FontWeight.w300,
           fontFamily: "Roboto",
         ),
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           floatingLabelBehavior: FloatingLabelBehavior.always,
           labelText: "E-mail",
-          contentPadding: EdgeInsets.symmetric(horizontal: 30),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 30),
           labelStyle: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w500,
             fontFamily: "Inter",
-            color: Color(0xFF595959),
+            color: Provider.of<RegData>(context).defTextColor,
           ),
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-              borderSide: BorderSide(color: Color(0xFFE4E4E4), width: 1)),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              borderSide: BorderSide(
+                  color: Provider.of<RegData>(context).defBorder, width: 1)),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-            borderSide: BorderSide(color: Color(0xFFE4E4E4), width: 1),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            borderSide: BorderSide(
+                color: Provider.of<RegData>(context).defBorder, width: 1),
           ),
         ),
       ),
@@ -334,22 +429,24 @@ class _FirstNameTextFieldWidget extends StatelessWidget {
           fontWeight: FontWeight.w300,
           fontFamily: "Roboto",
         ),
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           labelText: 'Имя',
           floatingLabelBehavior: FloatingLabelBehavior.always,
-          contentPadding: EdgeInsets.symmetric(horizontal: 30),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 30),
           labelStyle: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w500,
             fontFamily: "Inter",
-            color: Color(0xFF595959),
+            color: Provider.of<RegData>(context).defTextColor,
           ),
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-              borderSide: BorderSide(color: Color(0xFFE4E4E4), width: 1)),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              borderSide: BorderSide(
+                  color: Provider.of<RegData>(context).defBorder, width: 1)),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-            borderSide: BorderSide(color: Color(0xFFE4E4E4), width: 1),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            borderSide: BorderSide(
+                color: Provider.of<RegData>(context).defBorder, width: 1),
           ),
         ),
       ),
@@ -378,22 +475,24 @@ class _LastNameTextFieldWidget extends StatelessWidget {
           fontWeight: FontWeight.w300,
           fontFamily: "Roboto",
         ),
-        decoration: const InputDecoration(
+        decoration: InputDecoration(
           labelText: 'Фамилия',
           floatingLabelBehavior: FloatingLabelBehavior.always,
-          contentPadding: EdgeInsets.symmetric(horizontal: 30),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 30),
           labelStyle: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w500,
             fontFamily: "Inter",
-            color: Color(0xFF595959),
+            color: Provider.of<RegData>(context).defTextColor,
           ),
           focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-              borderSide: BorderSide(color: Color(0xFFE4E4E4), width: 1)),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              borderSide: BorderSide(
+                  color: Provider.of<RegData>(context).defBorder, width: 1)),
           enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(10)),
-            borderSide: BorderSide(color: Color(0xFFE4E4E4), width: 1),
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            borderSide: BorderSide(
+                color: Provider.of<RegData>(context).defBorder, width: 1),
           ),
         ),
       ),

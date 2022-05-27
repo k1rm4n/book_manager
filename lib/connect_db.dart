@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'data/auto_data.dart';
 import 'package:provider/provider.dart';
 import 'data/profile_data.dart';
+import 'data_reg.dart';
 
 class MyConnection {
   Future<MySqlConnection> getConnection() async {
@@ -50,19 +51,38 @@ class MyConnection {
   }
 
   void reg(String lastname, String firstname, String mail, String pass,
-      String repeatPass) async {
+      String repeatPass, BuildContext context) async {
     getConnection().then((conn) {
       conn
           .query(
               'insert into users (login, pass, firstname, lastname) values ("$mail", "$pass", "$firstname", "$lastname")')
           .then(
         (results) {
-          if (results.first["login"].runtimeType == MySqlException) {
-            throw new MySqlClientError('yes');
-          }
+          Provider.of<RegData>(context, listen: false).defColorTextAndBorder();
+          Provider.of<RegData>(context, listen: false).defSizedPass();
+          Provider.of<RegData>(context, listen: false).defSized();
+          Provider.of<RegData>(context, listen: false).defRowPresetLastName();
+          Provider.of<RegData>(context, listen: false).defRowPresetFirstName();
+          Provider.of<RegData>(context, listen: false).defRowPresetMail();
+          Provider.of<RegData>(context, listen: false).defRowPresetPass();
+          Provider.of<RegData>(context, listen: false).defRowPresetRepeatPass();
+
           conn.close();
         },
-      );
+      ).catchError((e) {
+        Provider.of<RegData>(context, listen: false).setRedTextAndBorder();
+        Provider.of<RegData>(context, listen: false).setSizedHeight();
+        Provider.of<RegData>(context, listen: false)
+            .setRowPresetLastName('Обязательное поле');
+        Provider.of<RegData>(context, listen: false)
+            .setRowPresetFirstName('Обязательное поле');
+        Provider.of<RegData>(context, listen: false)
+            .setRowPresetMail('Такой e-mail уже существует');
+        Provider.of<RegData>(context, listen: false)
+            .setRowPresetPass('Обязательное поле');
+        Provider.of<RegData>(context, listen: false)
+            .setRowPresetRepeatPass('Обязательное поле');
+      });
     });
   }
 }
