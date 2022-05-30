@@ -1,10 +1,12 @@
 import 'dart:ui';
 
+import 'package:book_manager/library_list_data.dart';
 import 'package:flutter/material.dart';
 
 class BookInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final book = ModalRoute.of(context)!.settings.arguments as LibraryListData;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -63,8 +65,8 @@ class BookInfo extends StatelessWidget {
                     const SizedBox(
                       height: 25,
                     ),
-                    const Text(
-                      'Голодные игры. И вспыхнет пламя. Сойка-пересмешница',
+                    Text(
+                      book.nameBook,
                       textAlign: TextAlign.left,
                       style: TextStyle(
                         color: Color.fromRGBO(255, 255, 255, 1),

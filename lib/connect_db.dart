@@ -13,9 +13,17 @@ class MyConnection {
       user: 'krotov',
       password: 'pOQ7gO',
       db: 'krotov_bm_db',
+      timeout: const Duration(seconds: 3),
     );
 
     return await MySqlConnection.connect(settings);
+  }
+
+  Future<Results?> getBookData() async {
+    final connection = await getConnection();
+    final result = await connection.query('select * from book');
+    await connection.close();
+    return result;
   }
 
   void auto(String mail, String pass, BuildContext context) async {

@@ -6,6 +6,7 @@ class LibraryListData {
   String publicBook = '';
   String yearBook = '';
   String descriptionBook = '';
+  String contentBook = '';
   String imgBook = '';
   String imgAuthor = '';
   int like = 0;
@@ -18,6 +19,7 @@ class LibraryListData {
     this.publicBook,
     this.yearBook,
     this.descriptionBook,
+    this.contentBook,
     this.imgBook,
     this.imgAuthor,
     this.like,
