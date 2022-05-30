@@ -1,4 +1,7 @@
+import 'package:book_manager/connect_db.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'data/profile_data.dart';
 
 class SettingsUser extends StatelessWidget {
   @override
@@ -28,6 +31,8 @@ class SettingsUser extends StatelessWidget {
 }
 
 class _ContainerProfileAndExitWidget extends StatelessWidget {
+  final profileData = ProfileData();
+  _ContainerProfileAndExitWidget({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -46,7 +51,9 @@ class _ContainerProfileAndExitWidget extends StatelessWidget {
       ),
       child: Column(
         children: [
-          _BoxProfileWidget(),
+          _BoxProfileWidget(
+            profileData: profileData,
+          ),
           _ButtonExitWidget(),
         ],
       ),
@@ -214,8 +221,17 @@ class _ContactWidget extends StatelessWidget {
 }
 
 class _BoxProfileWidget extends StatelessWidget {
+  const _BoxProfileWidget({
+    Key? key,
+    required this.profileData,
+  }) : super(key: key);
+
+  final ProfileData profileData;
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as NameAndLogin;
+    profileData.name = args.name.toString();
+    profileData.login = args.login.toString();
     return Column(
       children: [
         ClipRRect(
@@ -282,11 +298,11 @@ class _BoxProfileWidget extends StatelessWidget {
                           child: Align(
                             alignment: Alignment.topLeft,
                             child: RichText(
-                              text: const TextSpan(
+                              text: TextSpan(
                                 children: [
                                   TextSpan(
-                                    text: 'ФИО\n',
-                                    style: TextStyle(
+                                    text: '${profileData.name}\n',
+                                    style: const TextStyle(
                                       color: Color.fromRGBO(61, 104, 255, 1),
                                       fontSize: 15,
                                       fontWeight: FontWeight.w300,
@@ -295,8 +311,8 @@ class _BoxProfileWidget extends StatelessWidget {
                                     ),
                                   ),
                                   TextSpan(
-                                    text: 'e-mail@mail.ru',
-                                    style: TextStyle(
+                                    text: profileData.login,
+                                    style: const TextStyle(
                                       color: Color.fromRGBO(61, 104, 255, 1),
                                       fontSize: 12,
                                       fontWeight: FontWeight.w300,

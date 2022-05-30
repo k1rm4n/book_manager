@@ -23,6 +23,10 @@ class MyConnection {
       return "$lastname $firstname";
     }
 
+    String getMail(var mail) {
+      return "$mail";
+    }
+
     getConnection().then((conn) {
       conn
           .query(
@@ -35,8 +39,10 @@ class MyConnection {
             Provider.of<AutoData>(context, listen: false).setDefaultTextStyle();
             Provider.of<AutoData>(context, listen: false).setDefColorBorder();
             Navigator.popAndPushNamed(context, '/navBar',
-                arguments: getFirstAndLastName(
-                    results.first["lastname"], results.first["firstname"]));
+                arguments: NameAndLogin(
+                    getFirstAndLastName(
+                        results.first["lastname"], results.first["firstname"]),
+                    getMail(results.first["login"])));
           } else {
             Provider.of<AutoData>(context, listen: false).setText('E-mail*');
             Provider.of<AutoData>(context, listen: false)
@@ -85,4 +91,10 @@ class MyConnection {
       });
     });
   }
+}
+
+class NameAndLogin {
+  String name = '';
+  String login = '';
+  NameAndLogin(this.name, this.login);
 }

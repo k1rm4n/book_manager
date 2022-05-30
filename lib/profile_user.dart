@@ -1,3 +1,4 @@
+import 'package:book_manager/connect_db.dart';
 import 'package:book_manager/data/profile_data.dart';
 import 'package:flutter/material.dart';
 
@@ -15,7 +16,9 @@ class Profile extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 30),
             child: Column(
               children: <Widget>[
-                _HeaderProfileWidget(),
+                _HeaderProfileWidget(
+                  profileData: profileData,
+                ),
                 const SizedBox(height: 30),
                 _AvatarAndNameWidget(profileData: profileData),
                 const SizedBox(
@@ -223,8 +226,9 @@ class _AvatarAndNameWidget extends StatelessWidget {
   final ProfileData profileData;
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as String;
-    profileData.name = args;
+    final args = ModalRoute.of(context)!.settings.arguments as NameAndLogin;
+    profileData.name = args.name.toString();
+    profileData.login = args.login.toString();
     return Align(
       alignment: Alignment.center,
       child: Column(
@@ -264,8 +268,10 @@ class _AvatarAndNameWidget extends StatelessWidget {
 class _HeaderProfileWidget extends StatelessWidget {
   _HeaderProfileWidget({
     Key? key,
+    required this.profileData,
   }) : super(key: key);
 
+  final ProfileData profileData;
   final Shader linearGradient = const LinearGradient(
     begin: Alignment.centerRight,
     end: Alignment.centerLeft,
@@ -306,7 +312,8 @@ class _HeaderProfileWidget extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            Navigator.pushNamed(context, '/settingsUser');
+            Navigator.pushNamed(context, '/settingsUser',
+                arguments: NameAndLogin(profileData.name, profileData.login));
           },
           child: const Icon(
             Icons.settings,
