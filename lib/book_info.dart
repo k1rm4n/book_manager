@@ -18,10 +18,10 @@ class BookInfo extends StatelessWidget {
                   Container(
                     width: double.infinity,
                     height: 260,
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       image: DecorationImage(
                           image: NetworkImage(
-                            "https://img4.labirint.ru/rc/009ddcb31237552314703a6847875d04/220x340/books34/335480/cover.png?1612704312",
+                            book.imgBook,
                           ),
                           fit: BoxFit.cover),
                     ),
@@ -68,7 +68,7 @@ class BookInfo extends StatelessWidget {
                     Text(
                       book.nameBook,
                       textAlign: TextAlign.left,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Color.fromRGBO(255, 255, 255, 1),
                         fontFamily: 'Roboto',
                         fontStyle: FontStyle.normal,
@@ -80,9 +80,9 @@ class BookInfo extends StatelessWidget {
                       height: 20,
                     ),
                     RichText(
-                      text: const TextSpan(
+                      text: TextSpan(
                         children: [
-                          TextSpan(
+                          const TextSpan(
                             text: 'Автор:\n',
                             style: TextStyle(
                               color: Color.fromRGBO(255, 255, 255, 1),
@@ -93,8 +93,8 @@ class BookInfo extends StatelessWidget {
                             ),
                           ),
                           TextSpan(
-                            text: 'Сьюзен Коллинз',
-                            style: TextStyle(
+                            text: book.nameAuthor,
+                            style: const TextStyle(
                               color: Color.fromRGBO(255, 255, 255, 1),
                               fontFamily: 'Roboto',
                               fontStyle: FontStyle.normal,
@@ -123,9 +123,9 @@ class BookInfo extends StatelessWidget {
                                 color: Color.fromRGBO(0, 0, 0, 0.25),
                               ),
                             ],
-                            image: const DecorationImage(
+                            image: DecorationImage(
                                 image: NetworkImage(
-                                  "https://img4.labirint.ru/rc/009ddcb31237552314703a6847875d04/220x340/books34/335480/cover.png?1612704312",
+                                  book.imgBook,
                                 ),
                                 fit: BoxFit.cover),
                           ),
@@ -137,12 +137,12 @@ class BookInfo extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const SizedBox(
-                              height: 90,
+                              height: 100,
                             ),
                             RichText(
-                              text: const TextSpan(
+                              text: TextSpan(
                                 children: [
-                                  TextSpan(
+                                  const TextSpan(
                                     text: 'Год ',
                                     style: TextStyle(
                                       color: Color.fromRGBO(124, 124, 124, 1),
@@ -153,8 +153,9 @@ class BookInfo extends StatelessWidget {
                                     ),
                                   ),
                                   TextSpan(
-                                    text: '2009    • 16+',
-                                    style: TextStyle(
+                                    text:
+                                        '${book.yearBook}    • ${book.limitAge}+',
+                                    style: const TextStyle(
                                       color: Color.fromRGBO(70, 70, 70, 1),
                                       fontFamily: 'Roboto',
                                       fontStyle: FontStyle.normal,
@@ -169,9 +170,9 @@ class BookInfo extends StatelessWidget {
                               height: 5,
                             ),
                             RichText(
-                              text: const TextSpan(
+                              text: TextSpan(
                                 children: [
-                                  TextSpan(
+                                  const TextSpan(
                                     text: 'Издательство ',
                                     style: TextStyle(
                                       color: Color.fromRGBO(124, 124, 124, 1),
@@ -182,8 +183,8 @@ class BookInfo extends StatelessWidget {
                                     ),
                                   ),
                                   TextSpan(
-                                    text: '"АСТ"',
-                                    style: TextStyle(
+                                    text: book.publicBook,
+                                    style: const TextStyle(
                                       color: Color.fromRGBO(70, 70, 70, 1),
                                       fontFamily: 'Roboto',
                                       fontStyle: FontStyle.normal,
@@ -199,9 +200,9 @@ class BookInfo extends StatelessWidget {
                             ),
                             RichText(
                               textAlign: TextAlign.left,
-                              text: const TextSpan(
+                              text: TextSpan(
                                 children: [
-                                  TextSpan(
+                                  const TextSpan(
                                     text: 'Инвентарный номер ',
                                     style: TextStyle(
                                       color: Color.fromRGBO(124, 124, 124, 1),
@@ -212,8 +213,8 @@ class BookInfo extends StatelessWidget {
                                     ),
                                   ),
                                   TextSpan(
-                                    text: '№341',
-                                    style: TextStyle(
+                                    text: '№${book.idBook.toString()}',
+                                    style: const TextStyle(
                                       color: Color.fromRGBO(70, 70, 70, 1),
                                       fontFamily: 'Roboto',
                                       fontStyle: FontStyle.normal,
@@ -229,9 +230,9 @@ class BookInfo extends StatelessWidget {
                             ),
                             RichText(
                               textAlign: TextAlign.left,
-                              text: const TextSpan(
+                              text: TextSpan(
                                 children: [
-                                  TextSpan(
+                                  const TextSpan(
                                     text: 'Страницы ',
                                     style: TextStyle(
                                       color: Color.fromRGBO(124, 124, 124, 1),
@@ -242,8 +243,8 @@ class BookInfo extends StatelessWidget {
                                     ),
                                   ),
                                   TextSpan(
-                                    text: '416',
-                                    style: TextStyle(
+                                    text: book.pagesBook.toString(),
+                                    style: const TextStyle(
                                       color: Color.fromRGBO(70, 70, 70, 1),
                                       fontFamily: 'Roboto',
                                       fontStyle: FontStyle.normal,
@@ -256,20 +257,6 @@ class BookInfo extends StatelessWidget {
                             ),
                             const SizedBox(
                               height: 15,
-                            ),
-                            Row(
-                              children: const [
-                                Text(
-                                  'Подробнее',
-                                  style: TextStyle(
-                                    color: Color.fromRGBO(61, 104, 255, 1),
-                                  ),
-                                ),
-                                Icon(
-                                  Icons.keyboard_arrow_down_rounded,
-                                  color: Color.fromRGBO(61, 104, 255, 1),
-                                )
-                              ],
                             ),
                           ],
                         ),
@@ -348,10 +335,10 @@ class BookInfo extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                    const Text(
-                      'Эти парень и девушка знакомы с детства и еще могут полюбить друг друга, но им придется стать врагами. По жребию они должны участвовать в страшных Голодных играх, где побеждает только один – таков закон, который не нарушался еще никогда… Китнисс и Пит выжили – заставили признать победителями их обоих. Но многие из тех, кому не нравится победа, считают парня и девушку опасными. У этих людей хватает силы и власти, чтобы с легкостью убить и Пита, и Китнисс. Но никому не под силу их разъединить…классическими. ',
+                    Text(
+                      book.descriptionBook,
                       textAlign: TextAlign.left,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Color.fromRGBO(124, 124, 124, 1),
                         fontFamily: 'Roboto',
                         fontStyle: FontStyle.normal,
@@ -375,10 +362,10 @@ class BookInfo extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    const Text(
-                      'Голодные игры\nИ вспыхнет пламя\nСойка-пересмешница',
+                    Text(
+                      book.contentBook,
                       textAlign: TextAlign.left,
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Color.fromRGBO(124, 124, 124, 1),
                         fontFamily: 'Roboto',
                         fontStyle: FontStyle.normal,
@@ -397,9 +384,9 @@ class BookInfo extends StatelessWidget {
                           decoration: BoxDecoration(
                             color: Colors.black,
                             borderRadius: BorderRadius.circular(10),
-                            image: const DecorationImage(
+                            image: DecorationImage(
                                 image: NetworkImage(
-                                  "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Suzanne_Collins_David_Shankbone_2010.jpg/200px-Suzanne_Collins_David_Shankbone_2010.jpg",
+                                  book.imgAuthor,
                                 ),
                                 fit: BoxFit.cover),
                           ),
@@ -414,10 +401,10 @@ class BookInfo extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(vertical: 2),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
-                                children: const [
+                                children: [
                                   Text(
-                                    'Сьюзен Коллинз',
-                                    style: TextStyle(
+                                    book.nameAuthor,
+                                    style: const TextStyle(
                                       color: Color.fromRGBO(61, 104, 255, 1),
                                       fontFamily: 'Roboto',
                                       fontStyle: FontStyle.normal,
@@ -425,12 +412,12 @@ class BookInfo extends StatelessWidget {
                                       fontSize: 15,
                                     ),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     height: 2,
                                   ),
                                   Text(
-                                    '7 книг',
-                                    style: TextStyle(
+                                    '${book.countBook} книг',
+                                    style: const TextStyle(
                                       color: Color.fromRGBO(124, 124, 124, 1),
                                     ),
                                   ),

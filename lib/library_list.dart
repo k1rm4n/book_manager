@@ -2,6 +2,7 @@ import 'package:book_manager/connect_db.dart';
 import 'package:book_manager/library_list_data.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
+import 'package:mysql1/mysql1.dart';
 import 'package:provider/provider.dart';
 import 'data/library_data.dart';
 import 'navigation_bar.dart';
@@ -60,6 +61,7 @@ class _BookListWidgetState extends State<_BookListWidget> {
   Widget build(BuildContext context) {
     final book =
         Provider.of<LibraryData>(context).libraryListData[widget.index];
+
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, '/bookInfo', arguments: book);
@@ -150,10 +152,15 @@ class _BookListWidgetState extends State<_BookListWidget> {
                                       dotSecondaryColor:
                                           Color.fromARGB(255, 204, 7, 0),
                                     ),
-                                    likeBuilder: (isLiked) {
+                                    likeBuilder: (bool isLiked) {
+                                      isLiked == false
+                                          ? MyConnection()
+                                              .updateIdBook(0, book.idBook)
+                                          : MyConnection()
+                                              .updateIdBook(1, book.idBook);
                                       return Icon(
                                         Icons.favorite_outline,
-                                        color: isLiked
+                                        color: book.like == 1
                                             ? Colors.red
                                             : const Color.fromRGBO(
                                                 196, 196, 196, 1),

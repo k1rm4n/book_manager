@@ -25,6 +25,16 @@ class MyConnection {
     await connection.close();
     return result;
   }
+  // при нажатии на лайк isLiked = true
+  // при нажатии на дизлайк isLiked = false
+
+  Future<Results?> updateIdBook(int stateLike, int idBook) async {
+    final connection = await getConnection();
+    final result = await connection
+        .query('update book set like_book=$stateLike where id=$idBook');
+    await connection.close();
+    return result;
+  }
 
   void auto(String mail, String pass, BuildContext context) async {
     String getFirstAndLastName(var lastname, var firstname) {

@@ -12,6 +12,7 @@ class LibraryData extends ChangeNotifier {
     if (books != null) {
       libraryListData.addAll(books
           .map((book) => LibraryListData(
+              book["id"],
               book["name_author"],
               book["name_book"],
               book["limit_age"],
@@ -22,6 +23,8 @@ class LibraryData extends ChangeNotifier {
               book["content_book"],
               book["img_book"],
               book["img_author"],
+              book["count_book_author"],
+              book["pages_book"],
               book["like_book"]))
           .toList());
     }
