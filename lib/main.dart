@@ -1,5 +1,8 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:book_manager/admin/library_admin.dart';
+import 'package:book_manager/admin/query_admin.dart';
+import 'package:book_manager/admin/readers_admin.dart';
 import 'package:book_manager/library_list.dart';
 import 'package:book_manager/navigation_bar.dart';
 import 'package:book_manager/profile_user.dart';
@@ -18,7 +21,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -34,6 +36,9 @@ class MyApp extends StatelessWidget {
         '/navBar': (BuildContext context) => MainNavigationBar(),
         '/bookInfo': (BuildContext context) => BookInfo(),
         '/searchBook': (BuildContext context) => SearchBook(),
+        '/readersAdmin': (BuildContext context) => ReadersAdmin(),
+        '/libraryAdmin': (BuildContext context) => LibraryAdmin(),
+        '/queryAdmin': (BuildContext context) => QueryAdmin(),
       },
     );
   }
@@ -79,43 +84,44 @@ class _ButtonNextWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-        flex: 0,
-        child: GestureDetector(
-          onTap: () {
-            Navigator.popAndPushNamed(context, '/auto');
-          },
-          child: Align(
-            alignment: Alignment.bottomRight,
-            child: Container(
-              width: 50,
-              height: 50,
-              decoration: const BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: Color.fromRGBO(0, 0, 0, 0.2),
-                    offset: Offset(0, 4),
-                    blurRadius: 10,
-                    spreadRadius: 3,
-                  )
+      flex: 0,
+      child: GestureDetector(
+        onTap: () {
+          Navigator.popAndPushNamed(context, '/auto');
+        },
+        child: Align(
+          alignment: Alignment.bottomRight,
+          child: Container(
+            width: 50,
+            height: 50,
+            decoration: const BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  color: Color.fromRGBO(0, 0, 0, 0.2),
+                  offset: Offset(0, 4),
+                  blurRadius: 10,
+                  spreadRadius: 3,
+                )
+              ],
+              shape: BoxShape.circle,
+              gradient: LinearGradient(
+                begin: Alignment.centerRight,
+                end: Alignment.centerLeft,
+                colors: [
+                  Color.fromRGBO(76, 61, 255, 1),
+                  Color.fromRGBO(103, 152, 230, 1),
                 ],
-                shape: BoxShape.circle,
-                gradient: LinearGradient(
-                  begin: Alignment.centerRight,
-                  end: Alignment.centerLeft,
-                  colors: [
-                    Color.fromRGBO(76, 61, 255, 1),
-                    Color.fromRGBO(103, 152, 230, 1),
-                  ],
-                ),
-              ),
-              child: const Icon(
-                Icons.arrow_forward_ios_rounded,
-                color: Colors.white,
-                size: 40,
               ),
             ),
+            child: const Icon(
+              Icons.arrow_forward_ios_rounded,
+              color: Colors.white,
+              size: 40,
+            ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
 

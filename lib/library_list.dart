@@ -57,6 +57,14 @@ class _BookListWidget extends StatefulWidget {
 }
 
 class _BookListWidgetState extends State<_BookListWidget> {
+  late Color _likeColor;
+
+  @override
+  void initState() {
+    _likeColor = const Color.fromRGBO(196, 196, 196, 1);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     final book =
@@ -153,18 +161,27 @@ class _BookListWidgetState extends State<_BookListWidget> {
                                           Color.fromARGB(255, 204, 7, 0),
                                     ),
                                     likeBuilder: (bool isLiked) {
-                                      isLiked == false
-                                          ? MyConnection()
-                                              .updateIdBook(0, book.idBook)
-                                          : MyConnection()
-                                              .updateIdBook(1, book.idBook);
                                       return Icon(
                                         Icons.favorite_outline,
-                                        color: book.like == 1
-                                            ? Colors.red
-                                            : const Color.fromRGBO(
-                                                196, 196, 196, 1),
+                                        color: _likeColor,
                                       );
+                                    },
+                                    onTap: (isLiked) {
+                                      setState(() {
+                                        if (_likeColor ==
+                                            const Color.fromRGBO(
+                                                196, 196, 196, 1)) {
+                                          MyConnection()
+                                              .updateIdBook(1, book.idBook);
+                                          _likeColor = Colors.red;
+                                        } else {
+                                          _likeColor = const Color.fromRGBO(
+                                              196, 196, 196, 1);
+                                          MyConnection()
+                                              .updateIdBook(0, book.idBook);
+                                        }
+                                      });
+                                      return Future.value(!isLiked);
                                     },
                                   ),
                                 ),
