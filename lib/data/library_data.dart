@@ -23,9 +23,8 @@ class LibraryData extends ChangeNotifier {
               book["content_book"],
               book["img_book"],
               book["img_author"],
-              book["count_book_author"],
-              book["pages_book"],
-              book["like_book"]))
+              book["count_book"],
+              book["pages_book"]))
           .toList());
     }
     notifyListeners();

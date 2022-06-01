@@ -1,8 +1,11 @@
 // ignore_for_file: deprecated_member_use
 
+import 'package:book_manager/admin/add_book_admin.dart';
 import 'package:book_manager/admin/library_admin.dart';
+import 'package:book_manager/admin/navigator_bar_admin.dart';
 import 'package:book_manager/admin/query_admin.dart';
 import 'package:book_manager/admin/readers_admin.dart';
+import 'package:book_manager/admin/welcom_query.dart';
 import 'package:book_manager/library_list.dart';
 import 'package:book_manager/navigation_bar.dart';
 import 'package:book_manager/profile_user.dart';
@@ -36,9 +39,9 @@ class MyApp extends StatelessWidget {
         '/navBar': (BuildContext context) => MainNavigationBar(),
         '/bookInfo': (BuildContext context) => BookInfo(),
         '/searchBook': (BuildContext context) => SearchBook(),
-        '/readersAdmin': (BuildContext context) => ReadersAdmin(),
-        '/libraryAdmin': (BuildContext context) => LibraryAdmin(),
-        '/queryAdmin': (BuildContext context) => QueryAdmin(),
+        '/addBookAdmin': (BuildContext context) => AddBookAdmin(),
+        '/welcomQueryAdmin': (BuildContext context) => WelcomQueryAdmin(),
+        '/navBarAdmin': (BuildContext context) => NavigatorBarAdmin(),
       },
     );
   }

@@ -163,26 +163,20 @@ class _BookListWidgetState extends State<_BookListWidget> {
                                     likeBuilder: (bool isLiked) {
                                       return Icon(
                                         Icons.favorite_outline,
-                                        color: _likeColor,
+                                        color: isLiked //book.like == 1
+                                            ? Colors.red
+                                            : const Color.fromRGBO(
+                                                196, 196, 196, 1),
                                       );
                                     },
-                                    onTap: (isLiked) {
-                                      setState(() {
-                                        if (_likeColor ==
-                                            const Color.fromRGBO(
-                                                196, 196, 196, 1)) {
-                                          MyConnection()
-                                              .updateIdBook(1, book.idBook);
-                                          _likeColor = Colors.red;
-                                        } else {
-                                          _likeColor = const Color.fromRGBO(
-                                              196, 196, 196, 1);
-                                          MyConnection()
-                                              .updateIdBook(0, book.idBook);
-                                        }
-                                      });
-                                      return Future.value(!isLiked);
-                                    },
+                                    // onTap: (isLiked) {
+                                    //   setState(() {
+                                    //     book.like = book.like == 0 ? 1 : 0;
+                                    //     MyConnection().updateIdBook(
+                                    //         book.like, book.idBook);
+                                    //   });
+                                    //   return Future.value(!isLiked);
+                                    // },
                                   ),
                                 ),
                               ),

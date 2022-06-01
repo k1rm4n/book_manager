@@ -11,38 +11,20 @@ class QueryAdmin extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 10, right: 10, top: 25),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    GestureDetector(
-                      child: const Icon(
-                        Icons.arrow_back_ios_rounded,
-                        color: Color.fromRGBO(76, 61, 255, 1),
-                      ),
-                    ),
-                    const Text(
-                      'Запросы',
-                      style: TextStyle(
-                        color: Color.fromRGBO(76, 61, 255, 1),
-                        fontSize: 20,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w400,
-                        fontFamily: 'Roboto',
-                      ),
-                    ),
-                    GestureDetector(
-                      child: const Icon(
-                        Icons.search,
-                        color: Color.fromRGBO(76, 61, 255, 1),
-                        size: 25,
-                      ),
-                    ),
-                  ],
+              const Padding(
+                padding: EdgeInsets.only(left: 10, right: 10, top: 25),
+                child: Text(
+                  'Запросы',
+                  style: TextStyle(
+                    color: Color.fromRGBO(76, 61, 255, 1),
+                    fontSize: 20,
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w400,
+                    fontFamily: 'Roboto',
+                  ),
                 ),
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -176,35 +158,41 @@ class QueryAdmin extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Text(
-                                  'ID12341',
-                                  style: TextStyle(
-                                    color: Color.fromRGBO(196, 196, 196, 1),
-                                    fontFamily: 'Roboto',
-                                    fontStyle: FontStyle.normal,
-                                    fontWeight: FontWeight.w300,
-                                    fontSize: 10,
+                                const FittedBox(
+                                  child: Text(
+                                    'ID12341',
+                                    style: TextStyle(
+                                      color: Color.fromRGBO(196, 196, 196, 1),
+                                      fontFamily: 'Roboto',
+                                      fontStyle: FontStyle.normal,
+                                      fontWeight: FontWeight.w300,
+                                      fontSize: 10,
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(height: 5),
-                                const Text(
-                                  'Записки о Шерлоке Холмсе',
-                                  style: TextStyle(
-                                    color: Color.fromRGBO(70, 70, 70, 1),
-                                    fontFamily: 'Roboto',
-                                    fontStyle: FontStyle.normal,
-                                    fontWeight: FontWeight.w400,
-                                    fontSize: 15,
+                                const FittedBox(
+                                  child: Text(
+                                    'Записки о Шерлоке Холмсе',
+                                    style: TextStyle(
+                                      color: Color.fromRGBO(70, 70, 70, 1),
+                                      fontFamily: 'Roboto',
+                                      fontStyle: FontStyle.normal,
+                                      fontWeight: FontWeight.w400,
+                                      fontSize: 15,
+                                    ),
                                   ),
                                 ),
-                                const Text(
-                                  'Сэр Артур Конан Дойл, 2019',
-                                  style: TextStyle(
-                                    color: Color.fromRGBO(196, 196, 196, 1),
-                                    fontFamily: 'Roboto',
-                                    fontStyle: FontStyle.normal,
-                                    fontWeight: FontWeight.w300,
-                                    fontSize: 12,
+                                const FittedBox(
+                                  child: Text(
+                                    'Сэр Артур Конан Дойл, 2019',
+                                    style: TextStyle(
+                                      color: Color.fromRGBO(196, 196, 196, 1),
+                                      fontFamily: 'Roboto',
+                                      fontStyle: FontStyle.normal,
+                                      fontWeight: FontWeight.w300,
+                                      fontSize: 12,
+                                    ),
                                   ),
                                 ),
                                 const SizedBox(height: 5),
@@ -212,38 +200,40 @@ class QueryAdmin extends StatelessWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    RichText(
-                                      text: const TextSpan(
-                                        children: [
-                                          TextSpan(
-                                            text: 'Запросил: ',
-                                            style: TextStyle(
-                                              color: Color.fromRGBO(
-                                                  196, 196, 196, 1),
-                                              fontFamily: 'Roboto',
-                                              fontStyle: FontStyle.normal,
-                                              fontWeight: FontWeight.w300,
-                                              fontSize: 12,
+                                    FittedBox(
+                                      child: RichText(
+                                        text: const TextSpan(
+                                          children: [
+                                            TextSpan(
+                                              text: 'Запросил: ',
+                                              style: TextStyle(
+                                                color: Color.fromRGBO(
+                                                    196, 196, 196, 1),
+                                                fontFamily: 'Roboto',
+                                                fontStyle: FontStyle.normal,
+                                                fontWeight: FontWeight.w300,
+                                                fontSize: 12,
+                                              ),
                                             ),
-                                          ),
-                                          TextSpan(
-                                            text: 'Иванов Иван',
-                                            style: TextStyle(
-                                              color: Color.fromRGBO(
-                                                  61, 104, 255, 1),
-                                              fontFamily: 'Roboto',
-                                              fontStyle: FontStyle.normal,
-                                              fontWeight: FontWeight.w300,
-                                              fontSize: 15,
+                                            TextSpan(
+                                              text: 'Иванов Иван',
+                                              style: TextStyle(
+                                                color: Color.fromRGBO(
+                                                    61, 104, 255, 1),
+                                                fontFamily: 'Roboto',
+                                                fontStyle: FontStyle.normal,
+                                                fontWeight: FontWeight.w300,
+                                                fontSize: 15,
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       ),
                                     ),
                                     GestureDetector(
                                       onTap: () {
-                                        Navigator.popAndPushNamed(
-                                            context, '/auto');
+                                        Navigator.pushNamed(
+                                            context, '/welcomQueryAdmin');
                                       },
                                       child: Align(
                                         alignment: Alignment.bottomRight,

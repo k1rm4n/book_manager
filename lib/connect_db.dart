@@ -21,7 +21,7 @@ class MyConnection {
 
   Future<Results?> getBookData() async {
     final connection = await getConnection();
-    final result = await connection.query('select * from book');
+    final result = await connection.query('select * from books');
     await connection.close();
     return result;
   }
@@ -31,7 +31,7 @@ class MyConnection {
   Future<Results?> updateIdBook(int stateLike, int idBook) async {
     final connection = await getConnection();
     final result = await connection
-        .query('update book set like_book=$stateLike where id=$idBook');
+        .query('update books set like_book=$stateLike where id=$idBook');
     await connection.close();
     return result;
   }
@@ -107,6 +107,33 @@ class MyConnection {
         Provider.of<RegData>(context, listen: false)
             .setRowPresetRepeatPass('Обязательное поле');
       });
+    });
+  }
+
+  void printLibraryData(
+    String nameAuthor,
+    String nameBook,
+    String limitAge,
+    String categoryBook,
+    String publicBook,
+    String yearBook,
+    String descriptionBook,
+    String contentBook,
+    String imgBook,
+    String imgAuthor,
+    String countBook,
+    String pagesBook,
+    BuildContext context,
+  ) async {
+    getConnection().then((conn) {
+      conn
+          .query(
+              'insert into books (name_author, name_book, limit_age, category, public_book, year_book, description_book, content_book, img_book, img_author, count_book, pages_book) values ("$nameAuthor", "$nameBook", "$limitAge", "$categoryBook", "$publicBook", "$yearBook", "$descriptionBook", "$contentBook", "$imgBook", "$imgAuthor", "$countBook", "$pagesBook")')
+          .then(
+        (results) {
+          conn.close();
+        },
+      );
     });
   }
 }

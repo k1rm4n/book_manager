@@ -2,6 +2,9 @@ import 'dart:ui';
 
 import 'package:book_manager/library_list_data.dart';
 import 'package:flutter/material.dart';
+import 'package:like_button/like_button.dart';
+
+import 'connect_db.dart';
 
 class BookInfo extends StatelessWidget {
   @override
@@ -43,25 +46,7 @@ class BookInfo extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context, '/navBar');
-                          },
-                          child: const Icon(
-                            Icons.arrow_back_ios_rounded,
-                            color: Color.fromRGBO(255, 255, 255, 1),
-                          ),
-                        ),
-                        const Icon(
-                          Icons.favorite_outline,
-                          color: Color.fromRGBO(196, 196, 196, 1),
-                          size: 30,
-                        ),
-                      ],
-                    ),
+                    _HeaderBackAndLikeWidget(book: book),
                     const SizedBox(
                       height: 25,
                     ),
@@ -435,6 +420,64 @@ class BookInfo extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _HeaderBackAndLikeWidget extends StatefulWidget {
+  const _HeaderBackAndLikeWidget({
+    Key? key,
+    required this.book,
+  }) : super(key: key);
+
+  final LibraryListData book;
+
+  @override
+  State<_HeaderBackAndLikeWidget> createState() =>
+      _HeaderBackAndLikeWidgetState();
+}
+
+class _HeaderBackAndLikeWidgetState extends State<_HeaderBackAndLikeWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        GestureDetector(
+          onTap: () {
+            Navigator.pop(context, '/navBar');
+          },
+          child: const Icon(
+            Icons.arrow_back_ios_rounded,
+            color: Color.fromRGBO(255, 255, 255, 1),
+          ),
+        ),
+        // LikeButton(
+        //   size: 30,
+        //   circleColor: const CircleColor(
+        //       start: Color.fromARGB(255, 255, 102, 0),
+        //       end: Color.fromARGB(255, 204, 7, 0)),
+        //   bubblesColor: const BubblesColor(
+        //     dotPrimaryColor: Color.fromARGB(255, 255, 102, 0),
+        //     dotSecondaryColor: Color.fromARGB(255, 204, 7, 0),
+        //   ),
+        //   likeBuilder: (bool isLiked) {
+        //     return Icon(
+        //       Icons.favorite_outline,
+        //       color: widget.book.like == 1
+        //           ? Colors.red
+        //           : const Color.fromRGBO(196, 196, 196, 1),
+        //     );
+        //   },
+        //   onTap: (isLiked) {
+        //     setState(() {
+        //       widget.book.like = widget.book.like == 0 ? 1 : 0;
+        //       MyConnection().updateIdBook(widget.book.like, widget.book.idBook);
+        //     });
+        //     return Future.value(!isLiked);
+        //   },
+        // ),
+      ],
     );
   }
 }

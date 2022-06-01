@@ -15,23 +15,17 @@ class ReadersAdmin extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    GestureDetector(
-                      // onTap: () {
-                      //   MainNavigationBar();
-                      // },
-                      child: const Icon(
-                        Icons.arrow_back_ios_rounded,
-                        color: Color.fromRGBO(76, 61, 255, 1),
-                      ),
-                    ),
-                    const Text(
-                      'Читатели',
-                      style: TextStyle(
-                        color: Color.fromRGBO(76, 61, 255, 1),
-                        fontSize: 20,
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w400,
-                        fontFamily: 'Roboto',
+                    const Expanded(
+                      child: Text(
+                        'Читатели',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Color.fromRGBO(76, 61, 255, 1),
+                          fontSize: 20,
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w400,
+                          fontFamily: 'Roboto',
+                        ),
                       ),
                     ),
                     GestureDetector(
