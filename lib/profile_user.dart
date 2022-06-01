@@ -227,8 +227,9 @@ class _AvatarAndNameWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as NameAndLogin;
-    profileData.name = args.name.toString();
-    profileData.login = args.login.toString();
+    profileData.name = args.name;
+    profileData.login = args.login;
+    profileData.id = args.id;
     return Align(
       alignment: Alignment.center,
       child: Column(
@@ -313,7 +314,8 @@ class _HeaderProfileWidget extends StatelessWidget {
         GestureDetector(
           onTap: () {
             Navigator.pushNamed(context, '/settingsUser',
-                arguments: NameAndLogin(profileData.name, profileData.login));
+                arguments: NameAndLogin(
+                    profileData.name, profileData.login, profileData.id));
           },
           child: const Icon(
             Icons.settings,

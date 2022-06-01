@@ -19,19 +19,23 @@ class MyConnection {
     return await MySqlConnection.connect(settings);
   }
 
-  Future<Results?> getBookData() async {
+  Future<Results?> getBookData(int userId) async {
     final connection = await getConnection();
-    final result = await connection.query('select * from books');
+    final result = await connection.query(
+        '''select l.id as id_like_status, b.id, b.name_author, b.name_book, b.limit_age, 
+    b.category, b.public_book, b.year_book, b.description_book, b.content_book, b.img_book, 
+    b.img_author, b.count_book, b.pages_book, ifnull(l.like_state, 0) as like_state from books as b left join book_likes as l on b.id = l.book_id 
+    and $userId = l.user_id ''');
     await connection.close();
     return result;
   }
   // при нажатии на лайк isLiked = true
   // при нажатии на дизлайк isLiked = false
 
-  Future<Results?> updateIdBook(int stateLike, int idBook) async {
+  Future<Results?> updateLikeBook(int likeState, int userId, int bookId) async {
     final connection = await getConnection();
-    final result = await connection
-        .query('update books set like_book=$stateLike where id=$idBook');
+    final result = await connection.query(
+        'insert into book_likes (user_id, book_id, like_state) values($userId, $bookId, $likeState) on duplicate key update like_state = $likeState');
     await connection.close();
     return result;
   }
@@ -39,10 +43,6 @@ class MyConnection {
   void auto(String mail, String pass, BuildContext context) async {
     String getFirstAndLastName(var lastname, var firstname) {
       return "$lastname $firstname";
-    }
-
-    String getMail(var mail) {
-      return "$mail";
     }
 
     getConnection().then((conn) {
@@ -60,7 +60,8 @@ class MyConnection {
                 arguments: NameAndLogin(
                     getFirstAndLastName(
                         results.first["lastname"], results.first["firstname"]),
-                    getMail(results.first["login"])));
+                    results.first["login"],
+                    results.first["id"]));
           } else {
             Provider.of<AutoData>(context, listen: false).setText('E-mail*');
             Provider.of<AutoData>(context, listen: false)
@@ -141,5 +142,6 @@ class MyConnection {
 class NameAndLogin {
   String name = '';
   String login = '';
-  NameAndLogin(this.name, this.login);
+  int id = 0;
+  NameAndLogin(this.name, this.login, this.id);
 }

@@ -5,13 +5,15 @@ import 'package:like_button/like_button.dart';
 import 'package:mysql1/mysql1.dart';
 import 'package:provider/provider.dart';
 import 'data/library_data.dart';
+import 'data/profile_data.dart';
 import 'navigation_bar.dart';
 
 class Library extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as NameAndLogin;
     final initList = LibraryData();
-    initList.initListBook();
+    initList.initListBook(args.id);
     return ChangeNotifierProvider(
         create: (context) => initList,
         builder: (context, widget) {
@@ -163,20 +165,24 @@ class _BookListWidgetState extends State<_BookListWidget> {
                                     likeBuilder: (bool isLiked) {
                                       return Icon(
                                         Icons.favorite_outline,
-                                        color: isLiked //book.like == 1
+                                        color: book.stateLike == 1
                                             ? Colors.red
                                             : const Color.fromRGBO(
                                                 196, 196, 196, 1),
                                       );
                                     },
-                                    // onTap: (isLiked) {
-                                    //   setState(() {
-                                    //     book.like = book.like == 0 ? 1 : 0;
-                                    //     MyConnection().updateIdBook(
-                                    //         book.like, book.idBook);
-                                    //   });
-                                    //   return Future.value(!isLiked);
-                                    // },
+                                    onTap: (isLiked) {
+                                      setState(() {
+                                        book.stateLike =
+                                            book.stateLike == 0 ? 1 : 0;
+                                        MyConnection().updateLikeBook(
+                                          book.stateLike,
+                                          book.idUser,
+                                          book.idBook,
+                                        );
+                                      });
+                                      return Future.value(!isLiked);
+                                    },
                                   ),
                                 ),
                               ),

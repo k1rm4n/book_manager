@@ -1,5 +1,6 @@
 import 'package:book_manager/connect_db.dart';
 import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
 
 class AddBookAdmin extends StatelessWidget {
   final _nameAuthor = TextEditingController();
@@ -105,20 +106,20 @@ class AddBookAdmin extends StatelessWidget {
                     controllerBook: _pagesBook,
                   ),
                   const SizedBox(height: 20),
-                  _SaveDataButtonWidget(
-                    nameAuthor: _nameAuthor,
-                    nameBook: _nameBook,
-                    limitAge: _limitAge,
-                    categoryBook: _categoryBook,
-                    publicBook: _publicBook,
-                    yearBook: _yearBook,
-                    descriptionBook: _descriptionBook,
-                    contentBook: _contentBook,
-                    imgBook: _imgBook,
-                    imgAuthor: _imgAuthor,
-                    countBook: _countBook,
-                    pagesBook: _pagesBook,
-                  )
+                  _SaveDataButtonWidget(mapContollers: {
+                    "nameAuthor": _nameAuthor,
+                    "nameBook": _nameBook,
+                    "limitAge": _limitAge,
+                    "categoryBook": _categoryBook,
+                    "publicBook": _publicBook,
+                    "yearBook": _yearBook,
+                    "descriptionBook": _descriptionBook,
+                    "contentBook": _contentBook,
+                    "imgBook": _imgBook,
+                    "imgAuthor": _imgAuthor,
+                    "countBook": _countBook,
+                    "pagesBook": _pagesBook,
+                  })
                 ],
               ),
             ),
@@ -132,111 +133,47 @@ class AddBookAdmin extends StatelessWidget {
 class _SaveDataButtonWidget extends StatefulWidget {
   _SaveDataButtonWidget({
     Key? key,
-    required TextEditingController nameAuthor,
-    required TextEditingController nameBook,
-    required TextEditingController limitAge,
-    required TextEditingController categoryBook,
-    required TextEditingController publicBook,
-    required TextEditingController yearBook,
-    required TextEditingController descriptionBook,
-    required TextEditingController contentBook,
-    required TextEditingController imgBook,
-    required TextEditingController imgAuthor,
-    required TextEditingController countBook,
-    required TextEditingController pagesBook,
-  })  : _nameAuthor = nameAuthor,
-        _nameBook = nameBook,
-        _limitAge = limitAge,
-        _categoryBook = categoryBook,
-        _publicBook = publicBook,
-        _yearBook = yearBook,
-        _descriptionBook = descriptionBook,
-        _contentBook = contentBook,
-        _imgBook = imgBook,
-        _imgAuthor = imgAuthor,
-        _countBook = countBook,
-        _pagesBook = pagesBook,
-        super(key: key);
+    required this.mapContollers,
+  }) : super(key: key);
 
-  final TextEditingController _nameAuthor;
-  final TextEditingController _nameBook;
-  final TextEditingController _limitAge;
-  final TextEditingController _categoryBook;
-  final TextEditingController _publicBook;
-  final TextEditingController _yearBook;
-  final TextEditingController _descriptionBook;
-  final TextEditingController _contentBook;
-  final TextEditingController _imgBook;
-  final TextEditingController _imgAuthor;
-  final TextEditingController _countBook;
-  final TextEditingController _pagesBook;
-
+  final Map<String, TextEditingController> mapContollers;
   @override
-  State<_SaveDataButtonWidget> createState() => _SaveDataButtonWidgetState(
-      _nameAuthor,
-      _nameBook,
-      _limitAge,
-      _categoryBook,
-      _publicBook,
-      _yearBook,
-      _descriptionBook,
-      _contentBook,
-      _imgBook,
-      _imgAuthor,
-      _countBook,
-      _pagesBook);
+  State<_SaveDataButtonWidget> createState() => _SaveDataButtonWidgetState();
 }
 
 class _SaveDataButtonWidgetState extends State<_SaveDataButtonWidget> {
-  final TextEditingController _nameAuthor;
-  final TextEditingController _nameBook;
-  final TextEditingController _limitAge;
-  final TextEditingController _categoryBook;
-  final TextEditingController _publicBook;
-  final TextEditingController _yearBook;
-  final TextEditingController _descriptionBook;
-  final TextEditingController _contentBook;
-  final TextEditingController _imgBook;
-  final TextEditingController _imgAuthor;
-  final TextEditingController _countBook;
-  final TextEditingController _pagesBook;
-  _SaveDataButtonWidgetState(
-      this._nameAuthor,
-      this._nameBook,
-      this._limitAge,
-      this._categoryBook,
-      this._publicBook,
-      this._yearBook,
-      this._descriptionBook,
-      this._contentBook,
-      this._imgBook,
-      this._imgAuthor,
-      this._countBook,
-      this._pagesBook);
-
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         setState(() {
-          if (1 == 1 /*какое тут лучше условие сделать? если правильно всё*/) {
-            print('поля пустые');
+          bool stateController = false;
+          widget.mapContollers.forEach((key, value) {
+            if (value.text.isEmpty) {
+              stateController = true;
+            }
+          });
+          if (stateController) {
+            print('Поля пустые');
           } else {
             MyConnection().printLibraryData(
-              _nameAuthor.text,
-              _nameBook.text,
-              _limitAge.text,
-              _categoryBook.text,
-              _publicBook.text,
-              _yearBook.text,
-              _descriptionBook.text,
-              _contentBook.text,
-              _imgBook.text,
-              _imgAuthor.text,
-              _countBook.text,
-              _pagesBook.text,
+              widget.mapContollers["nameAuthor"]!.text,
+              widget.mapContollers["nameBook"]!.text,
+              widget.mapContollers["limitAge"]!.text,
+              widget.mapContollers["categoryBook"]!.text,
+              widget.mapContollers["publicBook"]!.text,
+              widget.mapContollers["yearBook"]!.text,
+              widget.mapContollers["descriptionBook"]!.text,
+              widget.mapContollers["contentBook"]!.text,
+              widget.mapContollers["imgBook"]!.text,
+              widget.mapContollers["imgAuthor"]!.text,
+              widget.mapContollers["countBook"]!.text,
+              widget.mapContollers["pagesBook"]!.text,
               context,
             );
+            widget.mapContollers.forEach((key, value) {
+              value.text = '';
+            });
           }
         });
       },
@@ -275,15 +212,11 @@ class _SaveDataButtonWidgetState extends State<_SaveDataButtonWidget> {
 
 class _TextFieldWidget extends StatelessWidget {
   const _TextFieldWidget(
-      {Key? key,
-      required TextEditingController controllerBook,
-      required String nameLabel})
-      : _controllerBook = controllerBook,
-        _nameLabel = nameLabel,
-        super(key: key);
+      {Key? key, required this.controllerBook, required this.nameLabel})
+      : super(key: key);
 
-  final TextEditingController _controllerBook;
-  final String _nameLabel;
+  final TextEditingController controllerBook;
+  final String nameLabel;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -292,7 +225,7 @@ class _TextFieldWidget extends StatelessWidget {
           width: double.infinity,
           height: 50,
           child: TextField(
-            controller: _controllerBook,
+            controller: controllerBook,
             style: const TextStyle(
               fontSize: 15,
               fontWeight: FontWeight.w300,
@@ -300,7 +233,7 @@ class _TextFieldWidget extends StatelessWidget {
             ),
             decoration: InputDecoration(
               floatingLabelBehavior: FloatingLabelBehavior.always,
-              labelText: _nameLabel,
+              labelText: nameLabel,
               contentPadding: const EdgeInsets.symmetric(horizontal: 30),
               labelStyle: const TextStyle(
                 color: Color.fromRGBO(70, 70, 70, 1),

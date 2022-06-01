@@ -12,6 +12,8 @@ class LibraryListData {
   String imgAuthor = '';
   int countBook = 0;
   int pagesBook = 0;
+  int stateLike = 0;
+  int idUser = 0;
 
   LibraryListData(
     this.idBook,
@@ -27,5 +29,7 @@ class LibraryListData {
     this.imgAuthor,
     this.countBook,
     this.pagesBook,
+    this.stateLike,
+    this.idUser,
   );
 }
