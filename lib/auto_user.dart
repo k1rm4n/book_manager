@@ -101,19 +101,19 @@ class Autorization extends StatelessWidget {
                       const SizedBox(
                         height: 20,
                       ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: RichText(
-                          text: const TextSpan(
-                            text: 'Забыли пароль?',
-                            style: TextStyle(
-                              fontWeight: FontWeight.w300,
-                              fontSize: 12,
-                              color: Color.fromRGBO(89, 89, 89, 1),
-                            ),
-                          ),
-                        ),
-                      ),
+                      // Align(
+                      //   alignment: Alignment.centerRight,
+                      //   child: RichText(
+                      //     text: const TextSpan(
+                      //       text: 'Забыли пароль?',
+                      //       style: TextStyle(
+                      //         fontWeight: FontWeight.w300,
+                      //         fontSize: 12,
+                      //         color: Color.fromRGBO(89, 89, 89, 1),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ),
                       const SizedBox(
                         height: 30,
                       ),
@@ -207,7 +207,7 @@ class _PassTextFieldWidgetState extends State<_PassTextFieldWidget> {
           labelText: Provider.of<AutoData>(context).textPass,
           suffixIcon: IconButton(
             icon: Icon(
-              _passwordVisible ? Icons.visibility : Icons.visibility_off,
+              _passwordVisible ? Icons.visibility_off : Icons.visibility,
               color: const Color.fromRGBO(103, 152, 230, 1),
             ),
             onPressed: () {

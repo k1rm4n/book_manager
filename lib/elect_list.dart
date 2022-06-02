@@ -14,24 +14,27 @@ class Elect extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: const [
-                  Icon(
-                    Icons.arrow_back_ios_rounded,
-                    color: Color.fromRGBO(76, 61, 255, 1),
-                  ),
-                  Text(
-                    'Избранные',
-                    style: TextStyle(
-                      color: Color.fromRGBO(76, 61, 255, 1),
-                      fontFamily: 'Roboto',
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 20,
+                  // Icon(
+                  //   Icons.arrow_back_ios_rounded,
+                  //   color: Color.fromRGBO(76, 61, 255, 1),
+                  // ),
+                  Expanded(
+                    child: Text(
+                      'Избранные',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Color.fromRGBO(76, 61, 255, 1),
+                        fontFamily: 'Roboto',
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 20,
+                      ),
                     ),
                   ),
-                  Icon(
-                    Icons.search,
-                    color: Color.fromRGBO(76, 61, 255, 1),
-                  ),
+                  // Icon(
+                  //   Icons.search,
+                  //   color: Color.fromRGBO(76, 61, 255, 1),
+                  // ),
                 ],
               ),
             ),

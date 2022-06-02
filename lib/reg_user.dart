@@ -267,7 +267,7 @@ class _RegButtonWidgetState extends State<_RegButtonWidget> {
         child: Center(
           child: RichText(
             text: const TextSpan(
-              text: 'Зарегестрироваться',
+              text: 'Зарегистрироваться',
               style: TextStyle(
                   fontSize: 15,
                   fontFamily: 'Roboto',
@@ -322,7 +322,7 @@ class _RepeatPassTextFieldWidgetState
           contentPadding: const EdgeInsets.symmetric(horizontal: 30),
           suffixIcon: IconButton(
             icon: Icon(
-              _passwordVisible ? Icons.visibility : Icons.visibility_off,
+              _passwordVisible ? Icons.visibility_off : Icons.visibility,
               color: const Color.fromRGBO(103, 152, 230, 1),
             ),
             onPressed: () {
@@ -392,7 +392,7 @@ class _PassTextFieldWidgetState extends State<_PassTextFieldWidget> {
           contentPadding: const EdgeInsets.symmetric(horizontal: 30),
           suffixIcon: IconButton(
             icon: Icon(
-              _passwordVisible ? Icons.visibility : Icons.visibility_off,
+              _passwordVisible ? Icons.visibility_off : Icons.visibility,
               color: const Color.fromRGBO(103, 152, 230, 1),
             ),
             onPressed: () {

@@ -171,47 +171,6 @@ class _NowReadWidget extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(
-          height: 10,
-        ),
-        Container(
-          width: double.infinity,
-          height: 61,
-          decoration: BoxDecoration(
-            color: const Color.fromRGBO(255, 255, 255, 1),
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: const [
-              BoxShadow(
-                color: Color.fromRGBO(0, 0, 0, 0.2),
-                offset: Offset(0, 0),
-                blurRadius: 2,
-              ),
-            ],
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: const [
-                Text(
-                  'История',
-                  style: TextStyle(
-                    color: Color.fromRGBO(70, 70, 70, 1),
-                    fontSize: 15,
-                    fontWeight: FontWeight.w400,
-                    fontStyle: FontStyle.normal,
-                    fontFamily: 'Roboto',
-                  ),
-                ),
-                Icon(
-                  Icons.restore_rounded,
-                  size: 25,
-                  color: Color.fromRGBO(128, 128, 131, 1),
-                ),
-              ],
-            ),
-          ),
-        ),
       ],
     );
   }
@@ -242,7 +201,7 @@ class _AvatarAndNameWidget extends StatelessWidget {
               shape: BoxShape.circle,
             ),
             child: const Icon(
-              Icons.image_rounded,
+              Icons.person,
               size: 60,
               color: Colors.white,
             ),

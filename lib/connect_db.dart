@@ -29,8 +29,6 @@ class MyConnection {
     await connection.close();
     return result;
   }
-  // при нажатии на лайк isLiked = true
-  // при нажатии на дизлайк isLiked = false
 
   Future<Results?> updateLikeBook(int likeState, int userId, int bookId) async {
     final connection = await getConnection();
