@@ -30,6 +30,26 @@ class MyConnection {
     return result;
   }
 
+  Future<Results?> getHistory(int userId) async {
+    final connection = await getConnection();
+    final result = await connection.query(
+        '''SELECT books.name_book, books.img_book, books.name_author,books.year_book 
+          FROM book_histories 
+          INNER JOIN books ON book_histories.book_id = books.id AND book_histories.user_id = $userId
+          ORDER BY book_histories.history_date DESC''');
+    await connection.close();
+    return result;
+  }
+
+  Future<Results?> addHistory(int userId, int bookId) async {
+    final connection = await getConnection();
+    final result = await connection.query(''' INSERT 
+            INTO book_histories 
+            (book_id, user_id, history_date) VALUES ($bookId, $userId, now())''');
+    await connection.close();
+    return result;
+  }
+
   Future<Results?> updateLikeBook(int likeState, int userId, int bookId) async {
     final connection = await getConnection();
     final result = await connection.query(
