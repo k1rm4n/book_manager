@@ -28,10 +28,6 @@ class _MyQueryState extends State<MyQuery> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: const [
-                          Icon(
-                            Icons.arrow_back_ios_rounded,
-                            color: Color.fromRGBO(76, 61, 255, 1),
-                          ),
                           Expanded(
                             child: Text(
                               'Мои запросы',

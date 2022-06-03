@@ -1,6 +1,7 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:book_manager/admin/add_book_admin.dart';
+import 'package:book_manager/admin/edit_book.dart';
 import 'package:book_manager/admin/library_admin.dart';
 import 'package:book_manager/admin/navigator_bar_admin.dart';
 import 'package:book_manager/admin/query_admin.dart';
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
         '/addBookAdmin': (BuildContext context) => AddBookAdmin(),
         '/welcomQueryAdmin': (BuildContext context) => WelcomQueryAdmin(),
         '/navBarAdmin': (BuildContext context) => NavigatorBarAdmin(),
+        '/editBookAdmin': (BuildContext context) => EditBook(),
       },
     );
   }

@@ -10,104 +10,131 @@ class LibraryAdmin extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
-                children: [
+                children: const [
                   _HeaderLibraryWidget(),
-                  const SizedBox(
+                  SizedBox(
                     height: 30,
                   ),
-                  Container(
-                    constraints: const BoxConstraints(
-                      maxWidth: double.infinity,
-                      maxHeight: 52,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: const [
-                        BoxShadow(
-                          offset: Offset(0, 0),
-                          blurRadius: 2,
-                          color: Color.fromRGBO(0, 0, 0, 0.2),
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      children: [
-                        ClipRRect(
-                          borderRadius: const BorderRadius.only(
-                            topLeft: Radius.circular(10),
-                            bottomLeft: Radius.circular(10),
-                          ),
-                          child: Container(
-                            width: 20,
-                            height: double.infinity,
-                            decoration: const BoxDecoration(
-                              color: Color.fromRGBO(244, 244, 244, 1),
-                              border: Border(
-                                right: BorderSide(
-                                  color: Color.fromRGBO(228, 228, 228, 1),
-                                  width: 1,
-                                  style: BorderStyle.solid,
-                                ),
-                              ),
-                            ),
-                            child: const Align(
-                              child: FittedBox(
-                                fit: BoxFit.cover,
-                                child: Text(
-                                  '1',
-                                  style: TextStyle(
-                                      color: Color.fromRGBO(61, 104, 255, 1),
-                                      fontFamily: 'Roboto',
-                                      fontStyle: FontStyle.normal,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 12),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 10),
-                          child: FittedBox(
-                            fit: BoxFit.cover,
-                            child: RichText(
-                              text: const TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: 'Записки о Шерлоке Холмсе\n',
-                                    style: TextStyle(
-                                      color: Color.fromRGBO(70, 70, 70, 1),
-                                      fontFamily: 'Roboto',
-                                      fontStyle: FontStyle.normal,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 15,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: 'Сэр Артутр Конан Дойл, 2019',
-                                    style: TextStyle(
-                                      color: Color.fromRGBO(196, 196, 196, 1),
-                                      fontFamily: 'Roboto',
-                                      fontStyle: FontStyle.normal,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 10,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                  _BookContainerWidget(),
                 ],
               ),
             ),
             _AddBookWidget(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _BookContainerWidget extends StatelessWidget {
+  const _BookContainerWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, '/editBookAdmin');
+      },
+      child: Container(
+        constraints: const BoxConstraints(
+          maxWidth: double.infinity,
+          maxHeight: 52,
+        ),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: const [
+            BoxShadow(
+              offset: Offset(0, 0),
+              blurRadius: 2,
+              color: Color.fromRGBO(0, 0, 0, 0.2),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(10),
+                bottomLeft: Radius.circular(10),
+              ),
+              child: Container(
+                width: 20,
+                height: double.infinity,
+                decoration: const BoxDecoration(
+                  color: Color.fromRGBO(244, 244, 244, 1),
+                  border: Border(
+                    right: BorderSide(
+                      color: Color.fromRGBO(228, 228, 228, 1),
+                      width: 1,
+                      style: BorderStyle.solid,
+                    ),
+                  ),
+                ),
+                child: const Align(
+                  child: FittedBox(
+                    fit: BoxFit.cover,
+                    child: Text(
+                      '1',
+                      style: TextStyle(
+                          color: Color.fromRGBO(61, 104, 255, 1),
+                          fontFamily: 'Roboto',
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: FittedBox(
+                fit: BoxFit.cover,
+                child: RichText(
+                  text: const TextSpan(
+                    children: [
+                      TextSpan(
+                        text: 'Записки о Шерлоке Холмсе\n',
+                        style: TextStyle(
+                          color: Color.fromRGBO(70, 70, 70, 1),
+                          fontFamily: 'Roboto',
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 15,
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'Сэр Артутр Конан Дойл, 2019',
+                        style: TextStyle(
+                          color: Color.fromRGBO(196, 196, 196, 1),
+                          fontFamily: 'Roboto',
+                          fontStyle: FontStyle.normal,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 10,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            const Expanded(
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Icon(
+                  Icons.delete_forever,
+                  color: Colors.red,
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 10,
+            )
           ],
         ),
       ),
