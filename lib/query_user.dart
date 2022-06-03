@@ -2,6 +2,8 @@ import 'package:book_manager/data/ListData.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'connect_db.dart';
+
 class MyQuery extends StatefulWidget {
   @override
   State<MyQuery> createState() => _MyQueryState();
@@ -10,10 +12,11 @@ class MyQuery extends StatefulWidget {
 class _MyQueryState extends State<MyQuery> {
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as NameAndLogin;
     return Scaffold(
       body: SafeArea(
         child: ChangeNotifierProvider(
-          create: (context) => ListData(),
+          create: (context) => ListData(args.id),
           child: Consumer<ListData>(
             builder: ((context, value, child) {
               return SingleChildScrollView(
@@ -148,6 +151,8 @@ class _MyQueryState extends State<MyQuery> {
                                 .defYouRead();
                             Provider.of<ListData>(context, listen: false)
                                 .defInWait();
+                            Provider.of<ListData>(context, listen: false)
+                                .getHistory();
                           },
                           child: Container(
                             height: 30,
@@ -215,11 +220,13 @@ class _MyQueryState extends State<MyQuery> {
 }
 
 class History extends StatelessWidget {
+  const History({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: [
-        const Align(
+      children: const [
+        Align(
           alignment: Alignment.centerLeft,
           child: Text(
             'Просмотрено',
@@ -235,89 +242,105 @@ class History extends StatelessWidget {
         SizedBox(
           height: 20,
         ),
-        Container(
-          width: double.infinity,
-          height: 130,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: const [
-              BoxShadow(
-                offset: Offset(0, 0),
-                blurRadius: 2,
-                color: Color.fromRGBO(0, 0, 0, 0.2),
-              ),
-            ],
-          ),
-          child: Row(
-            children: [
-              const SizedBox(
-                width: 20,
-              ),
-              Container(
-                width: 65,
-                height: 100,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(4),
-                  boxShadow: const [
-                    BoxShadow(
-                      offset: Offset(0, 4),
-                      blurRadius: 10,
-                      color: Color.fromRGBO(0, 0, 0, 0.25),
-                    ),
-                  ],
-                  image: const DecorationImage(
-                      image: NetworkImage(
-                        "https://img4.labirint.ru/rc/009ddcb31237552314703a6847875d04/220x340/books34/335480/cover.png?1612704312",
-                      ),
-                      fit: BoxFit.cover),
-                ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 10, left: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: const [
-                      Text(
-                        'Голодные игры. И вспыхнет пламя. Сойка-пересмешница',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          color: Color.fromRGBO(70, 70, 70, 1),
-                          fontFamily: 'Roboto',
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        'Сьюзен Коллинз, 2009',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(
-                          color: Color.fromRGBO(196, 196, 196, 1),
-                          fontFamily: 'Roboto',
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w300,
-                          fontSize: 12,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 15,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(
-          height: 10,
-        ),
       ],
+    );
+  }
+}
+
+class HistoryItemBook extends StatelessWidget {
+  final String urlImage;
+  final String titleBook;
+  final String author;
+  final String yearBook;
+
+  const HistoryItemBook({
+    Key? key,
+    required this.urlImage,
+    required this.titleBook,
+    required this.author,
+    required this.yearBook,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 130,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: const [
+          BoxShadow(
+            offset: Offset(0, 0),
+            blurRadius: 2,
+            color: Color.fromRGBO(0, 0, 0, 0.2),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          const SizedBox(
+            width: 20,
+          ),
+          Container(
+            width: 65,
+            height: 100,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4),
+              boxShadow: const [
+                BoxShadow(
+                  offset: Offset(0, 4),
+                  blurRadius: 10,
+                  color: Color.fromRGBO(0, 0, 0, 0.25),
+                ),
+              ],
+              image: DecorationImage(
+                  image: NetworkImage(
+                    urlImage,
+                  ),
+                  fit: BoxFit.cover),
+            ),
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(top: 10, left: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    titleBook,
+                    textAlign: TextAlign.left,
+                    style: const TextStyle(
+                      color: Color.fromRGBO(70, 70, 70, 1),
+                      fontFamily: 'Roboto',
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 15,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 5,
+                  ),
+                  Text(
+                    '$author, $yearBook',
+                    textAlign: TextAlign.left,
+                    style: const TextStyle(
+                      color: Color.fromRGBO(196, 196, 196, 1),
+                      fontFamily: 'Roboto',
+                      fontStyle: FontStyle.normal,
+                      fontWeight: FontWeight.w300,
+                      fontSize: 12,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -635,7 +658,8 @@ class YouRead extends StatelessWidget {
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(10),
                                     border: Border.all(
-                                      color: Color.fromRGBO(76, 61, 255, 1),
+                                      color:
+                                          const Color.fromRGBO(76, 61, 255, 1),
                                     ),
                                   ),
                                   child: const Align(
