@@ -22,8 +22,8 @@ class _BookInfoState extends State<BookInfo> {
 
   @override
   Widget build(BuildContext context) {
-    book = ModalRoute.of(context)!.settings.arguments as LibraryListData;
     if (!addHistory) {
+      book = ModalRoute.of(context)!.settings.arguments as LibraryListData;
       MyConnection().addHistory(book.idUser, book.idBook);
       addHistory = true;
     }
@@ -269,14 +269,7 @@ class _BookInfoState extends State<BookInfo> {
                     ),
                     Row(
                       children: [
-                        SizedBox(
-                          width: 15,
-                          height: 15,
-                          child: Image.asset(
-                            "images/time_data.png",
-                            fit: BoxFit.fill,
-                          ),
-                        ),
+                        const Icon(Icons.access_time, size: 20),
                         const SizedBox(
                           width: 9,
                         ),
