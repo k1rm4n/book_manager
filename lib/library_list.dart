@@ -2,11 +2,8 @@ import 'package:book_manager/connect_db.dart';
 import 'package:book_manager/library_list_data.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
-import 'package:mysql1/mysql1.dart';
 import 'package:provider/provider.dart';
 import 'data/library_data.dart';
-import 'data/profile_data.dart';
-import 'navigation_bar.dart';
 
 class Library extends StatelessWidget {
   @override
@@ -22,22 +19,26 @@ class Library extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Column(
                   children: [
-                    const _HeaderLibraryWidget(),
+                    _HeaderLibraryWidget(
+                      args: args,
+                    ),
                     const SizedBox(
                       height: 5,
                     ),
                     ListView.builder(
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      physics: const ScrollPhysics(),
-                      padding: const EdgeInsets.all(8),
-                      itemCount: Provider.of<LibraryData>(context)
-                          .libraryListData
-                          .length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return _BookListWidget(index: index);
-                      },
-                    ),
+                        scrollDirection: Axis.vertical,
+                        shrinkWrap: true,
+                        physics: const ScrollPhysics(),
+                        padding: const EdgeInsets.all(8),
+                        itemCount: Provider.of<LibraryData>(context)
+                            .libraryListData
+                            .length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return BookListWidget(
+                            book: Provider.of<LibraryData>(context)
+                                .libraryListData[index],
+                          );
+                        }),
                   ],
                 ),
               ),
@@ -47,34 +48,28 @@ class Library extends StatelessWidget {
   }
 }
 
-class _BookListWidget extends StatefulWidget {
-  const _BookListWidget({
-    required this.index,
+class BookListWidget extends StatefulWidget {
+  const BookListWidget({
     Key? key,
+    required this.book,
   }) : super(key: key);
 
-  final int index;
+  final LibraryListData book;
   @override
-  State<_BookListWidget> createState() => _BookListWidgetState();
+  State<BookListWidget> createState() => _BookListWidgetState();
 }
 
-class _BookListWidgetState extends State<_BookListWidget> {
-  late Color _likeColor;
-
+class _BookListWidgetState extends State<BookListWidget> {
   @override
   void initState() {
-    _likeColor = const Color.fromRGBO(196, 196, 196, 1);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final book =
-        Provider.of<LibraryData>(context).libraryListData[widget.index];
-
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/bookInfo', arguments: book);
+        Navigator.pushNamed(context, '/bookInfo', arguments: widget.book);
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -113,7 +108,7 @@ class _BookListWidgetState extends State<_BookListWidget> {
                         ],
                         image: DecorationImage(
                             image: NetworkImage(
-                              book.imgBook,
+                              widget.book.imgBook,
                             ),
                             fit: BoxFit.cover),
                       ),
@@ -136,7 +131,7 @@ class _BookListWidgetState extends State<_BookListWidget> {
                                 child: Padding(
                                   padding: const EdgeInsets.only(top: 16),
                                   child: Text(
-                                    book.nameBook,
+                                    widget.book.nameBook,
                                     textAlign: TextAlign.left,
                                     style: const TextStyle(
                                       color: Color.fromRGBO(70, 70, 70, 1),
@@ -165,7 +160,7 @@ class _BookListWidgetState extends State<_BookListWidget> {
                                     likeBuilder: (bool isLiked) {
                                       return Icon(
                                         Icons.favorite_outline,
-                                        color: book.stateLike == 1
+                                        color: widget.book.stateLike == 1
                                             ? Colors.red
                                             : const Color.fromRGBO(
                                                 196, 196, 196, 1),
@@ -173,12 +168,12 @@ class _BookListWidgetState extends State<_BookListWidget> {
                                     },
                                     onTap: (isLiked) {
                                       setState(() {
-                                        book.stateLike =
-                                            book.stateLike == 0 ? 1 : 0;
+                                        widget.book.stateLike =
+                                            widget.book.stateLike == 0 ? 1 : 0;
                                         MyConnection().updateLikeBook(
-                                          book.stateLike,
-                                          book.idUser,
-                                          book.idBook,
+                                          widget.book.stateLike,
+                                          widget.book.idUser,
+                                          widget.book.idBook,
                                         );
                                       });
                                       return Future.value(!isLiked);
@@ -192,7 +187,7 @@ class _BookListWidgetState extends State<_BookListWidget> {
                             height: 5,
                           ),
                           Text(
-                            '${book.nameAuthor}, ${book.yearBook}',
+                            '${widget.book.nameAuthor}, ${widget.book.yearBook}',
                             textAlign: TextAlign.left,
                             style: const TextStyle(
                               color: Color.fromRGBO(196, 196, 196, 1),
@@ -208,14 +203,7 @@ class _BookListWidgetState extends State<_BookListWidget> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    SizedBox(
-                                      width: 15,
-                                      height: 15,
-                                      child: Image.asset(
-                                        "images/time_data.png",
-                                        fit: BoxFit.fill,
-                                      ),
-                                    ),
+                                    const Icon(Icons.access_time, size: 20),
                                     const SizedBox(
                                       width: 5,
                                     ),
@@ -270,7 +258,7 @@ class _BookListWidgetState extends State<_BookListWidget> {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 15,
             )
           ],
@@ -426,8 +414,10 @@ class _GenreListWidget extends StatelessWidget {
 }
 
 class _HeaderLibraryWidget extends StatelessWidget {
+  final NameAndLogin args;
   const _HeaderLibraryWidget({
     Key? key,
+    required this.args,
   }) : super(key: key);
 
   @override
@@ -452,7 +442,7 @@ class _HeaderLibraryWidget extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              Navigator.pushNamed(context, '/searchBook');
+              Navigator.pushNamed(context, '/searchBook', arguments: args);
             },
             child: const Icon(
               Icons.search,
