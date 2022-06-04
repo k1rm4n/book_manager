@@ -19,13 +19,15 @@ class MyConnection {
     return await MySqlConnection.connect(settings);
   }
 
-  Future<Results?> getBookData(int userId) async {
+  Future<Results?> getBookData(int userId, {String where = ''}) async {
     final connection = await getConnection();
     final result = await connection.query(
         '''select l.id as id_like_status, b.id, b.name_author, b.name_book, b.limit_age, 
     b.category, b.public_book, b.year_book, b.description_book, b.content_book, b.img_book, 
-    b.img_author, b.count_book, b.pages_book, ifnull(l.like_state, 0) as like_state from books as b left join book_likes as l on b.id = l.book_id 
-    and $userId = l.user_id ''');
+    b.img_author, b.count_book, b.pages_book, ifnull(l.like_state, 0) as like_state 
+    from books as b left join book_likes as l on b.id = l.book_id 
+    and $userId = l.user_id
+    $where ''');
     await connection.close();
     return result;
   }
