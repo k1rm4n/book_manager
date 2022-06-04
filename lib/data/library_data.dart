@@ -27,6 +27,7 @@ class LibraryData extends ChangeNotifier {
                 book["pages_book"],
                 book["like_state"],
                 userId,
+                book["query_book"],
               ))
           .toList());
     }

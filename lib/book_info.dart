@@ -12,13 +12,22 @@ class BookInfo extends StatefulWidget {
 
 class _BookInfoState extends State<BookInfo> {
   bool addHistory = false;
+  late final LibraryListData book;
 
   @override
   void initState() {
     super.initState();
   }
 
-  late final LibraryListData book;
+  void addQuery() async {
+    try {
+      MyConnection().addQuery(book.idUser, book.idBook);
+
+      setState(() {
+        book.queryBook = 1;
+      });
+    } catch (e) {}
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -304,25 +313,30 @@ class _BookInfoState extends State<BookInfo> {
                     const SizedBox(
                       height: 20,
                     ),
-                    Container(
-                      width: double.infinity,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(
-                          color: const Color.fromRGBO(76, 61, 255, 1),
-                          width: 1,
+                    GestureDetector(
+                      onTap: book.queryBook == 0 ? addQuery : null,
+                      child: Container(
+                        width: double.infinity,
+                        height: 40,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: book.queryBook == 0
+                                ? const Color.fromRGBO(76, 61, 255, 1)
+                                : Colors.grey,
+                            width: 1,
+                          ),
                         ),
-                      ),
-                      child: const Align(
-                        child: Text(
-                          'Запросить',
-                          style: TextStyle(
-                            color: Color.fromRGBO(76, 61, 255, 1),
-                            fontFamily: 'Roboto',
-                            fontStyle: FontStyle.normal,
-                            fontWeight: FontWeight.w500,
-                            fontSize: 15,
+                        child: const Align(
+                          child: Text(
+                            'Запрошено',
+                            style: TextStyle(
+                              color: Color.fromRGBO(76, 61, 255, 1),
+                              fontFamily: 'Roboto',
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w500,
+                              fontSize: 15,
+                            ),
                           ),
                         ),
                       ),

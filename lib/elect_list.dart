@@ -90,7 +90,15 @@ class _ElectState extends State<Elect> {
             const SizedBox(
               height: 30,
             ),
-            ...listFavoriteBook
+            Expanded(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: listFavoriteBook.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return listFavoriteBook[index];
+                },
+              ),
+            ),
           ],
         ),
       ),
