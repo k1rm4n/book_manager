@@ -14,6 +14,7 @@ class LibraryListData {
   int pagesBook = 0;
   int stateLike = 0;
   int idUser = 0;
+  int queryBook = 0;
 
   LibraryListData(
     this.idBook,
@@ -31,5 +32,6 @@ class LibraryListData {
     this.pagesBook,
     this.stateLike,
     this.idUser,
+    this.queryBook,
   );
 }

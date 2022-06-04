@@ -23,10 +23,12 @@ class MyConnection {
     final connection = await getConnection();
     final result = await connection.query(
         '''select l.id as id_like_status, b.id, b.name_author, b.name_book, b.limit_age, 
-    b.category, b.public_book, b.year_book, b.description_book, b.content_book, b.img_book, 
-    b.img_author, b.count_book, b.pages_book, ifnull(l.like_state, 0) as like_state 
-    from books as b left join book_likes as l on b.id = l.book_id 
-    and $userId = l.user_id
+    b.category, b.public_book, b.year_book, b.description_book, b.content_book,
+    b.img_book, b.img_author, b.count_book, b.pages_book, 
+    ifnull(l.like_state, 0) as like_state, if(q.book_id is null, 0 , 1) as query_book
+    from books as b
+    left join book_likes as l on b.id = l.book_id  and $userId = l.user_id
+    left join book_query as q on b.id = q.book_id  and $userId = q.user_id
     $where ''');
     await connection.close();
     return result;
@@ -48,6 +50,15 @@ class MyConnection {
     final result = await connection.query(''' INSERT 
             INTO book_histories 
             (book_id, user_id, history_date) VALUES ($bookId, $userId, now())''');
+    await connection.close();
+    return result;
+  }
+
+  Future<Results?> addQuery(int userId, int bookId) async {
+    final connection = await getConnection();
+    final result = await connection.query(''' INSERT 
+            INTO book_query 
+            (book_id, user_id) VALUES ($bookId, $userId)''');
     await connection.close();
     return result;
   }
