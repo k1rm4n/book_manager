@@ -50,6 +50,21 @@ class MyConnection {
     return result;
   }
 
+  Future<Results?> getFavorite(int userId) async {
+    final connection = await getConnection();
+    final result = await connection.query(
+        '''SELECT books.name_book, books.img_book, books.name_author,books.year_book, books.id
+          FROM books
+          INNER JOIN book_likes
+          ON books.id = book_likes.book_id and $userId = book_likes.user_id and book_likes.like_state = 1''');
+    await connection.close();
+    return result;
+  }
+
+  Future<Results?> removeFavorite(int userId, int bookId) async {
+    return await updateLikeBook(0, userId, bookId);
+  }
+
   Future<Results?> updateLikeBook(int likeState, int userId, int bookId) async {
     final connection = await getConnection();
     final result = await connection.query(
