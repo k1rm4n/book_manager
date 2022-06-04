@@ -15,7 +15,6 @@ class _SearchBookState extends State<SearchBook> {
   final listBook = <BookListWidget>[];
   late final int userId;
   bool hasInit = false;
-  //final list<
 
   void searchListBook(String? textSearch) async {
     listBook.clear();
@@ -43,6 +42,7 @@ class _SearchBookState extends State<SearchBook> {
                   book["pages_book"],
                   book["like_state"],
                   userId,
+                  book["query_book"],
                 ))
             .toList();
         listBook.addAll(
