@@ -1,7 +1,13 @@
+import 'package:book_manager/connect_db.dart';
 import 'package:flutter/material.dart';
 
+import '../query_user.dart';
+
 class ListData extends ChangeNotifier {
+  final int userId;
   List<Widget> list = [];
+
+  ListData(this.userId);
 
   void clearAndAddAll(Widget widget) {
     list.clear();
@@ -17,6 +23,23 @@ class ListData extends ChangeNotifier {
   void activeColorYouRead() {
     defColorYouRead = activColor;
     notifyListeners();
+  }
+
+  void getHistory() async {
+    final result = await MyConnection().getHistory(userId);
+    if (result != null) {
+      list.addAll(result
+          .map(
+            (book) => HistoryItemBook(
+              author: book['name_author'],
+              titleBook: book['name_book'],
+              urlImage: book['img_book'],
+              yearBook: book['year_book'],
+            ),
+          )
+          .toList());
+      notifyListeners();
+    }
   }
 
   void activeInWait() {

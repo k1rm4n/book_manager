@@ -23,9 +23,8 @@ class Library extends StatelessWidget {
                 child: Column(
                   children: [
                     const _HeaderLibraryWidget(),
-                    const _GenreListWidget(),
                     const SizedBox(
-                      height: 29,
+                      height: 5,
                     ),
                     ListView.builder(
                         scrollDirection: Axis.vertical,

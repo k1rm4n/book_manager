@@ -1,15 +1,32 @@
 import 'dart:ui';
-
+import 'package:book_manager/connect_db.dart';
 import 'package:book_manager/library_list_data.dart';
 import 'package:flutter/material.dart';
-import 'package:like_button/like_button.dart';
 
-import 'connect_db.dart';
+class BookInfo extends StatefulWidget {
+  const BookInfo({Key? key}) : super(key: key);
 
-class BookInfo extends StatelessWidget {
+  @override
+  State<BookInfo> createState() => _BookInfoState();
+}
+
+class _BookInfoState extends State<BookInfo> {
+  bool addHistory = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  late final LibraryListData book;
+
   @override
   Widget build(BuildContext context) {
-    final book = ModalRoute.of(context)!.settings.arguments as LibraryListData;
+    book = ModalRoute.of(context)!.settings.arguments as LibraryListData;
+    if (!addHistory) {
+      MyConnection().addHistory(book.idUser, book.idBook);
+      addHistory = true;
+    }
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
