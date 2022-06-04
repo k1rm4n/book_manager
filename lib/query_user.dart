@@ -259,83 +259,86 @@ class HistoryItemBook extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 130,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: const [
-          BoxShadow(
-            offset: Offset(0, 0),
-            blurRadius: 2,
-            color: Color.fromRGBO(0, 0, 0, 0.2),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          const SizedBox(
-            width: 20,
-          ),
-          Container(
-            width: 65,
-            height: 100,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4),
-              boxShadow: const [
-                BoxShadow(
-                  offset: Offset(0, 4),
-                  blurRadius: 10,
-                  color: Color.fromRGBO(0, 0, 0, 0.25),
-                ),
-              ],
-              image: DecorationImage(
-                  image: NetworkImage(
-                    urlImage,
-                  ),
-                  fit: BoxFit.cover),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10),
+      child: Container(
+        width: double.infinity,
+        height: 130,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: const [
+            BoxShadow(
+              offset: Offset(0, 0),
+              blurRadius: 2,
+              color: Color.fromRGBO(0, 0, 0, 0.2),
             ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 10, left: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    titleBook,
-                    textAlign: TextAlign.left,
-                    style: const TextStyle(
-                      color: Color.fromRGBO(70, 70, 70, 1),
-                      fontFamily: 'Roboto',
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w400,
-                      fontSize: 15,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    '$author, $yearBook',
-                    textAlign: TextAlign.left,
-                    style: const TextStyle(
-                      color: Color.fromRGBO(196, 196, 196, 1),
-                      fontFamily: 'Roboto',
-                      fontStyle: FontStyle.normal,
-                      fontWeight: FontWeight.w300,
-                      fontSize: 12,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 15,
+          ],
+        ),
+        child: Row(
+          children: [
+            const SizedBox(
+              width: 20,
+            ),
+            Container(
+              width: 65,
+              height: 100,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(4),
+                boxShadow: const [
+                  BoxShadow(
+                    offset: Offset(0, 4),
+                    blurRadius: 10,
+                    color: Color.fromRGBO(0, 0, 0, 0.25),
                   ),
                 ],
+                image: DecorationImage(
+                    image: NetworkImage(
+                      urlImage,
+                    ),
+                    fit: BoxFit.cover),
               ),
             ),
-          ),
-        ],
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10, left: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      titleBook,
+                      textAlign: TextAlign.left,
+                      style: const TextStyle(
+                        color: Color.fromRGBO(70, 70, 70, 1),
+                        fontFamily: 'Roboto',
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 15,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      '$author, $yearBook',
+                      textAlign: TextAlign.left,
+                      style: const TextStyle(
+                        color: Color.fromRGBO(196, 196, 196, 1),
+                        fontFamily: 'Roboto',
+                        fontStyle: FontStyle.normal,
+                        fontWeight: FontWeight.w300,
+                        fontSize: 12,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 15,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
