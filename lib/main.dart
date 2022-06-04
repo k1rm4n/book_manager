@@ -6,6 +6,7 @@ import 'package:book_manager/admin/library_admin.dart';
 import 'package:book_manager/admin/navigator_bar_admin.dart';
 import 'package:book_manager/admin/query_admin.dart';
 import 'package:book_manager/admin/readers_admin.dart';
+import 'package:book_manager/admin/user_books.dart';
 import 'package:book_manager/admin/welcom_query.dart';
 import 'package:book_manager/library_list.dart';
 import 'package:book_manager/navigation_bar.dart';
@@ -45,6 +46,7 @@ class MyApp extends StatelessWidget {
         '/welcomQueryAdmin': (BuildContext context) => WelcomQueryAdmin(),
         '/navBarAdmin': (BuildContext context) => NavigatorBarAdmin(),
         '/editBookAdmin': (BuildContext context) => EditBook(),
+        '/premiserBookUserAdmin': (BuildContext context) => UserBook(),
       },
     );
   }

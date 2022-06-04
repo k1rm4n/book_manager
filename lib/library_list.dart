@@ -27,16 +27,17 @@ class Library extends StatelessWidget {
                       height: 5,
                     ),
                     ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        physics: const ScrollPhysics(),
-                        padding: const EdgeInsets.all(8),
-                        itemCount: Provider.of<LibraryData>(context)
-                            .libraryListData
-                            .length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return _BookListWidget(index: index);
-                        }),
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      physics: const ScrollPhysics(),
+                      padding: const EdgeInsets.all(8),
+                      itemCount: Provider.of<LibraryData>(context)
+                          .libraryListData
+                          .length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return _BookListWidget(index: index);
+                      },
+                    ),
                   ],
                 ),
               ),
