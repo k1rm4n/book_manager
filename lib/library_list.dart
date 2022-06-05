@@ -70,8 +70,11 @@ class _BookListWidgetState extends State<BookListWidget> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, '/bookInfo', arguments: widget.book);
+      onTap: () async {
+        final result = await Navigator.pushNamed(context, '/bookInfo',
+            arguments: widget.book);
+        Provider.of<LibraryData>(context, listen: false)
+            .initListBook(widget.book.idUser);
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),

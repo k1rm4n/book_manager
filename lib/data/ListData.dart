@@ -28,6 +28,7 @@ class ListData extends ChangeNotifier {
   void getHistory() async {
     final result = await MyConnection().getHistory(userId);
     if (result != null) {
+      list.clear();
       list.addAll(result
           .map(
             (book) => HistoryItemBook(
@@ -65,5 +66,67 @@ class ListData extends ChangeNotifier {
   void defHistory() {
     defColorHistory = const Color.fromRGBO(124, 124, 124, 1);
     notifyListeners();
+  }
+
+  void getWait() async {
+    final result = await MyConnection().getWaitBook(userId);
+    if (result != null) {
+      list.clear();
+      list.addAll(result
+          .map(
+            (book) => InWait(
+              author: book['name_author'],
+              titleBook: book['name_book'],
+              urlImage: book['img_book'],
+              yearBook: book['year_book'],
+              onCancel: removeQueryBook,
+              idBook: book['id'],
+            ),
+          )
+          .toList());
+      notifyListeners();
+    }
+  }
+
+  void getReadBook() async {
+    final result = await MyConnection().getReadBook(userId);
+    if (result != null) {
+      list.clear();
+      list.addAll(result
+          .map(
+            (book) => YouRead(
+              author: book['name_author'],
+              titleBook: book['name_book'],
+              urlImage: book['img_book'],
+              yearBook: book['year_book'],
+              onReturn: returnBook,
+              idBook: book['id'],
+            ),
+          )
+          .toList());
+      notifyListeners();
+    }
+  }
+
+  void returnBook(int idBook) async {
+    try {
+      final result = await MyConnection().returnBook(userId, idBook);
+      list.removeWhere((book) {
+        final b = book as YouRead;
+        return book.idBook == idBook;
+      });
+      notifyListeners();
+    } catch (e) {}
+  }
+
+  void removeQueryBook(int idBook) async {
+    try {
+      final result = await MyConnection().removeQueryBook(userId, idBook);
+      list.removeWhere((book) {
+        final b = book as InWait;
+        return book.idBook == idBook;
+      });
+      notifyListeners();
+    } catch (e) {}
   }
 }
