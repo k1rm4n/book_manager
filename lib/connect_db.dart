@@ -19,6 +19,14 @@ class MyConnection {
     return await MySqlConnection.connect(settings);
   }
 
+  Future<Results?> deleteBook(int bookId) async {
+    final connection = await getConnection();
+    final results =
+        await connection.query('delete from books where id=$bookId');
+    await connection.close();
+    return results;
+  }
+
   Future<Results?> updateBook(
     int bookId,
     String nameAuthor,
@@ -250,7 +258,7 @@ class MyConnection {
               'select * from users where login = "$mail" and pass = "$pass" ')
           .then(
         (results) {
-          if (results.isNotEmpty) {
+          if (results.isNotEmpty && results.first["login"] != 'admin') {
             Provider.of<AutoData>(context, listen: false).setText('E-mail');
             Provider.of<AutoData>(context, listen: false).setPassText('Пароль');
             Provider.of<AutoData>(context, listen: false).setDefaultTextStyle();
@@ -261,6 +269,8 @@ class MyConnection {
                         results.first["lastname"], results.first["firstname"]),
                     results.first["login"],
                     results.first["id"]));
+          } else if (results.first["login"] == 'admin') {
+            Navigator.popAndPushNamed(context, '/navBarAdmin');
           } else {
             Provider.of<AutoData>(context, listen: false).setText('E-mail*');
             Provider.of<AutoData>(context, listen: false)
@@ -275,11 +285,11 @@ class MyConnection {
   }
 
   void reg(String lastname, String firstname, String mail, String pass,
-      String repeatPass, BuildContext context) async {
+      String repeatPass, int userClass, BuildContext context) async {
     getConnection().then((conn) {
       conn
           .query(
-              'insert into users (login, pass, firstname, lastname) values ("$mail", "$pass", "$firstname", "$lastname")')
+              'insert into users (login, pass, firstname, lastname, user_class) values ("$mail", "$pass", "$firstname", "$lastname", "$userClass")')
           .then(
         (results) {
           Provider.of<RegData>(context, listen: false).defColorTextAndBorder();
