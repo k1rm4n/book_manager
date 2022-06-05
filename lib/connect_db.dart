@@ -97,6 +97,38 @@ class MyConnection {
     return result;
   }
 
+  Future<Results?> getAllWaitBook() async {
+    final connection = await getConnection();
+    final result = await connection.query(
+        '''SELECT books.id AS book_id, users.id AS user_id,book_query.id,books.id,books.name_book, books.img_book, books.name_author, 
+          books.year_book, users.firstname, users.lastname
+          FROM book_query 
+          INNER JOIN books ON book_query.book_id = books.id 
+          INNER JOIN users ON users.id = book_query.user_id''');
+    await connection.close();
+    return result;
+  }
+
+  Future<Results?> acceptBook(int userId, int bookId) async {
+    final connection = await getConnection();
+    final result = await connection.query('''DELETE FROM book_user_reads
+           WHERE book_user_reads.book_id = $bookId AND book_user_reads.user_id = $userId ''');
+    await connection.close();
+    return result;
+  }
+
+  Future<Results?> getAllReturnBook() async {
+    final connection = await getConnection();
+    final result = await connection.query(
+        '''SELECT books.id AS book_id, users.id AS user_id,book_user_reads.id,books.id,books.name_book, books.img_book, books.name_author, 
+          books.year_book, users.firstname, users.lastname
+          FROM book_user_reads 
+          INNER JOIN books ON book_user_reads.book_id = books.id 
+          INNER JOIN users ON users.id = book_user_reads.user_id AND book_user_reads.book_return = 1''');
+    await connection.close();
+    return result;
+  }
+
   Future<Results?> getReaders() async {
     final connection = await getConnection();
     final result =
@@ -168,7 +200,8 @@ class MyConnection {
 
   Future<Results?> returnBook(int userId, int bookId) async {
     final connection = await getConnection();
-    final result = await connection.query('''DELETE FROM book_user_reads
+    final result = await connection.query('''UPDATE book_user_reads
+           SET book_user_reads.book_return = 1
            WHERE book_user_reads.book_id = $bookId AND book_user_reads.user_id = $userId''');
     await connection.close();
     return result;
