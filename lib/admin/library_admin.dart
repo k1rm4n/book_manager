@@ -3,6 +3,8 @@ import 'package:book_manager/data/edit_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../data/library_data.dart';
+
 class LibraryAdmin extends StatefulWidget {
   @override
   State<LibraryAdmin> createState() => _LibraryAdminState();
@@ -10,10 +12,10 @@ class LibraryAdmin extends StatefulWidget {
 
 class _LibraryAdminState extends State<LibraryAdmin> {
   final editData = EditData();
+
   @override
   Widget build(BuildContext context) {
     editData.getLibrary();
-
     return ChangeNotifierProvider(
       create: (context) => editData,
       child: Scaffold(
@@ -182,8 +184,8 @@ class _HeaderLibraryWidget extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          const Expanded(
+        children: const [
+          Expanded(
             child: Text(
               'Библиотека',
               textAlign: TextAlign.center,
@@ -194,16 +196,6 @@ class _HeaderLibraryWidget extends StatelessWidget {
                 fontWeight: FontWeight.w400,
                 fontFamily: 'Roboto',
               ),
-            ),
-          ),
-          GestureDetector(
-            onTap: () {
-              Navigator.pushNamed(context, '/searchBook');
-            },
-            child: const Icon(
-              Icons.search,
-              color: Color.fromRGBO(76, 61, 255, 1),
-              size: 25,
             ),
           ),
         ],

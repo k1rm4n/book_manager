@@ -225,7 +225,7 @@ class MyConnection {
               'select * from users where login = "$mail" and pass = "$pass" ')
           .then(
         (results) {
-          if (results.isNotEmpty) {
+          if (results.isNotEmpty && results.first["login"] != 'admin') {
             Provider.of<AutoData>(context, listen: false).setText('E-mail');
             Provider.of<AutoData>(context, listen: false).setPassText('Пароль');
             Provider.of<AutoData>(context, listen: false).setDefaultTextStyle();
@@ -236,6 +236,8 @@ class MyConnection {
                         results.first["lastname"], results.first["firstname"]),
                     results.first["login"],
                     results.first["id"]));
+          } else if (results.first["login"] == 'admin') {
+            Navigator.popAndPushNamed(context, '/navBarAdmin');
           } else {
             Provider.of<AutoData>(context, listen: false).setText('E-mail*');
             Provider.of<AutoData>(context, listen: false)

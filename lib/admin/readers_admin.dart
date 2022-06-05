@@ -22,8 +22,8 @@ class ReadersAdmin extends StatelessWidget {
                       const EdgeInsets.symmetric(horizontal: 10, vertical: 25),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Expanded(
+                    children: const [
+                      Expanded(
                         child: Text(
                           'Читатели',
                           textAlign: TextAlign.center,
@@ -34,16 +34,6 @@ class ReadersAdmin extends StatelessWidget {
                             fontWeight: FontWeight.w400,
                             fontFamily: 'Roboto',
                           ),
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, '/searchBook');
-                        },
-                        child: const Icon(
-                          Icons.search,
-                          color: Color.fromRGBO(76, 61, 255, 1),
-                          size: 25,
                         ),
                       ),
                     ],
