@@ -105,6 +105,30 @@ class MyConnection {
     return result;
   }
 
+  Future<Results?> getReaders() async {
+    final connection = await getConnection();
+    final result =
+        await connection.query('''SELECT users.firstname, users.lastname
+          FROM book_user_reads AS readers
+          INNER JOIN users ON readers.user_id = users.id AND readers.book_return = 0
+          AND readers.second_date > now()
+          GROUP BY users.firstname, users.lastname ''');
+    await connection.close();
+    return result;
+  }
+
+  Future<Results?> getDebtor() async {
+    final connection = await getConnection();
+    final result =
+        await connection.query('''SELECT users.firstname, users.lastname
+          FROM book_user_reads AS readers
+          INNER JOIN users ON readers.user_id = users.id AND readers.book_return = 0 AND
+          readers.second_date < now()
+          GROUP BY users.firstname, users.lastname ''');
+    await connection.close();
+    return result;
+  }
+
   Future<Results?> removeQueryBook(int userId, int bookId) async {
     final connection = await getConnection();
     final result = await connection.query('''DELETE FROM book_query

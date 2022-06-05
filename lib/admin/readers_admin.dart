@@ -7,7 +7,7 @@ class ReadersAdmin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final readerData = ReaderData();
-    readerData.clearAndAddAll(_ContainerReaderWidget());
+    readerData.getReaders();
     readerData.activeColorReaders();
     return ChangeNotifierProvider(
       create: (context) => readerData,
@@ -65,7 +65,7 @@ class ReadersAdmin extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                _ListViewWidget(),
+                const _ListViewWidget(),
               ],
             ),
           ),
@@ -106,10 +106,9 @@ class _ReadersListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Provider.of<ReaderData>(context, listen: false)
-            .clearAndAddAll(_ContainerReaderWidget());
         Provider.of<ReaderData>(context, listen: false).defPromiser();
         Provider.of<ReaderData>(context, listen: false).activeColorReaders();
+        Provider.of<ReaderData>(context, listen: false).getReaders();
       },
       child: Container(
         constraints: const BoxConstraints(
@@ -152,10 +151,9 @@ class _PromiserListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Provider.of<ReaderData>(context, listen: false)
-            .clearAndAddAll(_ContainerPromiserWidget());
         Provider.of<ReaderData>(context, listen: false).defReaders();
         Provider.of<ReaderData>(context, listen: false).activeColorPromiser();
+        Provider.of<ReaderData>(context, listen: false).getDebtor();
       },
       child: Container(
         constraints: const BoxConstraints(
@@ -189,9 +187,13 @@ class _PromiserListWidget extends StatelessWidget {
   }
 }
 
-class _ContainerReaderWidget extends StatelessWidget {
-  const _ContainerReaderWidget({
+class ListItemWidget extends StatelessWidget {
+  final String firstName;
+  final String lastName;
+  const ListItemWidget({
     Key? key,
+    required this.firstName,
+    required this.lastName,
   }) : super(key: key);
 
   @override
@@ -214,51 +216,17 @@ class _ContainerReaderWidget extends StatelessWidget {
       ),
       child: Row(
         children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(10),
-              bottomLeft: Radius.circular(10),
-            ),
-            child: Container(
-              width: 20,
-              height: double.infinity,
-              decoration: const BoxDecoration(
-                color: Color.fromRGBO(244, 244, 244, 1),
-                border: Border(
-                  right: BorderSide(
-                    color: Color.fromRGBO(228, 228, 228, 1),
-                    width: 1,
-                    style: BorderStyle.solid,
-                  ),
-                ),
-              ),
-              child: const Align(
-                child: FittedBox(
-                  fit: BoxFit.cover,
-                  child: Text(
-                    '1',
-                    style: TextStyle(
-                        color: Color.fromRGBO(61, 104, 255, 1),
-                        fontFamily: 'Roboto',
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12),
-                  ),
-                ),
-              ),
-            ),
-          ),
           const SizedBox(width: 10),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: FittedBox(
               fit: BoxFit.cover,
               child: RichText(
-                text: const TextSpan(
+                text: TextSpan(
                   children: [
                     TextSpan(
-                      text: 'Иванов Иван\n',
-                      style: TextStyle(
+                      text: '$firstName $lastName\n',
+                      style: const TextStyle(
                         color: Color.fromRGBO(70, 70, 70, 1),
                         fontFamily: 'Roboto',
                         fontStyle: FontStyle.normal,
@@ -266,7 +234,7 @@ class _ContainerReaderWidget extends StatelessWidget {
                         fontSize: 15,
                       ),
                     ),
-                    TextSpan(
+                    const TextSpan(
                       text: '10 класс',
                       style: TextStyle(
                         color: Color.fromRGBO(196, 196, 196, 1),
@@ -282,105 +250,6 @@ class _ContainerReaderWidget extends StatelessWidget {
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class _ContainerPromiserWidget extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.pushNamed(context, '/premiserBookUserAdmin');
-      },
-      child: Container(
-        constraints: const BoxConstraints(
-          maxWidth: double.infinity,
-          maxHeight: 52,
-        ),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: const [
-            BoxShadow(
-              offset: Offset(0, 0),
-              blurRadius: 2,
-              color: Color.fromRGBO(0, 0, 0, 0.2),
-            ),
-          ],
-        ),
-        child: Row(
-          children: [
-            ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(10),
-                bottomLeft: Radius.circular(10),
-              ),
-              child: Container(
-                width: 20,
-                height: double.infinity,
-                decoration: const BoxDecoration(
-                  color: Color.fromRGBO(244, 244, 244, 1),
-                  border: Border(
-                    right: BorderSide(
-                      color: Color.fromRGBO(228, 228, 228, 1),
-                      width: 1,
-                      style: BorderStyle.solid,
-                    ),
-                  ),
-                ),
-                child: const Align(
-                  child: FittedBox(
-                    fit: BoxFit.cover,
-                    child: Text(
-                      '1',
-                      style: TextStyle(
-                          color: Color.fromRGBO(61, 104, 255, 1),
-                          fontFamily: 'Roboto',
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 12),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(width: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              child: FittedBox(
-                fit: BoxFit.cover,
-                child: RichText(
-                  text: const TextSpan(
-                    children: [
-                      TextSpan(
-                        text: 'Иванов Иван Должник\n',
-                        style: TextStyle(
-                          color: Color.fromRGBO(70, 70, 70, 1),
-                          fontFamily: 'Roboto',
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                        ),
-                      ),
-                      TextSpan(
-                        text: '10 класс',
-                        style: TextStyle(
-                          color: Color.fromRGBO(196, 196, 196, 1),
-                          fontFamily: 'Roboto',
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 10,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
