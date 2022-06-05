@@ -58,41 +58,15 @@ class _MyQueryState extends State<MyQuery> {
                         GestureDetector(
                           onTap: () {
                             Provider.of<ListData>(context, listen: false)
-                                .clearAndAddAll(YouRead());
-                            Provider.of<ListData>(context, listen: false)
                                 .activeColorYouRead();
                             Provider.of<ListData>(context, listen: false)
                                 .defInWait();
                             Provider.of<ListData>(context, listen: false)
                                 .defHistory();
+                            Provider.of<ListData>(context, listen: false)
+                                .getReadBook();
                           },
-                          child: Container(
-                            height: 30,
-                            constraints: const BoxConstraints(
-                                maxHeight: double.infinity),
-                            padding: const EdgeInsets.symmetric(horizontal: 15),
-                            decoration: BoxDecoration(
-                              color: const Color.fromRGBO(255, 255, 255, 1),
-                              border: Border.all(
-                                color: const Color.fromRGBO(228, 228, 228, 1),
-                                width: 1,
-                              ),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Align(
-                              child: Text(
-                                'Вы читаете',
-                                style: TextStyle(
-                                  color: Provider.of<ListData>(context)
-                                      .defColorYouRead,
-                                  fontFamily: 'Roboto',
-                                  fontStyle: FontStyle.normal,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ),
-                          ),
+                          child: const _BookRead(),
                         ),
                         const SizedBox(
                           width: 10,
@@ -184,6 +158,41 @@ class _MyQueryState extends State<MyQuery> {
                 ),
               );
             }),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _BookRead extends StatelessWidget {
+  const _BookRead({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 30,
+      constraints: const BoxConstraints(maxHeight: double.infinity),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      decoration: BoxDecoration(
+        color: const Color.fromRGBO(255, 255, 255, 1),
+        border: Border.all(
+          color: const Color.fromRGBO(228, 228, 228, 1),
+          width: 1,
+        ),
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Align(
+        child: Text(
+          'Вы читаете',
+          style: TextStyle(
+            color: Provider.of<ListData>(context).defColorYouRead,
+            fontFamily: 'Roboto',
+            fontStyle: FontStyle.normal,
+            fontWeight: FontWeight.w400,
+            fontSize: 12,
           ),
         ),
       ),
@@ -554,7 +563,21 @@ class InWait extends StatelessWidget {
 }
 
 class YouRead extends StatelessWidget {
-  const YouRead({Key? key}) : super(key: key);
+  final String urlImage;
+  final String titleBook;
+  final String author;
+  final String yearBook;
+  final int idBook;
+  final void Function(int index) onReturn;
+  const YouRead(
+      {Key? key,
+      required this.urlImage,
+      required this.titleBook,
+      required this.author,
+      required this.yearBook,
+      required this.idBook,
+      required this.onReturn})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -591,9 +614,9 @@ class YouRead extends StatelessWidget {
                       color: Color.fromRGBO(0, 0, 0, 0.25),
                     ),
                   ],
-                  image: const DecorationImage(
+                  image: DecorationImage(
                       image: NetworkImage(
-                        "https://img4.labirint.ru/rc/009ddcb31237552314703a6847875d04/220x340/books34/335480/cover.png?1612704312",
+                        urlImage,
                       ),
                       fit: BoxFit.cover),
                 ),
@@ -604,10 +627,10 @@ class YouRead extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Голодные игры. И вспыхнет пламя. Сойка-пересмешница',
+                      Text(
+                        titleBook,
                         textAlign: TextAlign.left,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Color.fromRGBO(70, 70, 70, 1),
                           fontFamily: 'Roboto',
                           fontStyle: FontStyle.normal,
@@ -618,10 +641,10 @@ class YouRead extends StatelessWidget {
                       const SizedBox(
                         height: 5,
                       ),
-                      const Text(
-                        'Сьюзен Коллинз, 2009',
+                      Text(
+                        '$author, $yearBook',
                         textAlign: TextAlign.left,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Color.fromRGBO(196, 196, 196, 1),
                           fontFamily: 'Roboto',
                           fontStyle: FontStyle.normal,
@@ -679,32 +702,36 @@ class YouRead extends StatelessWidget {
                               padding: const EdgeInsets.only(right: 20),
                               child: Align(
                                 alignment: Alignment.centerRight,
-                                child: Container(
-                                  constraints: const BoxConstraints(
-                                      maxWidth: double.infinity, maxHeight: 30),
-                                  height: 30,
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 18, vertical: 8),
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(10),
-                                    border: Border.all(
-                                      color:
-                                          const Color.fromRGBO(76, 61, 255, 1),
+                                child: GestureDetector(
+                                  onTap: () => onReturn(idBook),
+                                  child: Container(
+                                    constraints: const BoxConstraints(
+                                        maxWidth: double.infinity,
+                                        maxHeight: 30),
+                                    height: 30,
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 18, vertical: 8),
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(10),
+                                      border: Border.all(
+                                        color: const Color.fromRGBO(
+                                            76, 61, 255, 1),
+                                      ),
                                     ),
-                                  ),
-                                  child: const Align(
-                                    child: FittedBox(
-                                      fit: BoxFit.cover,
-                                      child: Text(
-                                        'Вернуть',
-                                        style: TextStyle(
-                                            color:
-                                                Color.fromRGBO(76, 61, 255, 1),
-                                            fontFamily: 'Roboto',
-                                            fontStyle: FontStyle.normal,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 12),
+                                    child: const Align(
+                                      child: FittedBox(
+                                        fit: BoxFit.cover,
+                                        child: Text(
+                                          'Вернуть',
+                                          style: TextStyle(
+                                              color: Color.fromRGBO(
+                                                  76, 61, 255, 1),
+                                              fontFamily: 'Roboto',
+                                              fontStyle: FontStyle.normal,
+                                              fontWeight: FontWeight.w500,
+                                              fontSize: 12),
+                                        ),
                                       ),
                                     ),
                                   ),

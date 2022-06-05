@@ -88,6 +88,37 @@ class ListData extends ChangeNotifier {
     }
   }
 
+  void getReadBook() async {
+    final result = await MyConnection().getReadBook(userId);
+    if (result != null) {
+      list.clear();
+      list.addAll(result
+          .map(
+            (book) => YouRead(
+              author: book['name_author'],
+              titleBook: book['name_book'],
+              urlImage: book['img_book'],
+              yearBook: book['year_book'],
+              onReturn: returnBook,
+              idBook: book['id'],
+            ),
+          )
+          .toList());
+      notifyListeners();
+    }
+  }
+
+  void returnBook(int idBook) async {
+    try {
+      final result = await MyConnection().returnBook(userId, idBook);
+      list.removeWhere((book) {
+        final b = book as YouRead;
+        return book.idBook == idBook;
+      });
+      notifyListeners();
+    } catch (e) {}
+  }
+
   void removeQueryBook(int idBook) async {
     try {
       final result = await MyConnection().removeQueryBook(userId, idBook);
