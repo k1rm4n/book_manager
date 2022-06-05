@@ -19,6 +19,14 @@ class MyConnection {
     return await MySqlConnection.connect(settings);
   }
 
+  Future<Results?> deleteBook(int bookId) async {
+    final connection = await getConnection();
+    final results =
+        await connection.query('delete from books where id=$bookId');
+    await connection.close();
+    return results;
+  }
+
   Future<Results?> updateBook(
     int bookId,
     String nameAuthor,

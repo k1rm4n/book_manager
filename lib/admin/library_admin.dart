@@ -32,7 +32,7 @@ class _LibraryAdminState extends State<LibraryAdmin> {
                   ],
                 ),
               ),
-              _AddBookWidget(),
+              const _AddBookWidget(),
             ],
           ),
         ),
@@ -60,7 +60,7 @@ class _ListBooksWidget extends StatelessWidget {
   }
 }
 
-class BookContainerWidget extends StatelessWidget {
+class BookContainerWidget extends StatefulWidget {
   final int bookId;
   final String titleBook;
   final String author;
@@ -75,10 +75,16 @@ class BookContainerWidget extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<BookContainerWidget> createState() => _BookContainerWidgetState();
+}
+
+class _BookContainerWidgetState extends State<BookContainerWidget> {
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/editBookAdmin', arguments: bookId);
+        Navigator.pushNamed(context, '/editBookAdmin',
+            arguments: widget.bookId);
       },
       child: Column(
         children: [
@@ -110,7 +116,7 @@ class BookContainerWidget extends StatelessWidget {
                       text: TextSpan(
                         children: [
                           TextSpan(
-                            text: '$titleBook\n',
+                            text: '${widget.titleBook}\n',
                             style: const TextStyle(
                               color: Color.fromRGBO(70, 70, 70, 1),
                               fontFamily: 'Roboto',
@@ -120,7 +126,7 @@ class BookContainerWidget extends StatelessWidget {
                             ),
                           ),
                           TextSpan(
-                            text: '$author, $yearBook',
+                            text: '${widget.author}, ${widget.yearBook}',
                             style: const TextStyle(
                               color: Color.fromRGBO(196, 196, 196, 1),
                               fontFamily: 'Roboto',
@@ -134,12 +140,19 @@ class BookContainerWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-                const Expanded(
+                Expanded(
                   child: Align(
                     alignment: Alignment.centerRight,
-                    child: Icon(
-                      Icons.delete_forever,
-                      color: Colors.red,
+                    child: GestureDetector(
+                      onTap: () async {
+                        await MyConnection().deleteBook(widget.bookId);
+                        Provider.of<EditData>(context, listen: false)
+                            .getLibrary();
+                      },
+                      child: const Icon(
+                        Icons.delete_forever,
+                        color: Colors.red,
+                      ),
                     ),
                   ),
                 ),
@@ -149,7 +162,7 @@ class BookContainerWidget extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 15,
           )
         ],
@@ -207,7 +220,10 @@ class _AddBookWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.pushNamed(context, '/addBookAdmin'),
+      onTap: () async {
+        await Navigator.pushNamed(context, '/addBookAdmin');
+        Provider.of<EditData>(context, listen: false).getLibrary();
+      },
       child: Padding(
         padding: const EdgeInsets.only(right: 20, bottom: 20),
         child: Column(
