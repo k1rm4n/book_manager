@@ -103,25 +103,7 @@ class _NowReadWidget extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    width: 65,
-                    height: 100,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
-                      boxShadow: const [
-                        BoxShadow(
-                          color: Color.fromRGBO(0, 0, 0, 0.25),
-                          offset: Offset(0, 4),
-                          blurRadius: 10,
-                        ),
-                      ],
-                      image: const DecorationImage(
-                          image: NetworkImage(
-                            "https://img4.labirint.ru/rc/009ddcb31237552314703a6847875d04/220x340/books34/335480/cover.png?1612704312",
-                          ),
-                          fit: BoxFit.cover),
-                    ),
-                  ),
+                  ...Provider.of<ProfileData>(context).listReadBook,
                 ],
               ),
             ),
@@ -200,6 +182,40 @@ class _NowReadWidget extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class ImageReadBook extends StatelessWidget {
+  final String urlImage;
+  const ImageReadBook({
+    Key? key,
+    required this.urlImage,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 10),
+      child: Container(
+        width: 65,
+        height: 100,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(4),
+          boxShadow: const [
+            BoxShadow(
+              color: Color.fromRGBO(0, 0, 0, 0.25),
+              offset: Offset(0, 4),
+              blurRadius: 10,
+            ),
+          ],
+          image: DecorationImage(
+              image: NetworkImage(
+                urlImage,
+              ),
+              fit: BoxFit.cover),
+        ),
+      ),
     );
   }
 }

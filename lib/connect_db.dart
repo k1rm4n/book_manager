@@ -45,6 +45,24 @@ class MyConnection {
     return result;
   }
 
+  Future<Results?> getWaitBook(int userId) async {
+    final connection = await getConnection();
+    final result = await connection.query(
+        '''SELECT books.id,books.name_book, books.img_book, books.name_author,books.year_book 
+          FROM book_query 
+          INNER JOIN books ON book_query.book_id = books.id AND book_query.user_id = $userId''');
+    await connection.close();
+    return result;
+  }
+
+  Future<Results?> removeQueryBook(int userId, int bookId) async {
+    final connection = await getConnection();
+    final result = await connection.query('''DELETE FROM book_query
+           WHERE book_query.book_id = $bookId AND book_query.user_id = $userId''');
+    await connection.close();
+    return result;
+  }
+
   Future<Results?> addHistory(int userId, int bookId) async {
     final connection = await getConnection();
     final result = await connection.query(''' INSERT 
@@ -59,6 +77,33 @@ class MyConnection {
     final result = await connection.query(''' SELECT COUNT(*) as  count_book
             FROM book_likes 
             WHERE book_likes.user_id = $userId AND book_likes.like_state = 1''');
+    await connection.close();
+    return result;
+  }
+
+  Future<Results?> getReadBook(int userId) async {
+    final connection = await getConnection();
+    final result = await connection.query(
+        '''SELECT books.id,books.name_book, books.img_book, books.name_author,books.year_book 
+          FROM book_user_reads 
+          INNER JOIN books ON book_user_reads.book_id = books.id AND book_user_reads.user_id = $userId''');
+    await connection.close();
+    return result;
+  }
+
+  Future<Results?> getImageReadBook(int userId) async {
+    final connection = await getConnection();
+    final result = await connection.query('''SELECT books.img_book 
+          FROM book_user_reads 
+          INNER JOIN books ON book_user_reads.book_id = books.id AND book_user_reads.user_id = $userId''');
+    await connection.close();
+    return result;
+  }
+
+  Future<Results?> returnBook(int userId, int bookId) async {
+    final connection = await getConnection();
+    final result = await connection.query('''DELETE FROM book_user_reads
+           WHERE book_user_reads.book_id = $bookId AND book_user_reads.user_id = $userId''');
     await connection.close();
     return result;
   }
