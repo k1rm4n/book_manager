@@ -15,7 +15,7 @@ class ReaderData extends ChangeNotifier {
     if (result != null) {
       list.clear();
       list.addAll(result
-          .map((readers) => ContainerReaderWidget(
+          .map((readers) => ListItemWidget(
                 firstName: readers['firstname'],
                 lastName: readers['lastname'],
               ))
@@ -24,10 +24,18 @@ class ReaderData extends ChangeNotifier {
     }
   }
 
-  void clearAndAddAll(Widget widget) {
-    list.clear();
-    list.add(widget);
-    notifyListeners();
+  Future<void> getDebtor() async {
+    final result = await MyConnection().getDebtor();
+    if (result != null) {
+      list.clear();
+      list.addAll(result
+          .map((readers) => ListItemWidget(
+                firstName: readers['firstname'],
+                lastName: readers['lastname'],
+              ))
+          .toList());
+      notifyListeners();
+    }
   }
 
   void activeColorReaders() {
