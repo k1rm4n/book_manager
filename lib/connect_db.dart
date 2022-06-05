@@ -45,6 +45,24 @@ class MyConnection {
     return result;
   }
 
+  Future<Results?> getWaitBook(int userId) async {
+    final connection = await getConnection();
+    final result = await connection.query(
+        '''SELECT books.id,books.name_book, books.img_book, books.name_author,books.year_book 
+          FROM book_query 
+          INNER JOIN books ON book_query.book_id = books.id AND book_query.user_id = $userId''');
+    await connection.close();
+    return result;
+  }
+
+  Future<Results?> removeQueryBook(int userId, int bookId) async {
+    final connection = await getConnection();
+    final result = await connection.query('''DELETE FROM book_query
+           WHERE book_query.book_id = $bookId AND book_query.user_id = $userId''');
+    await connection.close();
+    return result;
+  }
+
   Future<Results?> addHistory(int userId, int bookId) async {
     final connection = await getConnection();
     final result = await connection.query(''' INSERT 
