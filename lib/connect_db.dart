@@ -54,6 +54,15 @@ class MyConnection {
     return result;
   }
 
+  Future<Results?> getCountBookWantRead(int userId) async {
+    final connection = await getConnection();
+    final result = await connection.query(''' SELECT COUNT(*) as  count_book
+            FROM book_likes 
+            WHERE book_likes.user_id = $userId AND book_likes.like_state = 1''');
+    await connection.close();
+    return result;
+  }
+
   Future<Results?> addQuery(int userId, int bookId) async {
     final connection = await getConnection();
     final result = await connection.query(''' INSERT 

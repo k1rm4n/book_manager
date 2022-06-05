@@ -1,35 +1,50 @@
 import 'package:book_manager/connect_db.dart';
 import 'package:book_manager/data/profile_data.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 // menu_rounded
-class Profile extends StatelessWidget {
-  final profileData = ProfileData();
+class Profile extends StatefulWidget {
   Profile({Key? key}) : super(key: key);
 
   @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  final profileData = ProfileData();
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 25, horizontal: 30),
-            child: Column(
-              children: <Widget>[
-                _HeaderProfileWidget(
-                  profileData: profileData,
+    final args = ModalRoute.of(context)!.settings.arguments as NameAndLogin;
+    profileData.init(args);
+    return ChangeNotifierProvider(
+      create: (context) => profileData,
+      builder: (context, widget) {
+        return Scaffold(
+          body: SafeArea(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 25, horizontal: 30),
+                child: Column(
+                  children: <Widget>[
+                    _HeaderProfileWidget(
+                      profileData: profileData,
+                    ),
+                    const SizedBox(height: 30),
+                    const _AvatarAndNameWidget(),
+                    const SizedBox(
+                      height: 30,
+                    ),
+                    _NowReadWidget(),
+                  ],
                 ),
-                const SizedBox(height: 30),
-                _AvatarAndNameWidget(profileData: profileData),
-                const SizedBox(
-                  height: 30,
-                ),
-                const _NowReadWidget(),
-              ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }
@@ -38,6 +53,16 @@ class _NowReadWidget extends StatelessWidget {
   const _NowReadWidget({
     Key? key,
   }) : super(key: key);
+
+  String getTextReadBook(int countReadBook) {
+    if (countReadBook == 0 || countReadBook > 4) {
+      return 'Книг';
+    } else if (countReadBook == 1) {
+      return 'Книгу';
+    } else {
+      return 'Книги';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -125,10 +150,12 @@ class _NowReadWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 RichText(
-                  text: const TextSpan(children: [
+                  text: TextSpan(children: [
                     TextSpan(
-                      text: '2',
-                      style: TextStyle(
+                      text: Provider.of<ProfileData>(context)
+                          .countBookWantRead
+                          .toString(),
+                      style: const TextStyle(
                         color: Color.fromRGBO(70, 70, 70, 1),
                         fontSize: 20,
                         fontWeight: FontWeight.w400,
@@ -137,8 +164,9 @@ class _NowReadWidget extends StatelessWidget {
                       ),
                     ),
                     TextSpan(
-                      text: ' книги\n',
-                      style: TextStyle(
+                      text:
+                          ' ${getTextReadBook(Provider.of<ProfileData>(context).countBookWantRead)}\n',
+                      style: const TextStyle(
                         color: Color.fromRGBO(70, 70, 70, 1),
                         fontSize: 15,
                         fontWeight: FontWeight.w400,
@@ -146,7 +174,7 @@ class _NowReadWidget extends StatelessWidget {
                         fontFamily: 'Roboto',
                       ),
                     ),
-                    TextSpan(
+                    const TextSpan(
                       text: 'хочу прочитать',
                       style: TextStyle(
                         color: Color.fromRGBO(70, 70, 70, 1),
@@ -179,16 +207,10 @@ class _NowReadWidget extends StatelessWidget {
 class _AvatarAndNameWidget extends StatelessWidget {
   const _AvatarAndNameWidget({
     Key? key,
-    required this.profileData,
   }) : super(key: key);
 
-  final ProfileData profileData;
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context)!.settings.arguments as NameAndLogin;
-    profileData.name = args.name;
-    profileData.login = args.login;
-    profileData.id = args.id;
     return Align(
       alignment: Alignment.center,
       child: Column(
@@ -210,7 +232,7 @@ class _AvatarAndNameWidget extends StatelessWidget {
             height: 20,
           ),
           Text(
-            profileData.name,
+            Provider.of<ProfileData>(context).name,
             style: const TextStyle(
               color: Color.fromRGBO(61, 104, 255, 1),
               fontSize: 20,
