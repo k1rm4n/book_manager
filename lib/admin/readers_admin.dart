@@ -7,7 +7,7 @@ class ReadersAdmin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final readerData = ReaderData();
-    readerData.clearAndAddAll(_ContainerReaderWidget());
+    readerData.getReaders();
     readerData.activeColorReaders();
     return ChangeNotifierProvider(
       create: (context) => readerData,
@@ -65,7 +65,7 @@ class ReadersAdmin extends StatelessWidget {
                 const SizedBox(
                   height: 20,
                 ),
-                _ListViewWidget(),
+                const _ListViewWidget(),
               ],
             ),
           ),
@@ -106,10 +106,9 @@ class _ReadersListWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Provider.of<ReaderData>(context, listen: false)
-            .clearAndAddAll(_ContainerReaderWidget());
         Provider.of<ReaderData>(context, listen: false).defPromiser();
         Provider.of<ReaderData>(context, listen: false).activeColorReaders();
+        Provider.of<ReaderData>(context, listen: false).getReaders();
       },
       child: Container(
         constraints: const BoxConstraints(
@@ -189,9 +188,13 @@ class _PromiserListWidget extends StatelessWidget {
   }
 }
 
-class _ContainerReaderWidget extends StatelessWidget {
-  const _ContainerReaderWidget({
+class ContainerReaderWidget extends StatelessWidget {
+  final String firstName;
+  final String lastName;
+  const ContainerReaderWidget({
     Key? key,
+    required this.firstName,
+    required this.lastName,
   }) : super(key: key);
 
   @override
@@ -254,11 +257,11 @@ class _ContainerReaderWidget extends StatelessWidget {
             child: FittedBox(
               fit: BoxFit.cover,
               child: RichText(
-                text: const TextSpan(
+                text: TextSpan(
                   children: [
                     TextSpan(
-                      text: 'Иванов Иван\n',
-                      style: TextStyle(
+                      text: '$firstName $lastName\n',
+                      style: const TextStyle(
                         color: Color.fromRGBO(70, 70, 70, 1),
                         fontFamily: 'Roboto',
                         fontStyle: FontStyle.normal,
@@ -266,7 +269,7 @@ class _ContainerReaderWidget extends StatelessWidget {
                         fontSize: 15,
                       ),
                     ),
-                    TextSpan(
+                    const TextSpan(
                       text: '10 класс',
                       style: TextStyle(
                         color: Color.fromRGBO(196, 196, 196, 1),

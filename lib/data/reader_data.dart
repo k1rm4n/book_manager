@@ -1,11 +1,28 @@
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
+import '../admin/readers_admin.dart';
+import '../connect_db.dart';
+
 class ReaderData extends ChangeNotifier {
   List<Widget> list = [];
   Color defColorReaders = const Color.fromRGBO(124, 124, 124, 1);
   Color defColorPromiser = const Color.fromRGBO(124, 124, 124, 1);
   Color activeColor = const Color.fromRGBO(76, 61, 255, 1);
+
+  Future<void> getReaders() async {
+    final result = await MyConnection().getReaders();
+    if (result != null) {
+      list.clear();
+      list.addAll(result
+          .map((readers) => ContainerReaderWidget(
+                firstName: readers['firstname'],
+                lastName: readers['lastname'],
+              ))
+          .toList());
+      notifyListeners();
+    }
+  }
 
   void clearAndAddAll(Widget widget) {
     list.clear();
