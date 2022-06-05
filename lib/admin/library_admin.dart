@@ -1,142 +1,158 @@
+import 'package:book_manager/connect_db.dart';
+import 'package:book_manager/data/edit_data.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class LibraryAdmin extends StatelessWidget {
+class LibraryAdmin extends StatefulWidget {
+  @override
+  State<LibraryAdmin> createState() => _LibraryAdminState();
+}
+
+class _LibraryAdminState extends State<LibraryAdmin> {
+  final editData = EditData();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                children: const [
-                  _HeaderLibraryWidget(),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  _BookContainerWidget(),
-                ],
+    editData.getLibrary();
+
+    return ChangeNotifierProvider(
+      create: (context) => editData,
+      child: Scaffold(
+        body: SafeArea(
+          child: Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  children: const [
+                    _HeaderLibraryWidget(),
+                    SizedBox(
+                      height: 30,
+                    ),
+                    _ListBooksWidget(),
+                  ],
+                ),
               ),
-            ),
-            _AddBookWidget(),
-          ],
+              _AddBookWidget(),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-class _BookContainerWidget extends StatelessWidget {
-  const _BookContainerWidget({
+class _ListBooksWidget extends StatelessWidget {
+  const _ListBooksWidget({
     Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      physics: const ScrollPhysics(),
+      padding: const EdgeInsets.symmetric(horizontal: 15),
+      itemBuilder: (context, index) =>
+          Provider.of<EditData>(context).list[index],
+      itemCount: Provider.of<EditData>(context).list.length,
+    );
+  }
+}
+
+class BookContainerWidget extends StatelessWidget {
+  final int bookId;
+  final String titleBook;
+  final String author;
+  final String yearBook;
+
+  const BookContainerWidget({
+    Key? key,
+    required this.bookId,
+    required this.titleBook,
+    required this.author,
+    required this.yearBook,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, '/editBookAdmin');
+        Navigator.pushNamed(context, '/editBookAdmin', arguments: bookId);
       },
-      child: Container(
-        constraints: const BoxConstraints(
-          maxWidth: double.infinity,
-          maxHeight: 52,
-        ),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: const [
-            BoxShadow(
-              offset: Offset(0, 0),
-              blurRadius: 2,
-              color: Color.fromRGBO(0, 0, 0, 0.2),
+      child: Column(
+        children: [
+          Container(
+            constraints: const BoxConstraints(
+              maxWidth: double.infinity,
+              maxHeight: 52,
             ),
-          ],
-        ),
-        child: Row(
-          children: [
-            ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(10),
-                bottomLeft: Radius.circular(10),
-              ),
-              child: Container(
-                width: 20,
-                height: double.infinity,
-                decoration: const BoxDecoration(
-                  color: Color.fromRGBO(244, 244, 244, 1),
-                  border: Border(
-                    right: BorderSide(
-                      color: Color.fromRGBO(228, 228, 228, 1),
-                      width: 1,
-                      style: BorderStyle.solid,
-                    ),
-                  ),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: const [
+                BoxShadow(
+                  offset: Offset(0, 0),
+                  blurRadius: 2,
+                  color: Color.fromRGBO(0, 0, 0, 0.2),
                 ),
-                child: const Align(
+              ],
+            ),
+            child: Row(
+              children: [
+                const SizedBox(width: 10),
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
                   child: FittedBox(
                     fit: BoxFit.cover,
-                    child: Text(
-                      '1',
-                      style: TextStyle(
-                          color: Color.fromRGBO(61, 104, 255, 1),
-                          fontFamily: 'Roboto',
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 12),
+                    child: RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: '$titleBook\n',
+                            style: const TextStyle(
+                              color: Color.fromRGBO(70, 70, 70, 1),
+                              fontFamily: 'Roboto',
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 15,
+                            ),
+                          ),
+                          TextSpan(
+                            text: '$author, $yearBook',
+                            style: const TextStyle(
+                              color: Color.fromRGBO(196, 196, 196, 1),
+                              fontFamily: 'Roboto',
+                              fontStyle: FontStyle.normal,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 10,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ),
-            const SizedBox(width: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              child: FittedBox(
-                fit: BoxFit.cover,
-                child: RichText(
-                  text: const TextSpan(
-                    children: [
-                      TextSpan(
-                        text: 'Записки о Шерлоке Холмсе\n',
-                        style: TextStyle(
-                          color: Color.fromRGBO(70, 70, 70, 1),
-                          fontFamily: 'Roboto',
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 15,
-                        ),
-                      ),
-                      TextSpan(
-                        text: 'Сэр Артутр Конан Дойл, 2019',
-                        style: TextStyle(
-                          color: Color.fromRGBO(196, 196, 196, 1),
-                          fontFamily: 'Roboto',
-                          fontStyle: FontStyle.normal,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 10,
-                        ),
-                      ),
-                    ],
+                const Expanded(
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: Icon(
+                      Icons.delete_forever,
+                      color: Colors.red,
+                    ),
                   ),
                 ),
-              ),
+                const SizedBox(
+                  width: 10,
+                )
+              ],
             ),
-            const Expanded(
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: Icon(
-                  Icons.delete_forever,
-                  color: Colors.red,
-                ),
-              ),
-            ),
-            SizedBox(
-              width: 10,
-            )
-          ],
-        ),
+          ),
+          SizedBox(
+            height: 15,
+          )
+        ],
       ),
     );
   }

@@ -19,6 +19,30 @@ class MyConnection {
     return await MySqlConnection.connect(settings);
   }
 
+  Future<Results?> getBookForId(int bookId) async {
+    final connection = await getConnection();
+    final results =
+        await connection.query('select * from books where id = $bookId');
+    await connection.close();
+    return results;
+  }
+
+  Future<Results?> getBookDataForEdit() async {
+    final connection = await getConnection();
+    final results = await connection.query('select * from books');
+    await connection.close();
+    return results;
+  }
+
+  Future<Results?> addHistory(int userId, int bookId) async {
+    final connection = await getConnection();
+    final result = await connection.query(''' INSERT 
+            INTO book_histories 
+            (book_id, user_id, history_date) VALUES ($bookId, $userId, now())''');
+    await connection.close();
+    return result;
+  }
+
   Future<Results?> getBookData(int userId, {String where = ''}) async {
     final connection = await getConnection();
     final result = await connection.query(
@@ -41,15 +65,6 @@ class MyConnection {
           FROM book_histories 
           INNER JOIN books ON book_histories.book_id = books.id AND book_histories.user_id = $userId
           ORDER BY book_histories.history_date DESC''');
-    await connection.close();
-    return result;
-  }
-
-  Future<Results?> addHistory(int userId, int bookId) async {
-    final connection = await getConnection();
-    final result = await connection.query(''' INSERT 
-            INTO book_histories 
-            (book_id, user_id, history_date) VALUES ($bookId, $userId, now())''');
     await connection.close();
     return result;
   }
