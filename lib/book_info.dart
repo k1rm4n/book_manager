@@ -327,10 +327,10 @@ class _BookInfoState extends State<BookInfo> {
                             width: 1,
                           ),
                         ),
-                        child: const Align(
+                        child: Align(
                           child: Text(
-                            'Запрошено',
-                            style: TextStyle(
+                            book.queryBook == 0 ? 'Запросить' : 'Запрошено',
+                            style: const TextStyle(
                               color: Color.fromRGBO(76, 61, 255, 1),
                               fontFamily: 'Roboto',
                               fontStyle: FontStyle.normal,
@@ -403,35 +403,33 @@ class _BookInfoState extends State<BookInfo> {
                         const SizedBox(
                           width: 10,
                         ),
-                        Container(
-                          child: SizedBox(
-                            height: 45,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 2),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    book.nameAuthor,
-                                    style: const TextStyle(
-                                      color: Color.fromRGBO(61, 104, 255, 1),
-                                      fontFamily: 'Roboto',
-                                      fontStyle: FontStyle.normal,
-                                      fontWeight: FontWeight.w400,
-                                      fontSize: 15,
-                                    ),
+                        SizedBox(
+                          height: 45,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 2),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  book.nameAuthor,
+                                  style: const TextStyle(
+                                    color: Color.fromRGBO(61, 104, 255, 1),
+                                    fontFamily: 'Roboto',
+                                    fontStyle: FontStyle.normal,
+                                    fontWeight: FontWeight.w400,
+                                    fontSize: 15,
                                   ),
-                                  const SizedBox(
-                                    height: 2,
+                                ),
+                                const SizedBox(
+                                  height: 2,
+                                ),
+                                Text(
+                                  '${book.countBook} книг',
+                                  style: const TextStyle(
+                                    color: Color.fromRGBO(124, 124, 124, 1),
                                   ),
-                                  Text(
-                                    '${book.countBook} книг',
-                                    style: const TextStyle(
-                                      color: Color.fromRGBO(124, 124, 124, 1),
-                                    ),
-                                  ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
                         ),

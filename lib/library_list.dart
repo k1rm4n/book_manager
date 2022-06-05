@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 import 'data/library_data.dart';
 
 class Library extends StatelessWidget {
+  const Library({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context)!.settings.arguments as NameAndLogin;
@@ -228,14 +230,18 @@ class _BookListWidgetState extends State<BookListWidget> {
                                         borderRadius: BorderRadius.circular(10),
                                         border: Border.all(
                                           width: 1,
-                                          color: const Color.fromRGBO(
-                                              76, 61, 255, 1),
+                                          color: widget.book.queryBook == 0
+                                              ? const Color.fromRGBO(
+                                                  76, 61, 255, 1)
+                                              : Colors.grey,
                                         ),
                                       ),
-                                      child: const FittedBox(
+                                      child: FittedBox(
                                         child: Text(
-                                          'Запросить',
-                                          style: TextStyle(
+                                          widget.book.queryBook == 0
+                                              ? 'Запросить'
+                                              : 'Запрошено',
+                                          style: const TextStyle(
                                             color:
                                                 Color.fromRGBO(76, 61, 255, 1),
                                             fontSize: 12,
