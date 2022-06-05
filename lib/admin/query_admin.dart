@@ -3,17 +3,23 @@ import 'package:book_manager/data/query_data.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void onTap(BuildContext context) async {
-  await Navigator.pushNamed(context, '/welcomQueryAdmin');
-  Provider.of<QueryData>(context, listen: false)
-      .getQueryBook(() => onTap(context));
+class ClassUserAndBookID {
+  int userId = 0;
+  int bookId = 0;
+  ClassUserAndBookID(this.userId, this.bookId);
+}
+
+void onTap(int userId, int bookId, BuildContext context) async {
+  await Navigator.pushNamed(context, '/welcomQueryAdmin',
+      arguments: ClassUserAndBookID(userId, bookId));
+  Provider.of<QueryData>(context, listen: false).getQueryBook();
 }
 
 class QueryAdmin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final queryData = QueryData();
-    queryData.getQueryBook(() => onTap(context));
+    queryData.getQueryBook();
     queryData.activeColorQueryBook();
     return ChangeNotifierProvider(
       create: (context) => queryData,
@@ -208,8 +214,9 @@ class ListItemWidget extends StatelessWidget {
                             GestureDetector(
                               onTap: () {
                                 returnBook == 0
-                                    ? onTap(context)
-                                    : Provider.of<QueryData>(context)
+                                    ? onTap(userId, bookId, context)
+                                    : Provider.of<QueryData>(context,
+                                            listen: false)
                                         .acceptBook(userId, bookId);
                               },
                               child: Align(
@@ -217,8 +224,8 @@ class ListItemWidget extends StatelessWidget {
                                 child: Container(
                                   width: 30,
                                   height: 30,
-                                  decoration: const BoxDecoration(
-                                    boxShadow: [
+                                  decoration: BoxDecoration(
+                                    boxShadow: const [
                                       BoxShadow(
                                         color: Color.fromRGBO(0, 0, 0, 0.2),
                                         offset: Offset(0, 4),
@@ -231,13 +238,23 @@ class ListItemWidget extends StatelessWidget {
                                       begin: Alignment.centerRight,
                                       end: Alignment.centerLeft,
                                       colors: [
-                                        Color.fromARGB(255, 33, 162, 24),
-                                        Color.fromARGB(255, 112, 230, 103),
+                                        returnBook == 1
+                                            ? const Color.fromARGB(
+                                                255, 125, 3, 3)
+                                            : const Color.fromARGB(
+                                                255, 33, 162, 24),
+                                        returnBook == 1
+                                            ? const Color.fromARGB(
+                                                255, 185, 42, 42)
+                                            : const Color.fromARGB(
+                                                255, 112, 230, 103),
                                       ],
                                     ),
                                   ),
-                                  child: const Icon(
-                                    Icons.check_rounded,
+                                  child: Icon(
+                                    returnBook == 1
+                                        ? Icons.close_rounded
+                                        : Icons.check_rounded,
                                     color: Colors.white,
                                   ),
                                 ),
@@ -322,8 +339,7 @@ class _QueryBookButtonWidget extends StatelessWidget {
           // ));
           Provider.of<QueryData>(context, listen: false).defReturnBook();
           Provider.of<QueryData>(context, listen: false).activeColorQueryBook();
-          Provider.of<QueryData>(context, listen: false)
-              .getQueryBook(() => onTap(context));
+          Provider.of<QueryData>(context, listen: false).getQueryBook();
         },
         child: Container(
           constraints: const BoxConstraints(

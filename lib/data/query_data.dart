@@ -38,7 +38,7 @@ class QueryData extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getQueryBook(void Function() onTap) async {
+  Future<void> getQueryBook() async {
     final result = await MyConnection().getAllWaitBook();
     if (result != null) {
       list.clear();

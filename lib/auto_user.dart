@@ -266,7 +266,6 @@ class _ButtonWidgetState extends State<_ButtonWidget> {
         setState(() {
           MyConnection()
               .auto(_mailController.text, _passController.text, context);
-          // Navigator.popAndPushNamed(context, '/navBarAdmin');
         });
       },
       child: Container(

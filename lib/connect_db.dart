@@ -19,6 +19,23 @@ class MyConnection {
     return await MySqlConnection.connect(settings);
   }
 
+  Future<Results?> deleteFromQuery(int userId, int bookId) async {
+    final connection = await getConnection();
+    final results = await connection.query(
+        'delete from book_query where book_query.user_id=$userId and book_query.book_id = $bookId');
+    await connection.close();
+    return results;
+  }
+
+  Future<Results?> insertFromQuery(
+      int userId, bookId, String firstDate, String secondDate) async {
+    final connection = await getConnection();
+    final results = await connection.query(
+        '''insert into book_user_reads(user_id, book_id, first_date, second_date, book_return) values($userId, $bookId, '$firstDate', '$secondDate', 0)''');
+    await connection.close();
+    return results;
+  }
+
   Future<Results?> deleteBook(int bookId) async {
     final connection = await getConnection();
     final results =
