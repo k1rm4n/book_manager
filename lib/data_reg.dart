@@ -24,6 +24,13 @@ class RegData extends ChangeNotifier {
     notifyListeners();
   }
 
+  var rowPresetClassUser = Row(children: const []);
+
+  void defRowPresetClassUser() {
+    rowPresetClassUser = Row(children: const []);
+    notifyListeners();
+  }
+
   var rowPresetFirstName = Row(children: const []);
 
   void defRowPresetFirstName() {
@@ -63,6 +70,29 @@ class RegData extends ChangeNotifier {
 
   void setRowPresetLastName(String text) {
     rowPresetLastName = Row(
+      children: [
+        const Icon(
+          Icons.error_outline,
+          color: Colors.red,
+          size: 15,
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Text(
+          text,
+          style: const TextStyle(
+            fontSize: 12,
+            color: Colors.red,
+          ),
+        )
+      ],
+    );
+    notifyListeners();
+  }
+
+  void setRowPresetClassUser(String text) {
+    rowPresetFirstName = Row(
       children: [
         const Icon(
           Icons.error_outline,

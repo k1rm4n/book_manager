@@ -250,11 +250,11 @@ class MyConnection {
   }
 
   void reg(String lastname, String firstname, String mail, String pass,
-      String repeatPass, BuildContext context) async {
+      String repeatPass, int userClass, BuildContext context) async {
     getConnection().then((conn) {
       conn
           .query(
-              'insert into users (login, pass, firstname, lastname) values ("$mail", "$pass", "$firstname", "$lastname")')
+              'insert into users (login, pass, firstname, lastname, user_class) values ("$mail", "$pass", "$firstname", "$lastname", "$userClass")')
           .then(
         (results) {
           Provider.of<RegData>(context, listen: false).defColorTextAndBorder();

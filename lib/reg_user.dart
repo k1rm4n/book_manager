@@ -9,9 +9,11 @@ import 'data_reg.dart';
 class Registration extends StatelessWidget {
   final _lastname = TextEditingController();
   final _firstname = TextEditingController();
+  final _classUser = TextEditingController();
   final _mail = TextEditingController();
   final _pass = TextEditingController();
   final _repeatPass = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -58,6 +60,7 @@ class Registration extends StatelessWidget {
                 _fieldListWidget(
                     lastname: _lastname,
                     firstname: _firstname,
+                    classUser: _classUser,
                     mail: _mail,
                     pass: _pass,
                     repeatPass: _repeatPass),
@@ -74,12 +77,14 @@ class _fieldListWidget extends StatelessWidget {
   const _fieldListWidget({
     Key? key,
     required TextEditingController lastname,
+    required TextEditingController classUser,
     required TextEditingController firstname,
     required TextEditingController mail,
     required TextEditingController pass,
     required TextEditingController repeatPass,
   })  : _lastname = lastname,
         _firstname = firstname,
+        _classUser = classUser,
         _mail = mail,
         _pass = pass,
         _repeatPass = repeatPass,
@@ -87,6 +92,7 @@ class _fieldListWidget extends StatelessWidget {
 
   final TextEditingController _lastname;
   final TextEditingController _firstname;
+  final TextEditingController _classUser;
   final TextEditingController _mail;
   final TextEditingController _pass;
   final TextEditingController _repeatPass;
@@ -107,6 +113,11 @@ class _fieldListWidget extends StatelessWidget {
             child: Provider.of<RegData>(context).rowPresetLastName,
           ),
           _FirstNameTextFieldWidget(firstname: _firstname),
+          SizedBox(
+            height: Provider.of<RegData>(context).defSizedHeight,
+            child: Provider.of<RegData>(context).rowPresetFirstName,
+          ),
+          _ClassUserTextFieldWidget(classUser: _classUser),
           SizedBox(
             height: Provider.of<RegData>(context).defSizedHeight,
             child: Provider.of<RegData>(context).rowPresetFirstName,
@@ -135,6 +146,7 @@ class _fieldListWidget extends StatelessWidget {
           _RegButtonWidget(
             lastname: _lastname,
             firstname: _firstname,
+            classUser: _classUser,
             mail: _mail,
             pass: _pass,
             repeatPass: _repeatPass,
@@ -153,11 +165,13 @@ class _RegButtonWidget extends StatefulWidget {
     Key? key,
     required TextEditingController lastname,
     required TextEditingController firstname,
+    required TextEditingController classUser,
     required TextEditingController mail,
     required TextEditingController pass,
     required TextEditingController repeatPass,
   })  : _lastname = lastname,
         _firstname = firstname,
+        _classUser = classUser,
         _mail = mail,
         _pass = pass,
         _repeatPass = repeatPass,
@@ -165,23 +179,25 @@ class _RegButtonWidget extends StatefulWidget {
 
   final TextEditingController _lastname;
   final TextEditingController _firstname;
+  final TextEditingController _classUser;
   final TextEditingController _mail;
   final TextEditingController _pass;
   final TextEditingController _repeatPass;
 
   @override
-  State<_RegButtonWidget> createState() =>
-      _RegButtonWidgetState(_lastname, _firstname, _mail, _pass, _repeatPass);
+  State<_RegButtonWidget> createState() => _RegButtonWidgetState(
+      _lastname, _firstname, _classUser, _mail, _pass, _repeatPass);
 }
 
 class _RegButtonWidgetState extends State<_RegButtonWidget> {
   final TextEditingController _lastname;
   final TextEditingController _firstname;
+  final TextEditingController _classUser;
   final TextEditingController _mail;
   final TextEditingController _pass;
   final TextEditingController _repeatPass;
-  _RegButtonWidgetState(this._lastname, this._firstname, this._mail, this._pass,
-      this._repeatPass);
+  _RegButtonWidgetState(this._lastname, this._firstname, this._classUser,
+      this._mail, this._pass, this._repeatPass);
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -210,6 +226,11 @@ class _RegButtonWidgetState extends State<_RegButtonWidget> {
             Provider.of<RegData>(context, listen: false).setSizedHeight();
             Provider.of<RegData>(context, listen: false)
                 .setRowPresetFirstName('Введите имя');
+          } else if (_classUser.text.isEmpty) {
+            Provider.of<RegData>(context, listen: false).setRedTextAndBorder();
+            Provider.of<RegData>(context, listen: false).setSizedHeight();
+            Provider.of<RegData>(context, listen: false)
+                .setRowPresetClassUser('Введите класс');
           } else if (!mailRegex.hasMatch(_mail.text)) {
             Provider.of<RegData>(context, listen: false).setRedTextAndBorder();
             Provider.of<RegData>(context, listen: false).setSizedHeight();
@@ -232,10 +253,17 @@ class _RegButtonWidgetState extends State<_RegButtonWidget> {
             Provider.of<RegData>(context, listen: false)
                 .setRowPresetRepeatPass('Пароль не совпадает с предыдущим');
           } else {
-            MyConnection().reg(_lastname.text, _firstname.text, _mail.text,
-                _pass.text, _repeatPass.text, context);
+            MyConnection().reg(
+                _lastname.text,
+                _firstname.text,
+                _mail.text,
+                _pass.text,
+                _repeatPass.text,
+                int.parse(_classUser.text),
+                context);
             _lastname.text = '';
             _firstname.text = '';
+            _classUser.text = '';
             _mail.text = '';
             _pass.text = '';
             _repeatPass.text = '';
@@ -537,6 +565,52 @@ class _LastNameTextFieldWidget extends StatelessWidget {
         ),
         decoration: InputDecoration(
           labelText: 'Фамилия',
+          floatingLabelBehavior: FloatingLabelBehavior.always,
+          contentPadding: const EdgeInsets.symmetric(horizontal: 30),
+          labelStyle: TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.w500,
+            fontFamily: "Inter",
+            color: Provider.of<RegData>(context).defTextColor,
+          ),
+          focusedBorder: OutlineInputBorder(
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              borderSide: BorderSide(
+                  color: Provider.of<RegData>(context).defBorder, width: 1)),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: const BorderRadius.all(Radius.circular(10)),
+            borderSide: BorderSide(
+                color: Provider.of<RegData>(context).defBorder, width: 1),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _ClassUserTextFieldWidget extends StatelessWidget {
+  const _ClassUserTextFieldWidget({
+    Key? key,
+    required TextEditingController classUser,
+  })  : _classUser = classUser,
+        super(key: key);
+
+  final TextEditingController _classUser;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: double.infinity,
+      height: 50,
+      child: TextField(
+        controller: _classUser,
+        style: const TextStyle(
+          fontSize: 15,
+          fontWeight: FontWeight.w300,
+          fontFamily: "Roboto",
+        ),
+        decoration: InputDecoration(
+          labelText: 'Класс',
           floatingLabelBehavior: FloatingLabelBehavior.always,
           contentPadding: const EdgeInsets.symmetric(horizontal: 30),
           labelStyle: TextStyle(
