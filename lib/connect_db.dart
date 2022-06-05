@@ -19,6 +19,33 @@ class MyConnection {
     return await MySqlConnection.connect(settings);
   }
 
+  Future<Results?> updateBook(
+    int bookId,
+    String nameAuthor,
+    String nameBook,
+    String limitAge,
+    String categoryBook,
+    String publicBook,
+    String yearBook,
+    String descriptionBook,
+    String contentBook,
+    String imgBook,
+    String imgAuthor,
+    String countBook,
+    String pagesBook,
+  ) async {
+    final connection = await getConnection();
+    final results =
+        await connection.query('''update books set name_author = '$nameAuthor', 
+        name_book = '$nameBook', limit_age = $limitAge, category = '$categoryBook', 
+        public_book = '$publicBook', year_book = '$yearBook', 
+        description_book = '$descriptionBook', content_book = '$contentBook', 
+        img_book = '$imgBook', img_author = '$imgAuthor', 
+        count_book = $countBook, pages_book = $pagesBook  where id = $bookId''');
+    await connection.close();
+    return results;
+  }
+
   Future<Results?> getBookForId(int bookId) async {
     final connection = await getConnection();
     final results =

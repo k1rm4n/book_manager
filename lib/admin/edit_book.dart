@@ -99,7 +99,21 @@ class EditBook extends StatelessWidget {
                   nameLabel: 'Кол-во страниц',
                   controllerBook: _pagesBook,
                 ),
-                _EditButtonWidget(),
+                _EditButtonWidget(
+                  bookId: _bookId,
+                  nameAuthor: _nameAuthor,
+                  nameBook: _nameBook,
+                  limitAge: _limitAge,
+                  categoryBook: _categoryBook,
+                  publicBook: _publicBook,
+                  yearBook: _yearBook,
+                  descriptionBook: _descriptionBook,
+                  contentBook: _contentBook,
+                  imgBook: _imgBook,
+                  imgAuthor: _imgAuthor,
+                  countBook: _countBook,
+                  pagesBook: _pagesBook,
+                ),
               ],
             ),
           ),
@@ -110,36 +124,79 @@ class EditBook extends StatelessWidget {
 }
 
 class _EditButtonWidget extends StatelessWidget {
-  const _EditButtonWidget({
+  _EditButtonWidget({
+    required this.bookId,
+    required this.nameAuthor,
+    required this.nameBook,
+    required this.limitAge,
+    required this.categoryBook,
+    required this.publicBook,
+    required this.yearBook,
+    required this.descriptionBook,
+    required this.contentBook,
+    required this.imgBook,
+    required this.imgAuthor,
+    required this.countBook,
+    required this.pagesBook,
     Key? key,
   }) : super(key: key);
-
+  int bookId;
+  TextEditingController nameAuthor;
+  TextEditingController nameBook;
+  TextEditingController limitAge;
+  TextEditingController categoryBook;
+  TextEditingController publicBook;
+  TextEditingController yearBook;
+  TextEditingController descriptionBook;
+  TextEditingController contentBook;
+  TextEditingController imgBook;
+  TextEditingController imgAuthor;
+  TextEditingController countBook;
+  TextEditingController pagesBook;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Container(
-        width: double.infinity,
-        height: 40,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          border: Border.all(
-            color: const Color.fromRGBO(76, 61, 255, 1),
+    return GestureDetector(
+      onTap: () {
+        MyConnection().updateBook(
+            bookId,
+            nameAuthor.text,
+            nameBook.text,
+            limitAge.text,
+            categoryBook.text,
+            publicBook.text,
+            yearBook.text,
+            descriptionBook.text,
+            contentBook.text,
+            imgBook.text,
+            imgAuthor.text,
+            countBook.text,
+            pagesBook.text);
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: Container(
+          width: double.infinity,
+          height: 40,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            border: Border.all(
+              color: const Color.fromRGBO(76, 61, 255, 1),
+            ),
           ),
-        ),
-        child: const Align(
-          child: FittedBox(
-            fit: BoxFit.cover,
+          child: const Align(
             child: FittedBox(
-              child: Text(
-                'Редактировать',
-                style: TextStyle(
-                  color: Color.fromRGBO(76, 61, 255, 1),
-                  fontFamily: 'Roboto',
-                  fontStyle: FontStyle.normal,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 15,
+              fit: BoxFit.cover,
+              child: FittedBox(
+                child: Text(
+                  'Редактировать',
+                  style: TextStyle(
+                    color: Color.fromRGBO(76, 61, 255, 1),
+                    fontFamily: 'Roboto',
+                    fontStyle: FontStyle.normal,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 15,
+                  ),
                 ),
               ),
             ),
