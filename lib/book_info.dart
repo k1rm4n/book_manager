@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:book_manager/connect_db.dart';
 import 'package:book_manager/library_list_data.dart';
 import 'package:flutter/material.dart';
+import 'package:like_button/like_button.dart';
 
 class BookInfo extends StatefulWidget {
   const BookInfo({Key? key}) : super(key: key);
@@ -474,31 +475,6 @@ class _HeaderBackAndLikeWidgetState extends State<_HeaderBackAndLikeWidget> {
             color: Color.fromRGBO(255, 255, 255, 1),
           ),
         ),
-        // LikeButton(
-        //   size: 30,
-        //   circleColor: const CircleColor(
-        //       start: Color.fromARGB(255, 255, 102, 0),
-        //       end: Color.fromARGB(255, 204, 7, 0)),
-        //   bubblesColor: const BubblesColor(
-        //     dotPrimaryColor: Color.fromARGB(255, 255, 102, 0),
-        //     dotSecondaryColor: Color.fromARGB(255, 204, 7, 0),
-        //   ),
-        //   likeBuilder: (bool isLiked) {
-        //     return Icon(
-        //       Icons.favorite_outline,
-        //       color: widget.book.like == 1
-        //           ? Colors.red
-        //           : const Color.fromRGBO(196, 196, 196, 1),
-        //     );
-        //   },
-        //   onTap: (isLiked) {
-        //     setState(() {
-        //       widget.book.like = widget.book.like == 0 ? 1 : 0;
-        //       MyConnection().updateIdBook(widget.book.like, widget.book.idBook);
-        //     });
-        //     return Future.value(!isLiked);
-        //   },
-        // ),
       ],
     );
   }

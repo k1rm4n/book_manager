@@ -180,67 +180,77 @@ class _PromiserListWidget extends StatelessWidget {
 class ListItemWidget extends StatelessWidget {
   final String firstName;
   final String lastName;
+  final int classUser;
   const ListItemWidget({
     Key? key,
     required this.firstName,
     required this.lastName,
+    required this.classUser,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      constraints: const BoxConstraints(
-        maxWidth: double.infinity,
-        maxHeight: 52,
-      ),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: const [
-          BoxShadow(
-            offset: Offset(0, 0),
-            blurRadius: 2,
-            color: Color.fromRGBO(0, 0, 0, 0.2),
+    return Column(
+      children: [
+        Container(
+          constraints: const BoxConstraints(
+            maxWidth: double.infinity,
+            maxHeight: 52,
           ),
-        ],
-      ),
-      child: Row(
-        children: [
-          const SizedBox(width: 10),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            child: FittedBox(
-              fit: BoxFit.cover,
-              child: RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: '$firstName $lastName\n',
-                      style: const TextStyle(
-                        color: Color.fromRGBO(70, 70, 70, 1),
-                        fontFamily: 'Roboto',
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 15,
-                      ),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: const [
+              BoxShadow(
+                offset: Offset(0, 0),
+                blurRadius: 2,
+                color: Color.fromRGBO(0, 0, 0, 0.2),
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              const SizedBox(width: 10),
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                child: FittedBox(
+                  fit: BoxFit.cover,
+                  child: RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: '$firstName $lastName\n',
+                          style: const TextStyle(
+                            color: Color.fromRGBO(70, 70, 70, 1),
+                            fontFamily: 'Roboto',
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 15,
+                          ),
+                        ),
+                        TextSpan(
+                          text: '$classUser класс',
+                          style: const TextStyle(
+                            color: Color.fromRGBO(196, 196, 196, 1),
+                            fontFamily: 'Roboto',
+                            fontStyle: FontStyle.normal,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 10,
+                          ),
+                        ),
+                      ],
                     ),
-                    const TextSpan(
-                      text: '10 класс',
-                      style: TextStyle(
-                        color: Color.fromRGBO(196, 196, 196, 1),
-                        fontFamily: 'Roboto',
-                        fontStyle: FontStyle.normal,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 10,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
+        ),
+        const SizedBox(
+          height: 15,
+        ),
+      ],
     );
   }
 }

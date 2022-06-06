@@ -16,6 +16,7 @@ class ReaderData extends ChangeNotifier {
       list.clear();
       list.addAll(result
           .map((readers) => ListItemWidget(
+                classUser: readers['user_class'],
                 firstName: readers['firstname'],
                 lastName: readers['lastname'],
               ))
@@ -30,6 +31,7 @@ class ReaderData extends ChangeNotifier {
       list.clear();
       list.addAll(result
           .map((readers) => ListItemWidget(
+                classUser: readers['user_class'],
                 firstName: readers['firstname'],
                 lastName: readers['lastname'],
               ))

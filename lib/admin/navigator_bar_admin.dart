@@ -4,6 +4,8 @@ import 'package:book_manager/admin/readers_admin.dart';
 import 'package:book_manager/admin/welcom_query.dart';
 import 'package:flutter/material.dart';
 
+import 'exit_admin.dart';
+
 class NavigatorBarAdmin extends StatefulWidget {
   @override
   _NavigatorBarAdminState createState() => _NavigatorBarAdminState();
@@ -15,6 +17,7 @@ class _NavigatorBarAdminState extends State<NavigatorBarAdmin> {
     QueryAdmin(),
     LibraryAdmin(),
     ReadersAdmin(),
+    ExitAdmin(),
   ];
   void _onItemTapped(int index) {
     setState(() {
@@ -66,6 +69,13 @@ class _NavigatorBarAdminState extends State<NavigatorBarAdmin> {
               BottomNavigationBarItem(
                 icon: Icon(Icons.person_pin_rounded),
                 label: 'Читатели',
+                activeIcon: GradientIcon(
+                  icon: Icon(Icons.person_pin_rounded),
+                ),
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.exit_to_app),
+                label: 'Выход',
                 activeIcon: GradientIcon(
                   icon: Icon(Icons.person_pin_rounded),
                 ),
