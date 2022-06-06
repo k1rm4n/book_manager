@@ -1,7 +1,6 @@
 import 'package:book_manager/admin/query_admin.dart';
 import 'package:book_manager/connect_db.dart';
 import 'package:flutter/material.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
 class WelcomQueryAdmin extends StatelessWidget {
   int userId = 0;
